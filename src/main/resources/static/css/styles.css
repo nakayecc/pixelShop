@@ -189,3 +189,20 @@ section#shop .artifact_text_cost img.icon {
     height: 20px;
     vertical-align: -5px;
 }
+
+#login {
+    background-image: url("../img/bgDark.png");
+    height: 100vh;
+}
+#login input{
+    opacity: 0.2;
+    margin: 2%;
+}
+
+#login input:hover{
+    opacity: 0.4;
+}
+
+#login input:focus{
+    opacity: 0.4;
+}
