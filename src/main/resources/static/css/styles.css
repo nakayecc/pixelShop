@@ -65,6 +65,7 @@ section#profile #playerInfo {
     padding: 5%;
     border: white 2px dotted;
     background-color: rgba(255, 255, 255, 0.1);
+    margin: 1%;
 }
 
 section#profile #playerInfoText {
@@ -76,6 +77,15 @@ section#profile #statistic {
     padding: 5%;
     border: white 2px dotted;
     background-color: rgba(255, 255, 255, 0.1);
+    margin: 1%;
+}
+
+section#profile #items {
+
+    border: white 2px dotted;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-bottom: 1%;
+    margin: 1%;
 }
 
 section#profile #statisticText {
@@ -99,12 +109,12 @@ section#shop {
     min-height: 70vh;
 }
 
-section#shop img.image {
+img.image {
     height: 180px;
     width: 180px;
 }
 
-section#shop .artifact_overlay {
+.artifact_overlay {
     position: absolute;
     top: 0;
     right: 0;

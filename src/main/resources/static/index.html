@@ -10,31 +10,33 @@
 <body id="pageTop">
 <nav class="navbar navbar-expand-lg bg-dark fixed-top" id="mainNav">
 
-        <ul class="navbar-nav mr-auto">
-            <p>Logged us: User</p>
+    <ul class="navbar-nav mr-auto">
+        <p>Logged us: User</p>
+    </ul>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        MENU
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto mr-0">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#pageTop">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#profile">PROFILE</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#shop">STORE</a>
+            </li>
         </ul>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            MENU
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto mr-0">
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#pageTop">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#profile">PROFILE</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#shop">STORE</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto"><p>
-                50<img src="img/coin.png" width="20px"> \
-                1.000<img src="img/lvl.png" width="20px"> | <a href="../index.html">Logout</a>
-            </p>
-            </ul>
-        </div>
+        <ul class="navbar-nav ml-auto"><p>
+            50<img src="img/coin.png" width="20px"> \
+            1.000<img src="img/lvl.png" width="20px"> | <a href="../index.html">Logout</a>
+        </p>
+        </ul>
+    </div>
 
 </nav>
 <header>
@@ -47,10 +49,10 @@
     </div>
 </header>
 
-<section id="profile" >
-    <div class="container align-items-center p-5">
+<section id="profile">
+    <div class="container-fluid align-items-center p-5">
         <div class="row">
-            <div class="col-lg-5 m-4" id="playerInfo">
+            <div class="col-lg-3 mx-auto" id="playerInfo">
                 <div id="playerInfoImg" class="text-center">
                     <img src="img/avatar.png">
                 </div>
@@ -61,7 +63,7 @@
                     <p>Your Level: 50</p>
                 </div>
             </div>
-            <div class="col-lg-5 m-4" id="statistic">
+            <div class="col-lg-3 mx-auto" id="statistic">
                 <div id="statisticImg" class="text-center">
                     <img src="img/statistic.png">
                 </div>
@@ -70,6 +72,44 @@
                     <p>Done quests: 15/100</p>
                     <p>Your Personal Mentor: Mentor</p>
                     <p>Your class: Class</p>
+                </div>
+            </div>
+            <div class="col-lg-3 mx-auto" id="items">
+                <div class="row mx-auto">
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/003.jpg" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Combat</div>
+                            <div class="artifact_text_description">Private mentoring</div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/003.jpg" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Combat</div>
+                            <div class="artifact_text_description">Private mentoring</div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -133,7 +173,6 @@
         </div>
     </div>
 </section>
-
 
 
 </body>
