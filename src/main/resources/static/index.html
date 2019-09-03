@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuestStore</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="fonts/ChessType.ttf" rel="stylesheet">
+</head>
+<body id="pageTop">
+<nav class="navbar navbar-expand-lg bg-dark fixed-top" id="mainNav">
+
+        <ul class="navbar-nav mr-auto">
+            <p>Logged us: User</p>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            MENU
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto mr-0">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#pageTop">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#profile">PROFILE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#shop">STORE</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto"><p>
+                50<img src="img/coin.png" width="20px"> \
+                1.000<img src="img/lvl.png" width="20px"> | <a href="../index.html">Logout</a>
+            </p>
+            </ul>
+        </div>
+
+</nav>
+<header>
+
+    <div class="container d-flex h-100 align-items-center">
+        <div class="mx-auto text-center">
+            <h1 class="mx-auto my-0 text-uppercase">QuestStore </h1>
+            <p class="mx-auto mt-2 mb-5">Earn and spent smart your points!</p>
+        </div>
+    </div>
+</header>
+
+<section id="profile" >
+    <div class="container align-items-center p-5">
+        <div class="row">
+            <div class="col-lg-5 m-4" id="playerInfo">
+                <div id="playerInfoImg" class="text-center">
+                    <img src="img/avatar.png">
+                </div>
+                <div id="playerInfoText" class="mt-5">
+                    <p>Your nickname: User</p>
+                    <p>Your email: email@domain.com</p>
+                    <p>Your experience points: 15001900</p>
+                    <p>Your Level: 50</p>
+                </div>
+            </div>
+            <div class="col-lg-5 m-4" id="statistic">
+                <div id="statisticImg" class="text-center">
+                    <img src="img/statistic.png">
+                </div>
+                <div id="statisticText" class="mt-5">
+                    <p>Active boosts: 5/10</p>
+                    <p>Done quests: 15/100</p>
+                    <p>Your Personal Mentor: Mentor</p>
+                    <p>Your class: Class</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="shop">
+    <div class="container align-items-center p-5">
+        <div class="row text-center">
+            <div class="col-lg-4 mb-5 artifact_container">
+                <img src="img/store/003.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Combat</div>
+                    <div class="artifact_text_description">Private mentoring</div>
+                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">50</div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-5 artifact_container">
+                <img src="img/store/004.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Sanctuary</div>
+                    <div class="artifact_text_description">You can spend a day in home office</div>
+                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">300</div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-5 artifact_container">
+                <img src="img/store/005.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Time Travel</div>
+                    <div class="artifact_text_description">Extend SI week assignment deadline by one day</div>
+                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">500</div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mb-5 artifact_container">
+                <img src="img/store/006.gif" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Summon Code Elemental</div>
+                    <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-5 artifact_container">
+                <img src="img/store/007.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Circle of Magic</div>
+                    <div class="artifact_text_description">60 min workshop by a mentor(s) of the chosen topic</div>
+                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">50</div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-5 artifact_container">
+                <img src="img/store/008.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Tome of Knowledge</div>
+                    <div class="artifact_text_description">Extra material for the current topic</div>
+                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">500</div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+
+</body>
+<script src="js/userPage.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="js/jquery-easing/jquery.easing.min.js"></script>
+<script src="js/questStore.min.js"></script>
+</html>
