@@ -62,22 +62,25 @@ section#profile {
 }
 
 section#profile #playerInfo {
-    padding: 5%;
-    border: white 2px dotted;
-    background-color: rgba(255, 255, 255, 0.1);
     margin: 1%;
+}
+section#profile #playerInfoImg {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 section#profile #playerInfoText {
+    padding: 5%;
+    background-color: rgba(255, 255, 255, 0.1);
     display: none;
 }
 
 
 section#profile #statistic {
-    padding: 5%;
-    border: white 2px dotted;
-    background-color: rgba(255, 255, 255, 0.1);
     margin: 1%;
+}
+section#profile #statisticImg {
+    background-color: rgba(255, 255, 255, 0.1);
+
 }
 
 section#profile #items {
@@ -87,6 +90,8 @@ section#profile #items {
 }
 
 section#profile #statisticText {
+    padding: 5%;
+    background-color: rgba(255, 255, 255, 0.1);
     display: none;
 }
 
