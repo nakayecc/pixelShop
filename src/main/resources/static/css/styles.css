@@ -2,6 +2,9 @@
     font-family: ChessType;
     src: url('../fonts/ChessType.ttf');
 }
+body {
+    font-family: ChessType, serif;
+}
 
 #mainNav {
     font-family: ChessType, serif;
@@ -127,6 +130,11 @@ section#shop {
     min-height: 100vh;
 }
 
+section#shop .modal-content{
+    color: floralwhite;
+    background-color: rgba(0,0,0,0.7);
+}
+
 img.image {
     height: 180px;
     width: 180px;
@@ -216,6 +224,17 @@ section#shop .artifact_text_cost img.icon {
     width: 20px;
     height: 20px;
     vertical-align: -5px;
+}
+
+section#quests {
+    background-image: url("../img/bgDark.png");
+    color: floralwhite;
+}
+
+footer p{
+    padding: 0;
+    margin: 0;
+    color: floralwhite;
 }
 
 #login {

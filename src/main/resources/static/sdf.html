@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+This demonstrates bootstrap popover on an image.
+<br/>NOTE: Image MUST have tabindex property for the popover trigger to work
+<br/><br/>
+
+<table>
+    <tr>
+        <td>row 1</td>
+        <td>
+            <a href="#"  data-toggle="popover" title="Popover Header" >Toggle popover
+                <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS-eTmHxgicEfq4K-sEz_X52cq56uBP2l8cr_q8ivOavSIca5TYtQ"></a>
+
+
+        </td>
+    </tr>
+    <tr>
+        <td>row 2</td>
+        <td>
+            <button
+                    type="button"
+                    class="btn btn-default popover-dismiss"
+                    data-toggle="popover" data-placement="right">
+                Popover on right
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>row 3</td>
+        <td>
+            <button
+                    type="button"
+                    class="btn btn-default popover-dismiss"
+                    data-toggle="popover" data-placement="right">
+                Popover on right
+            </button>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+<script src="js/bootstrap.js"></script>
+
+
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
+</html>
