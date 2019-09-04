@@ -241,9 +241,20 @@ footer p {
 }
 
 #login {
-    background-image: url("../img/bgDark.png");
+    background-image: url("../img/loginBg.png");
     height: 100vh;
 }
+
+#login h1{
+    font-size: 4.5rem;
+    line-height: 4.5rem;
+    letter-spacing: 1.4rem;
+    background: -webkit-linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, 0.5));
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text
+}
+
+
 
 #login input {
     opacity: 0.2;
