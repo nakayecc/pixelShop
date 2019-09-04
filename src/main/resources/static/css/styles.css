@@ -40,7 +40,7 @@
 header {
     font-family: ChessType, serif;
 
-    height: 100vh;
+    height: 70vh;
     background-image: url("../img/bgLight.png");
 }
 
@@ -71,7 +71,6 @@ section#profile #playerInfoImg {
 section#profile #playerInfoText {
     padding: 5%;
     background-color: rgba(255, 255, 255, 0.1);
-    display: none;
 }
 
 
@@ -84,15 +83,18 @@ section#profile #statisticImg {
 }
 
 section#profile #items {
-
     padding-bottom: 1%;
     margin: 1%;
+    height: 500px;
+    /*display: flex;*/
+    /*flex-shrink: 2;*/
+    /*flex-wrap: wrap;*/
 }
+
 
 section#profile #statisticText {
     padding: 5%;
     background-color: rgba(255, 255, 255, 0.1);
-    display: none;
 }
 
 

@@ -50,33 +50,38 @@
 </header>
 
 <section id="profile">
-    <div class="container-fluid align-items-center p-5">
+    <div class="container-fluid align-items-center p-5" id="contener">
         <div class="row">
             <div class="col-lg-3 mx-auto rounded" id="playerInfo">
                 <div id="playerInfoImg" class="text-center rounded">
-                    <img src="img/avatar.png">
+                    <img class="img-responsive rounded-circle" src="img/avatar.png" alt="" data-toggle="collapse"
+                         data-target="#playerInfoText" aria-controls="playerInfoText" aria-expanded="false">
                 </div>
-                <div id="playerInfoText" class="rounded">
+                <div id="playerInfoText" class="rounded collapse">
                     <p>Your nickname: User</p>
                     <p>Your email: email@domain.com</p>
                     <p>Your experience points: 15001900</p>
                     <p>Your Level: 50</p>
                 </div>
             </div>
+
             <div class="col-lg-3 mx-auto rounded" id="statistic">
                 <div id="statisticImg" class="text-center rounded">
-                    <img src="img/statistic.png">
+                    <img class="img-responsive rounded-circle" src="img/statistic.png" alt="" data-toggle="collapse"
+                    data-target="#statisticText" aria-controls="statisticText" aria-expanded="false">
+
+
                 </div>
-                <div id="statisticText" class="rounded">
+                <div id="statisticText" class="rounded collapse">
                     <p>Active boosts: 5/10</p>
                     <p>Done quests: 15/100</p>
                     <p>Your Personal Mentor: Mentor</p>
                     <p>Your class: Class</p>
                 </div>
             </div>
-            <div class="col-lg-3 mx-auto" id="items">
-                <div class="row mx-auto">
-                    <div class="col-lg-6 artifact_container mt-3">
+            <div class="col-xl-3 mx-auto overflow-auto" id="items">
+                <div class="row mx-auto flex-sm-shrink-1">
+                    <div class="col-xl-6 artifact_container mt-3">
                         <img src="img/store/003.jpg" class="image rounded">
                         <div class="artifact_overlay mx-auto">
                             <div class="artifact_text_title">Combat</div>
@@ -84,7 +89,7 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-6 artifact_container mt-3">
+                    <div class="col-xl-6 artifact_container mt-3">
                         <img src="img/store/003.jpg" class="image rounded">
                         <div class="artifact_overlay mx-auto">
                             <div class="artifact_text_title">Combat</div>
@@ -92,6 +97,24 @@
                         </div>
 
                     </div>
+                    <div class="col-xl-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
+
                     <div class="col-lg-6 artifact_container mt-3">
                         <img src="img/store/006.gif" class="image rounded">
                         <div class="artifact_overlay mx-auto">
@@ -110,65 +133,70 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
 
-<section id="shop">
-    <div class="container align-items-center p-5">
-        <div class="row text-center">
-            <div class="col-lg-4 mb-5 artifact_container">
-                <img src="img/store/003.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Combat</div>
-                    <div class="artifact_text_description">Private mentoring</div>
-                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">50</div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5 artifact_container">
-                <img src="img/store/004.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Sanctuary</div>
-                    <div class="artifact_text_description">You can spend a day in home office</div>
-                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">300</div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5 artifact_container">
-                <img src="img/store/005.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Time Travel</div>
-                    <div class="artifact_text_description">Extend SI week assignment deadline by one day</div>
-                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">500</div>
-                </div>
-            </div>
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
 
-            <div class="col-lg-4 mb-5 artifact_container">
-                <img src="img/store/006.gif" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Summon Code Elemental</div>
-                    <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
-                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5 artifact_container">
-                <img src="img/store/007.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Circle of Magic</div>
-                    <div class="artifact_text_description">60 min workshop by a mentor(s) of the chosen topic</div>
-                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">50</div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5 artifact_container">
-                <img src="img/store/008.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Tome of Knowledge</div>
-                    <div class="artifact_text_description">Extra material for the current topic</div>
-                    <div class="artifact_text_cost"><img class="icon" src="img/coin.png">500</div>
-                </div>
-            </div>
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
 
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3">
+                        <img src="img/store/006.gif" class="image rounded">
+                        <div class="artifact_overlay mx-auto">
+                            <div class="artifact_text_title">Summon Code Elemental</div>
+                            <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                            <div class="artifact_text_cost"><img class="icon" src="img/coin.png">1000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -176,12 +204,13 @@
 
 
 </body>
-<script src="js/userPage.js"></script>
-<!-- Bootstrap core JavaScript -->
 <script src="js/jquery/jquery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 
-<!-- Plugin JavaScript -->
 <script src="js/jquery-easing/jquery.easing.min.js"></script>
 <script src="js/questStore.min.js"></script>
+
+
+
+
 </html>
