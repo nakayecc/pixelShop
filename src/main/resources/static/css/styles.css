@@ -43,7 +43,6 @@ body {
 
 header {
     font-family: ChessType, serif;
-
     height: 70vh;
     background-image: url("../img/bgLight.png");
 }
@@ -63,6 +62,7 @@ section#profile {
     background-image: url("../img/bgDark.png");
     font-family: ChessType, serif;
     color: floralwhite;
+    text-shadow: black 2px 2px;
 }
 
 section#profile #playerInfo {
@@ -245,7 +245,7 @@ footer p {
     height: 100vh;
 }
 
-#login h1{
+#login h1 {
     font-size: 4.5rem;
     line-height: 4.5rem;
     letter-spacing: 1.4rem;
@@ -253,7 +253,6 @@ footer p {
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text
 }
-
 
 
 #login input {
