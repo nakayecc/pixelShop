@@ -29,32 +29,25 @@ public class PostgreSQLJDBC {
         return c;
     }
 
-    public ResultSet executeQuery(String query){
-        try {
-            stmt = c.createStatement();
-            rs = stmt.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public ResultSet executeQuery(String query) throws SQLException {
+        PreparedStatement ps = c.prepareStatement(query);
+        rs = ps.executeQuery();
         return rs;
     }
 
 
 
-    public void execute(String query){
-        try {
-            stmt = c.createStatement();
-            stmt.execute(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void execute(String query) throws SQLException {
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.executeUpdate();
+        c.close();
     }
 
     public void close(){
         try {
             c.close();
             stmt.close();
-            rs.close();
+//            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
