@@ -46,4 +46,5 @@ public class UserDAO {
         this.rs = stmt.executeQuery(query);
         return rs.next();
     }
+    //
 }
