@@ -31,27 +31,55 @@ public class ArtifactDAOI implements ArtifactDao {
     }
 
     @Override
-    public boolean updateArtifact(Artifact artifact, int id) {
-        return false;
+    public boolean updateArtifact(Artifact artifact) throws SQLException {
+
+        String query = "UPDATE artifacts SET name = ?, description = ?, price = ?,is_global = ? " +
+                "WHERE id = " + artifact.getId() + "";
+        this.ps = c.prepareStatement(query);
+        ps.setString(1, artifact.getName());
+        ps.setString(2, artifact.getDescription());
+        ps.setInt(3, artifact.getPrice());
+        ps.setBoolean(4, artifact.isGlobal());
+        int i = ps.executeUpdate();
+
+        return i == 1;
     }
 
     @Override
-    public boolean insertArtifact(Artifact artifact) {
-        return false;
+    public boolean insertArtifact(Artifact artifact) throws SQLException {
+        String query = "INSERT INTO artifacts(name, description, price, is_global) VALUES (?,?,?,?)";
+        this.ps = c.prepareStatement(query);
+        ps.setString(1, artifact.getName());
+        ps.setString(2, artifact.getDescription());
+        ps.setInt(3, artifact.getPrice());
+        ps.setBoolean(4, artifact.isGlobal());
+        int i = ps.executeUpdate();
+        return i == 1;
     }
 
     @Override
-    public boolean deleteArtifact(Artifact artifact) {
-        return false;
+    public boolean deleteArtifact(Artifact artifact) throws SQLException {
+        String query = "DELETE FROM artifacts WHERE id = " + artifact.getId() + "";
+        this.stmt = c.createStatement();
+        return stmt.execute(query);
+
     }
 
     private List<Artifact> getListFromRS(ResultSet rs) throws SQLException {
         List<Artifact> artifactList = new ArrayList<>();
         while (rs.next()) artifactList.add(extractArtifactFromRS(rs));
-        rs.close();
-        c.close();
         return artifactList;
 
+    }
+
+    @Override
+    public Artifact getById(int id) throws SQLException {
+        String query = "select id, name, description, price, is_global from artifacts " +
+                "WHERE id = ?";
+        this.ps = c.prepareStatement(query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        return getListFromRS(rs).get(0);
     }
 
     private Artifact extractArtifactFromRS(ResultSet rs) throws SQLException {
