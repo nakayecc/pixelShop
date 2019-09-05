@@ -8,7 +8,7 @@ import java.util.List;
 public interface ArtifactDao {
 
     List<Artifact> getListFull() throws SQLException;
-    Artifact getListBy(String valueName, String value);
+    List<Artifact> getListBy(String valueName, String value) throws SQLException;
     boolean updateArtifact(Artifact artifact, int id);
     boolean insertArtifact(Artifact artifact);
     boolean deleteArtifact(Artifact artifact);

@@ -26,8 +26,8 @@ public class ArtifactDAOI implements ArtifactDao {
     }
 
     @Override
-    public Artifact getListBy(String valueName, String value) {
-        return null;
+    public List<Artifact> getListBy(String valueName, String value) throws SQLException {
+        return getListFromRS(getRSByValue(valueName, value));
     }
 
     @Override
@@ -67,5 +67,13 @@ public class ArtifactDAOI implements ArtifactDao {
         String query = " SELECT id, name, description, price, is_global FROM artifacts";
         Statement stmt = c.createStatement();
         return stmt.executeQuery(query);
+    }
+
+    private ResultSet getRSByValue(String valueName, String value) throws SQLException {
+        String query = "select id, name, description, price, is_global from artifacts " +
+                "WHERE " + valueName + " = ?));";
+        this.ps = c.prepareStatement(query);
+        ps.setString(1, value);
+        return ps.executeQuery();
     }
 }
