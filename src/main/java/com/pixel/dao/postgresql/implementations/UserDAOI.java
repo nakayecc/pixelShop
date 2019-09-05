@@ -48,5 +48,4 @@ public class UserDAOI implements UsersDAO {
         this.rs = stmt.executeQuery(query);
         return rs.next();
     }
-    //
 }
