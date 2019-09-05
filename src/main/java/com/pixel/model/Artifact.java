@@ -6,21 +6,21 @@ public class Artifact {
     private String name;
     private  String description;
     private int price;
-    private boolean is_global;
+    private boolean global;
 
-    public Artifact(int id, String name, String description, int price, boolean is_global) {
+    public Artifact(int id, String name, String description, int price, boolean global) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.is_global = is_global;
+        this.global = global;
     }
 
-    public Artifact(String name, String description, int price, boolean is_global) {
+    public Artifact(String name, String description, int price, boolean global) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.is_global = is_global;
+        this.global = global;
     }
 
     public Artifact() {
@@ -58,11 +58,13 @@ public class Artifact {
         this.price = price;
     }
 
-    public boolean isIs_global() {
-        return is_global;
+    public boolean isGlobal() {
+        return global;
     }
 
-    public void setIs_global(boolean is_global) {
-        this.is_global = is_global;
+    public void setGlobal(boolean global) {
+        this.global = global;
     }
+
+
 }
