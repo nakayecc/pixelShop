@@ -1,16 +1,18 @@
-package com.pixel.dao.postgresql;
+package com.pixel.dao.postgresql.implementations;
 
+import com.pixel.dao.postgresql.PostgreSQLJDBC;
+import com.pixel.dao.postgresql.interfaces.UsersDAO;
 import com.pixel.model.User;
 
 import java.sql.*;
 
-public class UserDAO {
+public class UserDAOI implements UsersDAO {
     private Connection c;
     private PreparedStatement ps;
     private ResultSet rs;
     private Statement stmt;
 
-    public UserDAO() {
+    public UserDAOI() {
         this.c = new PostgreSQLJDBC().getConnection();
     }
 
@@ -46,5 +48,4 @@ public class UserDAO {
         this.rs = stmt.executeQuery(query);
         return rs.next();
     }
-    //
 }

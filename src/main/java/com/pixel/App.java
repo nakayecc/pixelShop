@@ -1,13 +1,18 @@
 package com.pixel;
 
+import com.pixel.dao.postgresql.implementations.ArtifactDAOI;
+
 /**
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+
+        ArtifactDAOI artifactDAOI = new ArtifactDAOI();
+
+
     }
 }
