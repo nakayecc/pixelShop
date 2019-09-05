@@ -1,19 +1,18 @@
 package com.pixel.controller;
 
-import com.pixel.dao.postgresql.UserDAO;
-import com.pixel.dao.postgresql.interfaces.UsersDAOInterface;
+import com.pixel.dao.postgresql.implementations.UserDAOI;
 
 import java.sql.SQLException;
 
 public class UserController {
-    private UserDAO dao;
+    private UserDAOI dao;
 
-    public UserController(UserDAO dao) {
+    public UserController(UserDAOI dao) {
         this.dao = dao;
     }
 
     public int getUserIdFromCredentials(String name, String password) throws SQLException {
-        return new UserDAO().getIdFromCredentials(name, password);
+        return new UserDAOI().getIdFromCredentials(name, password);
         }
 
     public String checkUserRank(int id) throws SQLException {
