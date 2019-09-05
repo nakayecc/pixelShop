@@ -36,4 +36,9 @@ public class Student extends User {
     public void setCass_id(int cass_id) {
         this.cass_id = cass_id;
     }
+
+    @Override
+    public String toString() {
+        return this.getName() + " " + this.getRoleName();
+    }
 }
