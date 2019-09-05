@@ -68,8 +68,10 @@ public class StudentDAOI implements StudentDAO {
     }
 
     @Override
-    public boolean delete(Student s) {
-        return false;
+    public boolean delete(Student s) throws SQLException {
+        this.stmt = c.createStatement();
+        String query = "DELETE FROM students WHERE user_id = " + s.getId() + "; DELETE FROM users WHERE id = " + s.getId() +"";
+        return stmt.execute(query);
     }
 
     @Override
