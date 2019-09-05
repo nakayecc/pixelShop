@@ -30,30 +30,21 @@ public class StudentDAOI implements StudentDAO {
 
     @Override
     public boolean save(Student s) throws SQLException {
-        /*
-        BEGIN TRANSACTION
-          DECLARE @DataID int;
-        INSERT INTO DataTable (Column1 ...) VALUES (....);
-   SELECT @DataID = scope_identity();
-   INSERT INTO LinkTable VALUES (@ObjectID, @DataID);
-COMMIT
-
-         */
-
-        String query = "INSERT INTO users (name, password, role_name) VALUES (?, ?, ?);";
+        String query = "" +
+                "WITH ins1 AS (" +
+                "    INSERT INTO users(name, password, role_name)" +
+                "        VALUES (?, ?, ?)" +
+                "        RETURNING id AS user_id" +
+                ") " +
+                "INSERT INTO students (user_id, mentor_id, class_id)" +
+                "SELECT user_id, ?, ? FROM ins1;";
         this.ps = c.prepareStatement(query);
         ps.setString(1, s.getName());
         ps.setString(2, s.getPassword());
         ps.setString(3, s.getRoleName());
-        ps.execute();
-
-        query = "UPDATE students SET mentor_id = ?, class_id = ? WHERE user_id = "+s.getId()+"";
-        this.ps = c.prepareStatement(query);
-        ps.setInt(1, s.getMentor_id());
-        ps.setInt(2, s.getCass_id());
-        ps.executeUpdate();
-
-        return true;
+        ps.setInt(4, s.getMentor_id());
+        ps.setInt(5, s.getCass_id());
+        return ps.execute();
     }
 
     @Override
