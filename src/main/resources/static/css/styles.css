@@ -3,6 +3,10 @@
     src: url('../fonts/ChessType.ttf');
 }
 
+body {
+    font-family: ChessType, serif;
+}
+
 #mainNav {
     font-family: ChessType, serif;
 }
@@ -39,8 +43,7 @@
 
 header {
     font-family: ChessType, serif;
-
-    height: 100vh;
+    height: 70vh;
     background-image: url("../img/bgLight.png");
 }
 
@@ -59,11 +62,13 @@ section#profile {
     background-image: url("../img/bgDark.png");
     font-family: ChessType, serif;
     color: floralwhite;
+    text-shadow: black 2px 2px;
 }
 
 section#profile #playerInfo {
     margin: 1%;
 }
+
 section#profile #playerInfoImg {
     background-color: rgba(255, 255, 255, 0.1);
 }
@@ -71,28 +76,44 @@ section#profile #playerInfoImg {
 section#profile #playerInfoText {
     padding: 5%;
     background-color: rgba(255, 255, 255, 0.1);
-    display: none;
 }
 
 
 section#profile #statistic {
     margin: 1%;
 }
+
 section#profile #statisticImg {
     background-color: rgba(255, 255, 255, 0.1);
 
 }
 
 section#profile #items {
-
     padding-bottom: 1%;
     margin: 1%;
+    height: 500px;
+    /*display: flex;*/
+    /*flex-shrink: 2;*/
+    /*flex-wrap: wrap;*/
 }
+
 
 section#profile #statisticText {
     padding: 5%;
     background-color: rgba(255, 255, 255, 0.1);
-    display: none;
+}
+
+section#profile #questsDone {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+section#profile #questsDone table {
+    color: floralwhite;
+}
+
+section#profile #questsDone p {
+    cursor: pointer;
 }
 
 
@@ -109,7 +130,12 @@ section#profile img:hover {
 
 section#shop {
     background-image: url("../img/bgLight.png");
-    min-height: 70vh;
+    min-height: 100vh;
+}
+
+section#shop .modal-content {
+    color: floralwhite;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 img.image {
@@ -203,19 +229,41 @@ section#shop .artifact_text_cost img.icon {
     vertical-align: -5px;
 }
 
-#login {
+section#quests {
     background-image: url("../img/bgDark.png");
+    color: floralwhite;
+}
+
+footer p {
+    padding: 0;
+    margin: 0;
+    color: floralwhite;
+}
+
+#login {
+    background-image: url("../img/loginBg.png");
     height: 100vh;
 }
-#login input{
+
+#login h1 {
+    font-size: 4.5rem;
+    line-height: 4.5rem;
+    letter-spacing: 1.4rem;
+    background: -webkit-linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, 0.5));
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text
+}
+
+
+#login input {
     opacity: 0.2;
     margin: 2%;
 }
 
-#login input:hover{
+#login input:hover {
     opacity: 0.4;
 }
 
-#login input:focus{
+#login input:focus {
     opacity: 0.4;
 }
