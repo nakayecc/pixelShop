@@ -5,10 +5,8 @@ import com.pixel.dao.postgresql.implementations.UserDAOI;
 import java.sql.SQLException;
 
 public class UserController {
-    private UserDAOI dao;
 
     public UserController(UserDAOI dao) {
-        this.dao = dao;
     }
 
     public int getUserIdFromCredentials(String name, String password) throws SQLException {
@@ -16,6 +14,7 @@ public class UserController {
         }
 
     public String checkUserRank(int id) throws SQLException {
+        UserDAOI dao = new UserDAOI();
 
         if (dao.checkIfUserIsCreep(id)){
             return "creep";
