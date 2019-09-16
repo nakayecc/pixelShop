@@ -267,3 +267,24 @@ footer p {
 #login input:focus {
     opacity: 0.4;
 }
+
+section#userList {
+    background-image: url("../img/bgLight.png");
+
+}
+
+.modal-content {
+    color: floralwhite;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+section table {
+    cursor: pointer;
+}
+
+section#questList {
+    background-image: url("../img/bgDark.png");
+}
+section#questList h1{
+    color: floralwhite;
+}
