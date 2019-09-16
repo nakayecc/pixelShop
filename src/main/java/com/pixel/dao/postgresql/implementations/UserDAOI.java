@@ -16,6 +16,15 @@ public class UserDAOI implements UsersDAO {
         this.c = new PostgreSQLJDBC().getConnection();
     }
 
+    public void updateInUserTable(int id, String name, String password, String roleName) throws SQLException {
+        String query = "UPDATE users SET name = ?, password = ?, role_name = ? WHERE id = "+id+"";
+        this.ps = c.prepareStatement(query);
+        ps.setString(1, name);
+        ps.setString(2, password);
+        ps.setString(3, roleName);
+        ps.executeUpdate();
+    }
+
     public int getIdFromCredentials(String name, String password) throws SQLException {
         String query = "SELECT * FROM users WHERE name = ? AND password = ? LIMIT 1";
         this.ps = c.prepareStatement(query);
