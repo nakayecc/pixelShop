@@ -288,3 +288,7 @@ section#questList {
 section#questList h1{
     color: floralwhite;
 }
+
+section#itemList {
+    background-image: url("../img/bgLight.png");
+}
