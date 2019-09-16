@@ -1,10 +1,13 @@
 package com.pixel;
 
-import com.pixel.dao.postgresql.implementations.ArtifactDAOI;
-import com.pixel.dao.postgresql.implementations.QuestDAOI;
-import com.pixel.model.Quest;
+import com.pixel.controller.StudentController;
+import com.pixel.controller.UserController;
+import com.pixel.view.Index;
+import com.pixel.view.Static;
+import com.sun.net.httpserver.HttpServer;
 
-import java.sql.SQLException;
+import java.io.IOException;
+import java.net.InetSocketAddress;
 
 /**
  * Hello world!
@@ -14,21 +17,19 @@ public class App
 {
     public static void main( String[] args )
     {
+        UserController userController = new UserController();
+        StudentController studentController = new StudentController();
 
-        ArtifactDAOI artifactDAOI = new ArtifactDAOI();
-        QuestDAOI questDAOI = new QuestDAOI();
-
+        HttpServer server = null;
         try {
-            System.out.println(questDAOI.getListFull());
-            //questDAOI.insertQuest(new Quest("quest2","test Desc",12,2));
-           // questDAOI.deleteQuest(questDAOI.getById(8));
-            Quest quest = questDAOI.getById(3);
-            quest.setExp(666);
-            questDAOI.updateQuest(quest);
-        } catch (SQLException e) {
+            server = HttpServer.create(new InetSocketAddress(8000), 0);
+            server.createContext("/", new Index(studentController));
+            server.createContext("/static", new Static());
+            server.setExecutor(null);
+            server.start();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 }
