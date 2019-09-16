@@ -25,11 +25,12 @@
                 <a class="nav-link js-scroll-trigger" href="#pageTop">Users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#profile">Quests</a>
+                <a class="nav-link js-scroll-trigger" href="#questList">Quests</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#shop">Items</a>
+                <a class="nav-link js-scroll-trigger" href="#itemList">Items</a>
             </li>
+
 
         </ul>
         <ul class="navbar-nav ml-auto"><p>
@@ -61,7 +62,6 @@
                                 <td>Mentor</td>
                                 <td>Edit</td>
                             </tr>
-
                             <tr class="rounded">
                                 <th scope="row">1</th>
                                 <td>UserName</td>
@@ -211,7 +211,6 @@
                                 <th scope="row">Id</th>
                                 <td>QuestName</td>
                                 <td>Value</td>
-                                <td>Cost</td>
                                 <td>Edit</td>
                             </tr>
 
@@ -219,7 +218,6 @@
                                 <th scope="row">1</th>
                                 <td>QuestName</td>
                                 <td>Value</td>
-                                <td>Cost</td>
                                 <td data-toggle="modal" data-target="#questListEditBox">>>></td>
                             </tr>
 
@@ -227,35 +225,30 @@
                                 <th scope="row">2</th>
                                 <td>QuestName</td>
                                 <td>Value</td>
-                                <td>Cost</td>
                                 <td data-toggle="modal" data-target="#questListEditBox">>>></td>
                             </tr>
                             <tr>
                                 <th scope="row">3</th>
                                 <td>QuestName</td>
                                 <td>Value</td>
-                                <td>Cost</td>
                                 <td data-toggle="modal" data-target="#questListEditBox">>>></td>
                             </tr>
                             <tr>
                                 <th scope="row">4</th>
                                 <td>QuestName</td>
                                 <td>Value</td>
-                                <td>Cost</td>
                                 <td data-toggle="modal" data-target="#questListEditBox">>>></td>
                             </tr>
                             <tr>
                                 <th scope="row">5</th>
                                 <td>QuestName</td>
                                 <td>Value</td>
-                                <td>Cost</td>
                                 <td data-toggle="modal" data-target="#questListEditBox">>>></td>
                             </tr>
                             <tr>
                                 <th scope="row">6</th>
                                 <td>QuestName</td>
                                 <td>Value</td>
-                                <td>Cost</td>
                                 <td data-toggle="modal" data-target="#questListEditBox">>>></td>
                             </tr>
                             <tr>
@@ -302,9 +295,7 @@
                             <div class="col-lg-12">Value</div>
                             <div class="col-lg-12"><input type="text"
                                                           name="class" value="100"></div>
-                            <div class="col-lg-12">Cost</div>
-                            <div class="col-lg-12"><input type="text"
-                                                          name="mentor" value="1500.1900"></div>
+>
 
                         </div>
                     </form>
@@ -347,9 +338,7 @@
                             <div class="col-lg-12">Value</div>
                             <div class="col-lg-12"><input type="text"
                                                           name="class" value="100"></div>
-                            <div class="col-lg-12">Cost</div>
-                            <div class="col-lg-12"><input type="text"
-                                                          name="mentor" value="1500.1900"></div>
+
 
                         </div>
                     </form>
@@ -362,6 +351,171 @@
     </div>
     <!--END EDIT QUEST BOX-->
 </section>
+
+<section id="itemList">
+    <div class="container-fluid align-items-center p-5">
+        <div class="row">
+
+            <div class="col-lg-12 rounded" id="itemsList">
+
+                <div class="row text-center">
+                    <h1 class="mx-auto p-5">Item List</h1>
+                    <div class="col-lg-12 table-responsive">
+                        <table class="table table-primary table-hover table-striped rounded">
+
+                            <tbody>
+                            <tr class="rounded">
+                                <th scope="row">Id</th>
+                                <td>ItemName</td>
+                                <td>Cost</td>
+                                <td>Type</td>
+                                <td>Edit</td>
+                            </tr>
+
+                            <tr class="rounded">
+                                <th scope="row">1</th>
+                                <td>ItemName</td>
+                                <td>Cost</td>
+                                <td>Type</td>
+                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>ItemName</td>
+                                <td>Cost</td>
+                                <td>Type</td>
+                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>ItemName</td>
+                                <td>Cost</td>
+                                <td>Type</td>
+                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>ItemName</td>
+                                <td>Cost</td>
+                                <td>Type</td>
+                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>ItemName</td>
+                                <td>Cost</td>
+                                <td>Type</td>
+                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">6</th>
+                                <td>ItemName</td>
+                                <td>Cost</td>
+                                <td>Type</td>
+                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
+                            </tr>
+                            <tr>
+                                <th colspan="5" data-toggle="modal" data-target="#addNewItem">Add New Item</th>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--    ADD NEW QUEST MODAL BOX-->
+
+    <div class="modal fade" id="addNewItem" tabindex="-1" role="dialog"
+         aria-labelledby="addNewQuestTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                        <div class="row mx-auto text-center">
+                            <div class="col-lg-12">Item Name</div>
+                            <div class="col-lg-12">
+                                <input type="text" name="itemName" value="ItemName">
+                            </div>
+                            <div class="col-lg-12">Cost</div>
+                            <div class="col-lg-12"><input type="text"
+                                                          name="class" value="100"></div>
+                            <div class="col-lg-12">Type</div>
+                            <div class="col-lg-12">
+                                <select class="browser-default custom-select w-75">
+                                    <option selected>Item Type</option>
+                                    <option value="1">Basic</option>
+                                    <option value="2">Extra</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto">Add Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END ADD NEW QUEST BOX-->
+
+    <!--    ADD NEW USER MODAL BOX-->
+
+    <div class="modal fade" id="itemListEditBox" tabindex="-1" role="dialog"
+         aria-labelledby="itemListEditBoxTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                        <div class="row mx-auto text-center">
+                            <div class="col-lg-12">Item Name</div>
+                            <div class="col-lg-12">
+                                <input type="text" name="itemName" value="ItemName">
+                            </div>
+                            <div class="col-lg-12">Cost</div>
+                            <div class="col-lg-12"><input type="text"
+                                                          name="class" value="100"></div>
+                            <div class="col-lg-12">Item Category</div>
+                            <div class="col-lg-12">
+                                <select class="browser-default custom-select w-75">
+                                    <option selected>Item Type</option>
+                                    <option value="1">Basic</option>
+                                    <option value="2">Extra</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto">Edit Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END EDIT QUEST BOX-->
+</section>
+
 
 
 <footer class="bg-dark text-center">
