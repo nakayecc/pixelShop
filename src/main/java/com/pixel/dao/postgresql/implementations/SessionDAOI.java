@@ -40,7 +40,16 @@ public class SessionDAOI implements Session {
     }
 
     @Override
-    public int getUserId(String session) {
+    public int getUserId(String session) throws SQLException {
+        String query = "SELECT * FROM session WHERE sessionid = ?";
+        this.ps = c.prepareStatement(query);
+        ps.setString(1, session);
+        rs = ps.executeQuery();
+        if (rs.next()){
+            return rs.getInt("id_user");
+        }
         return 0;
+
     }
+
 }

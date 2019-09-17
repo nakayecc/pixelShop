@@ -41,8 +41,13 @@ public class Login implements HttpHandler {
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
+//        try {
+//            sessionDAOI.deleteSessionById(8);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         try {
-            sessionDAOI.deleteSessionById(8);
+            System.out.println(sessionDAOI.getUserId("f712a932-c971-48ca-9930-37e86caf7c8f"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,9 +56,8 @@ public class Login implements HttpHandler {
     }
 
     private String generateSessionID() {
-
         UUID generatedId = UUID.randomUUID();
-        return String.valueOf(generatedId);
+        return generatedId.toString();
     }
 
 
