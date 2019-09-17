@@ -1,13 +1,9 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.UserDAOI;
-
 import java.sql.SQLException;
 
 public class UserController {
-
-    public UserController(UserDAOI dao) {
-    }
 
     public int getUserIdFromCredentials(String name, String password) throws SQLException {
         return new UserDAOI().getIdFromCredentials(name, password);
