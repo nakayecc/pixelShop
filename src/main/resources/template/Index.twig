@@ -57,7 +57,8 @@
         <div class="row">
             <div class="col-lg-3 mx-auto rounded" id="playerInfo">
                 <div id="playerInfoImg" class="text-center rounded">
-                    <img class="img-responsive rounded-circle" src="/static/img/avatar.png" alt="" data-toggle="collapse"
+                    <img class="img-responsive rounded-circle" src="/static/img/avatar.png" alt=""
+                         data-toggle="collapse"
                          data-target="#playerInfoText" aria-controls="playerInfoText" aria-expanded="false">
                 </div>
                 <div id="playerInfoText" class="rounded collapse">
@@ -69,7 +70,8 @@
 
             <div class="col-lg-3 mx-auto rounded" id="statistic">
                 <div id="statisticImg" class="text-center rounded">
-                    <img class="img-responsive rounded-circle" src="/static/img/statistic.png" alt="" data-toggle="collapse"
+                    <img class="img-responsive rounded-circle" src="/static/img/statistic.png" alt=""
+                         data-toggle="collapse"
                          data-target="#statisticText" aria-controls="statisticText" aria-expanded="false">
 
 
@@ -284,55 +286,15 @@
                 <table class="table table-dark table-hover table-striped rounded">
 
                     <tbody>
-                    <tr class="rounded">
-                        <th scope="row">1</th>
-                        <td>QuestName</td>
-                        <td>Solo/Team</td>
-                        <td>ExpToGet</td>
-                        <td>Difficulty</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>QuestName</td>
-                        <td>Solo/Team</td>
-                        <td>ExpToGet</td>
-                        <td>Difficulty</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>QuestName</td>
-                        <td>Solo/Team</td>
-                        <td>ExpToGet</td>
-                        <td>Difficulty</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>QuestName</td>
-                        <td>Solo/Team</td>
-                        <td>ExpToGet</td>
-                        <td>Difficulty</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>QuestName</td>
-                        <td>Solo/Team</td>
-                        <td>ExpToGet</td>
-                        <td>Difficulty</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td>QuestName</td>
-                        <td>Solo/Team</td>
-                        <td>ExpToGet</td>
-                        <td>Difficulty</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">7</th>
-                        <td>QuestName</td>
-                        <td>Solo/Team</td>
-                        <td>ExpToGet</td>
-                        <td>Difficulty</td>
-                    </tr>
+                    {% for Quest in QuestList %}
+                        {% set counter = counter | default(0) + 1 %}
+                        <tr class="rounded">
+                            <th scope="row">{{ counter }}</th>
+                            <td>{{ Quest.getname() }}</td>
+                            <td>{{ Quest.getExp() }}</td>
+                            <td>{{ Quest.getDescription }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

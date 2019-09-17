@@ -1,5 +1,6 @@
 package com.pixel.view;
 
+import com.pixel.controller.QuestController;
 import com.pixel.controller.StudentController;
 import com.pixel.controller.UserController;
 import com.pixel.model.Student;
@@ -14,9 +15,11 @@ import java.sql.SQLException;
 
 public class Index implements HttpHandler {
     private StudentController studentController;
+    private QuestController questController;
 
-    public Index(StudentController studentController) {
+    public Index(StudentController studentController, QuestController questController) {
         this.studentController = studentController;
+        this.questController = questController;
     }
 
     @Override
@@ -34,9 +37,13 @@ public class Index implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Index.twig");
         JtwigModel model = JtwigModel.newModel();
 
+        int index = 0;
+
         model.with("userName", student.getName());
         model.with("exp", 100); //TODO exp counting
         model.with("lvl", 10); //TODO lvl
+        model.with("indexQuest", index);
+        model.with("QuestList", questController.getQuestList());
 
         response = template.render(model);
         sendResponse(httpExchange, response);
