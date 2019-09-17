@@ -68,6 +68,7 @@ public class QuestDAOI implements QuestDAO {
     private List<Quest> getListFromRS(ResultSet rs) throws SQLException {
         List<Quest> questList = new ArrayList<>();
         while (rs.next()) questList.add(extractQuestFromRS(rs));
+        c.close();
         return questList;
 
     }

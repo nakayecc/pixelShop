@@ -117,8 +117,7 @@ public class StudentDAOI implements StudentDAO {
     private List<Student> getListFromRS(ResultSet rs) throws SQLException {
         List<Student> list = new ArrayList<>();
         while (rs.next()) list.add(extractStudentFromRS(rs));
-     /*   rs.close();
-        c.close();*/
+        c.close();
         return list;
 
     }
