@@ -28,6 +28,19 @@ public class StudentDAOI implements StudentDAO {
         return getListFromRS(getRSByValue(valeName, value));
     }
 
+    public int getExperience(Student s) throws SQLException {
+        int id = s.getId();
+        String query = "select exp_gained from quests_completed WHERE (user_id = ?);";
+        this.ps = c.prepareStatement(query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        int total_exp = 0;
+        while (rs.next()) {
+            total_exp += rs.getInt("exp_gained");
+        }
+        return total_exp;
+    }
+
     @Override
     public boolean save(Student s) throws SQLException {
         String query = "" +
@@ -104,8 +117,8 @@ public class StudentDAOI implements StudentDAO {
     private List<Student> getListFromRS(ResultSet rs) throws SQLException {
         List<Student> list = new ArrayList<>();
         while (rs.next()) list.add(extractStudentFromRS(rs));
-        rs.close();
-        c.close();
+     /*   rs.close();
+        c.close();*/
         return list;
 
     }

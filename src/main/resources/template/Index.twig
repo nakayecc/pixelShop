@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuestStore</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+    <link href="/static/fonts/ChessType.ttf" rel="stylesheet">
+</head>
+<body id="pageTop">
+<nav class="navbar navbar-expand-lg bg-dark fixed-top" id="mainNav">
+
+    <ul class="navbar-nav mr-auto">
+        <p>Logged us: {{ userName }}</p>
+    </ul>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        MENU
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto mr-0">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#pageTop">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#profile">PROFILE</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#shop">STORE</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#quests">QUESTS</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto"><p>
+                {{ coin }}<img src="/static/img/coin.png" width="20px"> \
+                {{ level }}<img src="/static/img/lvl.png" width="20px"> | <a href="../index.html">Logout</a>
+            </p>
+        </ul>
+    </div>
+
+</nav>
+<header>
+
+    <div class="container d-flex h-100 align-items-center">
+        <div class="mx-auto text-center">
+            <h1 class="mx-auto my-0 text-uppercase">QuestStore </h1>
+            <p class="mx-auto mt-2 mb-5">Earn and spent smart your points!</p>
+        </div>
+    </div>
+</header>
+
+<section id="profile">
+    <div class="container-fluid align-items-center p-5" id="contener">
+        <div class="row">
+            <div class="col-lg-3 mx-auto rounded" id="playerInfo">
+                <div id="playerInfoImg" class="text-center rounded">
+                    <img class="img-responsive rounded-circle" src="/static/img/avatar.png" alt=""
+                         data-toggle="collapse"
+                         data-target="#playerInfoText" aria-controls="playerInfoText" aria-expanded="false">
+                </div>
+                <div id="playerInfoText" class="rounded collapse">
+                    <p>Your nickname: {{ userName }}</p>
+                    <p>Your experience points: {{ exp }}</p>
+                    <p>Your Level: {{ lvl }}</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 mx-auto rounded" id="statistic">
+                <div id="statisticImg" class="text-center rounded">
+                    <img class="img-responsive rounded-circle" src="/static/img/statistic.png" alt=""
+                         data-toggle="collapse"
+                         data-target="#statisticText" aria-controls="statisticText" aria-expanded="false">
+
+
+                </div>
+                <div id="statisticText" class="rounded collapse">
+                    <p>Active boosts: {{ activeBoost }}</p>
+                    <p>Done quests: {{ doneQuest }}</p>
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                             aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%"></div>
+                    </div>
+                    <p>Your Personal Mentor: {{ mentorName }}</p>
+                    <p>Your class: {{ className }}</p>
+
+                </div>
+            </div>
+            <div class="col-lg-3 mx-auto overflow-auto" id="items">
+                <div class="row mx-auto p-2">
+                    <div class="col-xl-6 artifact_container mt-3"
+                         data-toggle="tooltip" data-placement="top" title="Item Name">
+                        <img src="/static/img/store/003.jpg" class="image rounded" alt="">
+
+
+                    </div>
+                    <div class="col-xl-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/003.jpg" class="image rounded">
+
+
+                    </div>
+                    <div class="col-xl-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+
+                    </div>
+
+                    <div class="col-lg-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
+                         title="Item Name">
+                        <img src="/static/img/store/006.gif" class="image rounded">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 rounded" id="questsDone">
+
+                <div class="row text-center">
+                    <p class="text-center p-3 mx-auto" data-toggle="collapse"
+                       data-target="#questsDoneTable" aria-controls="questsDoneTable" aria-expanded="false">Done
+                        Quests</p>
+                    <div class="col-lg-12 collapse table-responsive" id="questsDoneTable">
+                        <table class="table table-dark table-hover table-striped rounded">
+
+                            <tbody>
+                            <tr class="rounded">
+                                <th scope="row">1</th>
+                                <td>QuestName</td>
+                                <td>Solo/Team</td>
+                                <td>GainedExp</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>QuestName</td>
+                                <td>Solo/Team</td>
+                                <td>GainedExp</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>QuestName</td>
+                                <td>Solo/Team</td>
+                                <td>GainedExp</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section id="shop">
+    <div class="container text-center p-5">
+        <h2 class="p-5 m-2">Shop Offer</h2>
+        <div class="row text-center">
+            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                <img src="/static/img/store/003.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Combat</div>
+                    <div class="artifact_text_description">Private mentoring</div>
+                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">50</div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                <img src="/static/img/store/004.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Sanctuary</div>
+                    <div class="artifact_text_description">You can spend a day in home office</div>
+                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">300</div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                <img src="/static/img/store/005.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Time Travel</div>
+                    <div class="artifact_text_description">Extend SI week assignment deadline by one day</div>
+                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">500</div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                <img src="/static/img/store/006.gif" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Summon Code Elemental</div>
+                    <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
+                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">1000</div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                <img src="/static/img/store/007.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Circle of Magic</div>
+                    <div class="artifact_text_description">60 min workshop by a mentor(s) of the chosen topic</div>
+                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">50</div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                <img src="/static/img/store/008.jpg" class="image rounded">
+                <div class="artifact_overlay mx-auto">
+                    <div class="artifact_text_title">Tome of Knowledge</div>
+                    <div class="artifact_text_description">Extra material for the current topic</div>
+                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">500</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="shopBuyItemBox" tabindex="-1" role="dialog"
+         aria-labelledby="shopBuyItemBoxTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Item Name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras diam magna, tempor sed dui eget,
+                    porta rhoncus libero. Nulla pretium laoreet mi et cursus. Mauris ullamcorper sollicitudin orci,
+                    sed vulputate velit interdum eu. Quisque tristique vestibulum cursus. Donec id suscipit nunc.
+                    Nullam sed sapien quam. Sed consequat ultricies commodo. Quisque sit amet tincidunt eros.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto">Buy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="quests">
+    <div class="container text-center p-5">
+        <h2 class="p-5 m-2">List Of Quests</h2>
+        <div class="row text-center">
+            <div class="col-lg-12 table-responsive">
+                <table class="table table-dark table-hover table-striped rounded">
+
+                    <tbody>
+                    {% for Quest in QuestList %}
+                        {% set counter = counter | default(0) + 1 %}
+                        <tr class="rounded">
+                            <th scope="row">{{ counter }}</th>
+                            <td>{{ Quest.getname() }}</td>
+                            <td>{{ Quest.getExp() }}</td>
+                            <td>{{ Quest.getDescription }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="bg-dark text-center">
+    <p>Copyright &copy; TeamName</p>
+</footer>
+
+
+</body>
+<script src="/static/js/jquery/jquery.min.js"></script>
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+
+<script src="/static/js/jquery-easing/jquery.easing.min.js"></script>
+<script src="/static/js/questStore.min.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
+
+
+</html>
