@@ -25,6 +25,11 @@ public class QuestDAOI implements QuestDAO {
         return getListFromRS(rs);
     }
 
+    public List<Quest> getListActive() throws SQLException {
+        this.rs = getActiveQuestRS();
+        return getListFromRS(rs);
+    }
+
     @Override
     public List<Quest> getListBy(String valueName, String value) throws SQLException {
         return getListFromRS(getRSByValue(valueName, value));
@@ -94,6 +99,12 @@ public class QuestDAOI implements QuestDAO {
 
     private ResultSet getAllQuestRS() throws SQLException {
         String query = " SELECT id, name, exp, category_id, description FROM quests";
+        Statement stmt = c.createStatement();
+        return stmt.executeQuery(query);
+    }
+
+    private ResultSet getActiveQuestRS() throws SQLException {
+        String query = " SELECT id, name, exp, category_id, description FROM quests WHERE is_active = true";
         Statement stmt = c.createStatement();
         return stmt.executeQuery(query);
     }

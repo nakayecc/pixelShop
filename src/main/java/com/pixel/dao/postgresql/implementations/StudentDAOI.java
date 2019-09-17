@@ -2,11 +2,14 @@ package com.pixel.dao.postgresql.implementations;
 
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.interfaces.StudentDAO;
+import com.pixel.model.Quest;
 import com.pixel.model.Student;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class StudentDAOI implements StudentDAO {
     private Connection c;
@@ -26,6 +29,24 @@ public class StudentDAOI implements StudentDAO {
 
     public List<Student> getListByValue(String valeName, String value) throws SQLException {
         return getListFromRS(getRSByValue(valeName, value));
+    }
+
+
+
+    public HashMap<Quest, Integer> getQuestCompleted(Student s) throws SQLException {
+        int id = s.getId();
+        String query = "select quest_id from quests_completed WHERE (user_id = ?);";
+        this.ps = c.prepareStatement(query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        HashMap<Quest, Integer> questsCompleted = new HashMap<Quest, Integer>();
+        while (rs.next()) {
+            int questId = rs.getInt("quest_id");
+            Quest quest = new QuestDAOI().getById(questId);
+            int count = questsCompleted.getOrDefault(quest, 0);
+            questsCompleted.put(quest, count + 1);
+        }
+        return questsCompleted;
     }
 
     public int getExperience(Student s) throws SQLException {

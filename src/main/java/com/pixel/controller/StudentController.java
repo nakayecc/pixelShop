@@ -2,13 +2,13 @@ package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.LevelsDAOI;
 import com.pixel.dao.postgresql.implementations.StudentDAOI;
+import com.pixel.model.Quest;
 import com.pixel.model.Student;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static java.util.Collections.emptyMap;
 
 public class StudentController {
     StudentDAOI studentDAOI = new StudentDAOI();
@@ -52,7 +52,28 @@ public class StudentController {
             }
         }
         return rankName;
+    }
 
+    public HashMap<Quest, Integer> getAllQuestCompleted(Student student){
+        try {
+            return new StudentDAOI().getQuestCompleted(student);
+        } catch (SQLException e) {
+            return new HashMap<>();
+        }
+    }
+
+    public float getPercentageOfCompleted(Student student){
+        int questCompleted = getUniqueQuestCompleted(student);
+        int totalQuests = new QuestController().getNumberOfActiveQuest();
+        return (float) questCompleted/totalQuests*100;
+    }
+
+    public int getUniqueQuestCompleted(Student student){
+        try {
+            return new StudentDAOI().getQuestCompleted(student).keySet().size();
+        } catch (SQLException e) {
+            return 0;
+        }
     }
 
 }
