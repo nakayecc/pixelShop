@@ -31,6 +31,14 @@ public class StudentDAOI implements StudentDAO {
         return getListFromRS(getRSByValue(valeName, value));
     }
 
+    public String getMentorName(Student s) throws SQLException {
+        return new MentorDAOI().getById(s.getMentor_id()).getName();
+    }
+
+    public String getClassName(Student s) throws SQLException {
+        return new ClassesDAOI().getClassById(s.getCass_id()).getName();
+    }
+
 
 
     public HashMap<Quest, Integer> getQuestCompleted(Student s) throws SQLException {

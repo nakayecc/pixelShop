@@ -1,6 +1,7 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.LevelsDAOI;
+import com.pixel.dao.postgresql.implementations.MentorDAOI;
 import com.pixel.dao.postgresql.implementations.StudentDAOI;
 import com.pixel.model.Quest;
 import com.pixel.model.Student;
@@ -28,7 +29,7 @@ public class StudentController {
 
     public int getStudentExperience(Student student) {
         try {
-            return new StudentDAOI().getExperience(student);
+            return studentDAOI.getExperience(student);
         } catch (SQLException e) {
             return 0;
         }
@@ -56,7 +57,7 @@ public class StudentController {
 
     public HashMap<Quest, Integer> getAllQuestCompleted(Student student){
         try {
-            return new StudentDAOI().getQuestCompleted(student);
+            return studentDAOI.getQuestCompleted(student);
         } catch (SQLException e) {
             return new HashMap<>();
         }
@@ -68,7 +69,15 @@ public class StudentController {
         return (float) questCompleted/totalQuests*100;
     }
 
-    public int getUniqueQuestCompleted(Student student){
+    public String getMentorName(Student student){
+        try {
+            return studentDAOI.getMentorName(student);
+        } catch (SQLException e) {
+            return "";
+        }
+    }
+
+    private int getUniqueQuestCompleted(Student student){
         try {
             return new StudentDAOI().getQuestCompleted(student).keySet().size();
         } catch (SQLException e) {
