@@ -1,0 +1,24 @@
+package com.pixel.controller;
+
+import com.pixel.dao.postgresql.implementations.QuestDAOI;
+import com.pixel.model.Quest;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class QuestController {
+    private QuestDAOI questDAOI = new QuestDAOI();
+
+
+
+    public List<Quest> getQuestList()  {
+        List<Quest> questList = new ArrayList<>();
+        try {
+            questList = questDAOI.getListFull();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return questList;
+    }
+}
