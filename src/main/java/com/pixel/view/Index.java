@@ -1,8 +1,8 @@
 package com.pixel.view;
 
+import com.pixel.controller.ArtifactController;
 import com.pixel.controller.QuestController;
 import com.pixel.controller.StudentController;
-import com.pixel.controller.UserController;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -16,8 +16,10 @@ import java.sql.SQLException;
 public class Index implements HttpHandler {
     private StudentController studentController;
     private QuestController questController;
+    private ArtifactController artifactController;
 
-    public Index(StudentController studentController, QuestController questController) {
+    public Index(StudentController studentController, QuestController questController, ArtifactController artifactController) {
+        this.artifactController = artifactController;
         this.studentController = studentController;
         this.questController = questController;
     }
@@ -44,6 +46,8 @@ public class Index implements HttpHandler {
         model.with("lvl", studentController.getUserLevel(student)); //TODO lvl
         model.with("indexQuest", index);
         model.with("QuestList", questController.getQuestList());
+        model.with("artefactGroupList",artifactController.getGroupArtifact());
+        model.with("artifactPictureId",004);
 
         response = template.render(model);
         sendResponse(httpExchange, response);

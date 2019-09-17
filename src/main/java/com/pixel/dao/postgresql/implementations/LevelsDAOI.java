@@ -25,6 +25,9 @@ public class LevelsDAOI {
             int expRequired = rs.getInt("exp_req");
             levels.put(levelName, expRequired);
         }
+        c.close();
+        ps.close();
+        rs.close();
         return levels;
 
     }
