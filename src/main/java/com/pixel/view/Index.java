@@ -28,7 +28,7 @@ public class Index implements HttpHandler {
         String response = "";
         Student student = null; //find by cookie
         try {
-            student = studentController.getStudent(7);
+            student = studentController.getStudent(8);
 
             System.out.println(student.getName());
         } catch (SQLException e) {
@@ -40,8 +40,8 @@ public class Index implements HttpHandler {
         int index = 0;
 
         model.with("userName", student.getName());
-        model.with("exp", 100); //TODO exp counting
-        model.with("lvl", 10); //TODO lvl
+        model.with("exp", studentController.getStudentExperience(student)); //TODO exp counting
+        model.with("lvl", studentController.getUserLevel(student)); //TODO lvl
         model.with("indexQuest", index);
         model.with("QuestList", questController.getQuestList());
 
