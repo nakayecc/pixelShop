@@ -2,7 +2,6 @@ package com.pixel;
 
 import com.pixel.controller.StudentController;
 import com.pixel.controller.UserController;
-import com.pixel.view.Index;
 import com.pixel.view.Login;
 import com.pixel.view.Static;
 import com.sun.net.httpserver.HttpServer;

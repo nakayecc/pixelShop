@@ -4,5 +4,6 @@ public interface Session {
 
     void createSession(String session);
     void deleteSessionById(int userId);
-    boolean isCurrentSession
+    boolean isCurrentSession(String session);
+    int getUserId(String session);
 }
