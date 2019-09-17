@@ -7,30 +7,29 @@ import com.pixel.model.User;
 import java.sql.*;
 
 public class UserDAOI implements UsersDAO {
-    private Connection c;
-    private PreparedStatement ps;
-    private ResultSet rs;
-    private Statement stmt;
+    private Connection connection;
 
-    public UserDAOI() {
-        this.c = new PostgreSQLJDBC().getConnection();
+    public UserDAOI(Connection connection) {
+        this.connection = connection;
     }
 
     public void updateInUserTable(int id, String name, String password, String roleName) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "UPDATE users SET name = ?, password = ?, role_name = ? WHERE id = "+id+"";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, name);
-        ps.setString(2, password);
-        ps.setString(3, roleName);
-        ps.executeUpdate();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, password);
+        preparedStatement.setString(3, roleName);
+        preparedStatement.executeUpdate();
     }
 
     public int getIdFromCredentials(String name, String password) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "SELECT * FROM users WHERE name = ? AND password = ? LIMIT 1";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, name);
-        ps.setString(2, password);
-        ResultSet rs = ps.executeQuery();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, password);
+        ResultSet rs = preparedStatement.executeQuery();
         if(rs.next()){
             return rs.getInt("id");
         }
@@ -38,23 +37,29 @@ public class UserDAOI implements UsersDAO {
     }
 
     public boolean checkIfUserIsCreep(int id) throws SQLException {
+        Statement statement;
+        ResultSet resultSet;
         String query = "SELECT * from creeps WHERE user_id = "+id+"";
-        this.stmt = c.createStatement();
-        this.rs = stmt.executeQuery(query);
-        return rs.next();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        return resultSet.next();
     }
 
     public boolean checkIfUserIsMentor(int id) throws SQLException {
+        Statement statement;
+        ResultSet resultSet;
         String query = "SELECT * from mentors WHERE user_id = "+id+"";
-        this.stmt = c.createStatement();
-        this.rs = stmt.executeQuery(query);
-        return rs.next();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        return resultSet.next();
     }
 
     public boolean checkIfUserIsStudent(int id) throws SQLException {
+        Statement statement;
+        ResultSet resultSet;
         String query = "SELECT * from students WHERE user_id = "+id+"";
-        this.stmt = c.createStatement();
-        this.rs = stmt.executeQuery(query);
-        return rs.next();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+        return resultSet.next();
     }
 }

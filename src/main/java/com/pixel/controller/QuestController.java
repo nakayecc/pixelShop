@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestController {
-    private QuestDAOI questDAOI = new QuestDAOI();
+    private QuestDAOI questDAOI;
 
-
+    public QuestController(QuestDAOI questDAOI) {
+        this.questDAOI = questDAOI;
+    }
 
     public List<Quest> getQuestList()  {
         List<Quest> questList = new ArrayList<>();

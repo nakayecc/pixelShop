@@ -19,7 +19,6 @@ public class ArtifactController {
         List<Artifact> groupArtifact = new ArrayList<>();
         try {
             allArtifactList = artifactDAOI.getListFull();
-            artifactDAOI.connClose();
         } catch (SQLException e) {
             e.printStackTrace();
         }

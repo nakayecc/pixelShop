@@ -10,19 +10,17 @@ import java.util.List;
 
 public class QuestCategoryDAOI implements QuestCategoryDAO {
 
-    private Connection c;
-    private PreparedStatement ps;
-    private ResultSet rs;
-    private Statement stmt;
+    private Connection connection;
 
-    public QuestCategoryDAOI() {
-        this.c = new PostgreSQLJDBC().getConnection();
+    public QuestCategoryDAOI(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
     public List<QuestCategory> getListFull() throws SQLException {
-        this.rs = getAllQuestCategoryRS();
-        return getListFromRS(rs);
+        ResultSet resultSet;
+        resultSet = getAllQuestCategoryRS();
+        return getListFromRS(resultSet);
     }
 
     @Override
@@ -32,30 +30,33 @@ public class QuestCategoryDAOI implements QuestCategoryDAO {
 
     @Override
     public boolean updateQuestCategory(QuestCategory questCategory) throws SQLException {
+        PreparedStatement preparedStatement;
 
         String query = "UPDATE quests_categories SET name = ? " +
                 "WHERE id = " + questCategory.getId() + "";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, questCategory.getName());
-        int i = ps.executeUpdate();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, questCategory.getName());
+        int i = preparedStatement.executeUpdate();
 
         return i == 1;
     }
 
     @Override
     public boolean insertQuestCategory(QuestCategory questCategory) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "INSERT INTO quests_categories(name) VALUES (?)";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, questCategory.getName());
-        int i = ps.executeUpdate();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, questCategory.getName());
+        int i = preparedStatement.executeUpdate();
         return i == 1;
     }
 
     @Override
     public boolean deleteQuestCategory(QuestCategory questCategory) throws SQLException {
+        Statement statement;
         String query = "DELETE FROM artifacts WHERE id = " + questCategory.getId() + "";
-        this.stmt = c.createStatement();
-        return stmt.execute(query);
+        statement = connection.createStatement();
+        return statement.execute(query);
 
     }
 
@@ -68,11 +69,12 @@ public class QuestCategoryDAOI implements QuestCategoryDAO {
 
     @Override
     public QuestCategory getById(int id) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "select id, name from quests_categories " +
                 "WHERE id = ?";
-        this.ps = c.prepareStatement(query);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
         return getListFromRS(rs).get(0);
     }
 
@@ -84,16 +86,17 @@ public class QuestCategoryDAOI implements QuestCategoryDAO {
 
     private ResultSet getAllQuestCategoryRS() throws SQLException {
         String query = " SELECT id, name FROM quests_categories";
-        Statement stmt = c.createStatement();
+        Statement stmt = connection.createStatement();
         return stmt.executeQuery(query);
     }
 
     private ResultSet getRSByValue(String valueName, String value) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "select id, name from quests_categories " +
                 "WHERE " + valueName + " = ?));";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, value);
-        return ps.executeQuery();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, value);
+        return preparedStatement.executeQuery();
     }
 }
 
