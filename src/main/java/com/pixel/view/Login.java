@@ -1,5 +1,6 @@
 package com.pixel.view;
 
+import com.pixel.dao.postgresql.implementations.SessionDAOI;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -9,6 +10,7 @@ import org.jtwig.JtwigTemplate;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,10 +34,18 @@ public class Login implements HttpHandler {
         //System.out.println(cookieHandler.getCookie(httpExchange,"SESSIONID"));
         Optional<HttpCookie> loginCookie = cookieHandler.getCookie(httpExchange, "SESSIONID");
         //System.out.println(loginCookie.get());
-        System.out.println(cookieHandler.extractCookieToString(loginCookie));
-        System.out.println(method);
-        System.out.println("method");
-        System.out.println(method.equals("POST"));
+        String ciastko = cookieHandler.extractCookieToString(loginCookie);
+        SessionDAOI sessionDAOI = new SessionDAOI();
+//        try {
+//            sessionDAOI.createSession(ciastko, 8);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        try {
+            sessionDAOI.deleteSessionById(8);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
     }
