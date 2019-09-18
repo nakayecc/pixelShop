@@ -9,7 +9,7 @@ public class PostgreSQLJDBC {
 
     public PostgreSQLJDBC() {
 
-        this.url = "jdbc:postgresql://192.168.1.15:5432/codecool?currentSchema=quest_store";
+        this.url = "jdbc:postgresql://nabielec.synology.me:5432/codecool?currentSchema=quest_store";
         this.database = "codecooler";
         this.password = "codecool";
     }
@@ -26,12 +26,5 @@ public class PostgreSQLJDBC {
         return c;
     }
 
-
-
-//    public void execute(String query) throws SQLException {
-//        PreparedStatement ps = c.prepareStatement(query);
-//        ps.executeUpdate();
-//        c.close();
-//    }
 
 }

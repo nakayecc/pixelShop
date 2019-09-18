@@ -1,6 +1,7 @@
 package com.pixel.view;
 
 import com.pixel.controller.ArtifactController;
+import com.pixel.controller.OwnItemController;
 import com.pixel.controller.QuestController;
 import com.pixel.controller.StudentController;
 import com.pixel.model.Student;
@@ -17,11 +18,19 @@ public class Index implements HttpHandler {
     private StudentController studentController;
     private QuestController questController;
     private ArtifactController artifactController;
+    private OwnItemController ownItemController;
 
-    public Index(StudentController studentController, QuestController questController, ArtifactController artifactController) {
+    public Index(
+            StudentController studentController,
+            QuestController questController,
+            ArtifactController artifactController,
+            OwnItemController ownItemController
+    )
+    {
         this.artifactController = artifactController;
         this.studentController = studentController;
         this.questController = questController;
+        this.ownItemController = ownItemController;
     }
 
     @Override
@@ -46,8 +55,9 @@ public class Index implements HttpHandler {
         model.with("lvl", studentController.getUserLevel(student)); //TODO lvl
         model.with("indexQuest", index);
         model.with("QuestList", questController.getQuestList());
-        model.with("artifactGroupList",artifactController.getGroupArtifact());
-        model.with("artifactSoloList",artifactController.getSoloArtifact());
+        model.with("artifactGroupList", artifactController.getGroupArtifact());
+        model.with("artifactSoloList", artifactController.getSoloArtifact());
+        model.with("studentArtifactList",ownItemController.getStudentOwnArtifact(student));
 
         response = template.render(model);
         sendResponse(httpExchange, response);
