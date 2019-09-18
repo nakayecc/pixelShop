@@ -26,7 +26,7 @@ public class QuestController {
 
     public int getNumberOfActiveQuest(){
         try {
-            return new QuestDAOI().getListActive().size();
+            return questDAOI.getListActive().size();
         } catch (SQLException e) {
             return 0;
         }

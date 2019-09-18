@@ -24,7 +24,7 @@ public class QuestDAOI implements QuestDAO {
     }
 
     public List<Quest> getListActive() throws SQLException {
-        this.rs = getActiveQuestRS();
+        ResultSet rs = getActiveQuestRS();
         return getListFromRS(rs);
     }
 
@@ -108,7 +108,7 @@ public class QuestDAOI implements QuestDAO {
 
     private ResultSet getActiveQuestRS() throws SQLException {
         String query = " SELECT id, name, exp, category_id, description FROM quests WHERE is_active = true";
-        Statement stmt = c.createStatement();
+        Statement stmt = connection.createStatement();
         return stmt.executeQuery(query);
     }
 

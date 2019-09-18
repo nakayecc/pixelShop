@@ -30,7 +30,7 @@ public class StudentDAOI implements StudentDAO {
     }
 
     public String getMentorName(Student s) throws SQLException {
-        return new MentorDAOI().getById(s.getMentor_id()).getName();
+        return new MentorDAOI(connection).getById(s.getMentor_id()).getName();
     }
 
     public String getClassName(Student s) throws SQLException {
@@ -42,13 +42,13 @@ public class StudentDAOI implements StudentDAO {
     public HashMap<Quest, Integer> getQuestCompleted(Student s) throws SQLException {
         int id = s.getId();
         String query = "select quest_id from quests_completed WHERE (user_id = ?);";
-        this.ps = c.prepareStatement(query);
+        PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         HashMap<Quest, Integer> questsCompleted = new HashMap<Quest, Integer>();
         while (rs.next()) {
             int questId = rs.getInt("quest_id");
-            Quest quest = new QuestDAOI().getById(questId);
+            Quest quest = new QuestDAOI(connection).getById(questId);
             int count = questsCompleted.getOrDefault(quest, 0);
             questsCompleted.put(quest, count + 1);
         }
