@@ -92,13 +92,13 @@
                 <div class="row mx-auto p-2">
                     <div class="col-xl-6 artifact_container mt-3"
                          data-toggle="tooltip" data-placement="top" title="Item Name">
-                        <img src="/static/img/store/003.jpg" class="image rounded" alt="">
+                        <img src="/static/img/store/3.jpg" class="image rounded" alt="">
 
 
                     </div>
                     <div class="col-xl-6 artifact_container mt-3" data-toggle="tooltip" data-placement="top"
                          title="Item Name">
-                        <img src="/static/img/store/003.jpg" class="image rounded">
+                        <img src="/static/img/store/3.jpg" class="image rounded">
 
 
                     </div>
@@ -202,81 +202,63 @@
 <section id="shop">
     <div class="container text-center p-5">
         <h2 class="p-5 m-2">Shop Offer</h2>
+        <h3>Solo artefact's</h3>
         <div class="row text-center">
-            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
-                <img src="/static/img/store/003.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Combat</div>
-                    <div class="artifact_text_description">Private mentoring</div>
-                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">50</div>
+            {% for artifactSolo in artifactSoloList %}
+                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                    {% set srcImageSolo = "/static/img/store/" ~ artifactSolo.getId() ~ ".jpg" %}
+                    <img src="{{ srcImageSolo }}" class="image rounded">
+                    <div class="artifact_overlay mx-auto">
+                        <div class="artifact_text_title">{{ artifactSolo.getName() }}</div>
+                        <div class="artifact_text_description">{{ artifactSolo.getDescription() }}</div>
+                        <div class="artifact_text_cost"><img class="icon"
+                                                             src="/static/img/coin.png">{{ artifactSolo.getPrice() }}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
-                <img src="/static/img/store/004.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Sanctuary</div>
-                    <div class="artifact_text_description">You can spend a day in home office</div>
-                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">300</div>
+            {% endfor %}
+        </div>
+        <div class="text-center">
+            <h3>Group artefact's</h3>
+        </div>
+        <div class="row text-center">
+            {% for artifactGroup in artifactGroupList %}
+                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                    {% set srcImageGroup = "/static/img/store/" ~ artifactGroup.getId() ~ ".jpg" %}
+                    <img src="{{ srcImageGroup }}" class="image rounded">
+                    <div class="artifact_overlay mx-auto">
+                        <div class="artifact_text_title">{{ artifactGroup.getName() }}</div>
+                        <div class="artifact_text_description">{{ artifactGroup.getDescription() }}</div>
+                        <div class="artifact_text_cost"><img class="icon"
+                                                             src="/static/img/coin.png">{{ artifactGroup.getPrice() }}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
-                <img src="/static/img/store/005.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Time Travel</div>
-                    <div class="artifact_text_description">Extend SI week assignment deadline by one day</div>
-                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">500</div>
-                </div>
-            </div>
+            {% endfor %}
+        </div>
 
-            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
-                <img src="/static/img/store/006.gif" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Summon Code Elemental</div>
-                    <div class="artifact_text_description">Mentor joins a students' team for a one hour</div>
-                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">1000</div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
-                <img src="/static/img/store/007.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Circle of Magic</div>
-                    <div class="artifact_text_description">60 min workshop by a mentor(s) of the chosen topic</div>
-                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">50</div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
-                <img src="/static/img/store/008.jpg" class="image rounded">
-                <div class="artifact_overlay mx-auto">
-                    <div class="artifact_text_title">Tome of Knowledge</div>
-                    <div class="artifact_text_description">Extra material for the current topic</div>
-                    <div class="artifact_text_cost"><img class="icon" src="/static/img/coin.png">500</div>
+        <div class="modal fade" id="shopBuyItemBox" tabindex="-1" role="dialog"
+             aria-labelledby="shopBuyItemBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Item Name</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras diam magna, tempor sed dui eget,
+                        porta rhoncus libero. Nulla pretium laoreet mi et cursus. Mauris ullamcorper sollicitudin orci,
+                        sed vulputate velit interdum eu. Quisque tristique vestibulum cursus. Donec id suscipit nunc.
+                        Nullam sed sapien quam. Sed consequat ultricies commodo. Quisque sit amet tincidunt eros.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto">Buy</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="modal fade" id="shopBuyItemBox" tabindex="-1" role="dialog"
-         aria-labelledby="shopBuyItemBoxTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Item Name</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras diam magna, tempor sed dui eget,
-                    porta rhoncus libero. Nulla pretium laoreet mi et cursus. Mauris ullamcorper sollicitudin orci,
-                    sed vulputate velit interdum eu. Quisque tristique vestibulum cursus. Donec id suscipit nunc.
-                    Nullam sed sapien quam. Sed consequat ultricies commodo. Quisque sit amet tincidunt eros.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Buy</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
 <section id="quests">
     <div class="container text-center p-5">

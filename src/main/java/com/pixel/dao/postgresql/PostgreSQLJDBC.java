@@ -3,17 +3,15 @@ package com.pixel.dao.postgresql;
 import java.sql.*;
 
 public class PostgreSQLJDBC {
-    private Connection c;
     private final String url;
     private String database;
     private String password;
 
     public PostgreSQLJDBC() {
 
-        this.url = "jdbc:postgresql://nabielec.synology.me:5432/codecool?currentSchema=quest_store";
+        this.url = "jdbc:postgresql://192.168.1.15:5432/codecool?currentSchema=quest_store";
         this.database = "codecooler";
         this.password = "codecool";
-        this.c = getConnection();
     }
 
     public Connection getConnection() {

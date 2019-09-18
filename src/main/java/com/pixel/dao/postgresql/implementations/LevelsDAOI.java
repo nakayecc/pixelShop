@@ -6,19 +6,17 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class LevelsDAOI {
-    private Connection c;
-    private PreparedStatement ps;
-    private ResultSet rs;
-    private Statement stmt;
+    private Connection connection;
 
-    public LevelsDAOI() {
-        this.c = new PostgreSQLJDBC().getConnection();
+    public LevelsDAOI(Connection connection) {
+        this.connection = connection;
     }
 
     public HashMap<String, Integer> getLevelMap() throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "select * from levels;";
-        this.ps = c.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
+        preparedStatement = connection.prepareStatement(query);
+        ResultSet rs = preparedStatement.executeQuery();
         HashMap<String, Integer> levels = new HashMap<String, Integer>();
         while (rs.next()) {
             String levelName = rs.getString("level_name");

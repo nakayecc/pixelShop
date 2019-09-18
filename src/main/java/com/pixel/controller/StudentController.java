@@ -11,8 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 public class StudentController {
-    StudentDAOI studentDAOI = new StudentDAOI();
+    StudentDAOI studentDAOI ;
+    LevelsDAOI levelsDAOI;
 
+    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI) {
+        this.studentDAOI = studentDAOI;
+        this.levelsDAOI = levelsDAOI;
+    }
 
     public List<Student> getStudentList() throws SQLException {
         return studentDAOI.getListFull();
@@ -28,7 +33,7 @@ public class StudentController {
 
     public int getStudentExperience(Student student) {
         try {
-            return new StudentDAOI().getExperience(student);
+            return studentDAOI.getExperience(student);
         } catch (SQLException e) {
             return 0;
         }
@@ -38,7 +43,7 @@ public class StudentController {
         int experience = getStudentExperience(student);
         HashMap<String, Integer> levels = null;
         try {
-            levels = new LevelsDAOI().getLevelMap();
+            levels = levelsDAOI.getLevelMap();
         } catch (SQLException e) {
             return "";
         }
