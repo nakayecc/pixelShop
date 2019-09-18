@@ -26,4 +26,8 @@ public class LevelsDAOI {
         return levels;
 
     }
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
 }

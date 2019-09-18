@@ -62,4 +62,8 @@ public class UserDAOI implements UsersDAO {
         resultSet = statement.executeQuery(query);
         return resultSet.next();
     }
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
 }

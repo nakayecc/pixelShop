@@ -101,6 +101,10 @@ public class CreepDAOI extends UserDAOI implements CreepDAO {
                 rs.getString("password"),
                 rs.getString("role_name"));
     }
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
 
 
 }

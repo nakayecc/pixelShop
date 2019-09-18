@@ -120,5 +120,9 @@ public class QuestDAOI implements QuestDAO {
         preparedStatement.setString(1, value);
         return preparedStatement.executeQuery();
     }
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
 
 }
