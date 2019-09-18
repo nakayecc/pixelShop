@@ -1,9 +1,6 @@
 package com.pixel.controller;
 
-import com.pixel.dao.postgresql.implementations.LevelsDAOI;
-import com.pixel.dao.postgresql.implementations.MentorDAOI;
-import com.pixel.dao.postgresql.implementations.QuestDAOI;
-import com.pixel.dao.postgresql.implementations.StudentDAOI;
+import com.pixel.dao.postgresql.implementations.*;
 import com.pixel.model.Quest;
 import com.pixel.model.Student;
 
@@ -16,11 +13,13 @@ public class StudentController {
     StudentDAOI studentDAOI ;
     LevelsDAOI levelsDAOI;
     QuestDAOI questDAOI;
+    ClassesDAOI classesDAOI;
 
-    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI) {
+    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI, ClassesDAOI classesDAOI) {
         this.studentDAOI = studentDAOI;
         this.levelsDAOI = levelsDAOI;
         this.questDAOI = questDAOI;
+        this.classesDAOI = classesDAOI;
     }
 
     public List<Student> getStudentList() throws SQLException {
@@ -80,6 +79,14 @@ public class StudentController {
     public String getMentorName(Student student){
         try {
             return studentDAOI.getMentorName(student);
+        } catch (SQLException e) {
+            return "";
+        }
+    }
+
+    public String getClassName(Student student){
+        try {
+            return classesDAOI.getClassById(student.getCass_id()).getName();
         } catch (SQLException e) {
             return "";
         }
