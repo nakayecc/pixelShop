@@ -3,6 +3,7 @@ package com.pixel.view;
 import com.pixel.controller.*;
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.implementations.*;
+import com.pixel.model.Quest;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class Index implements HttpHandler {
 
@@ -63,7 +65,7 @@ public class Index implements HttpHandler {
         model.with("artifactGroupList", artifactController.getGroupArtifact());
         model.with("artifactSoloList", artifactController.getSoloArtifact());
         model.with("studentArtifactList",ownItemController.getStudentOwnArtifact(student));
-
+        model.with("questDoneMap",studentController.getAllQuestCompleted(student).entrySet());
 
         response = template.render(model);
         try {

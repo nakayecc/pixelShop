@@ -92,10 +92,10 @@
                 <div class="row mx-auto p-2">
                     {% for singeArtifact in studentArtifactList %}
                         {% set srcImageOwn = "/static/img/store/" ~ singeArtifact.getId() ~ ".jpg" %}
-                    <div class="col-xl-6 artifact_container mt-3"
-                         data-toggle="tooltip" data-placement="top" title="{{ singeArtifact.getName() }}">
-                        <img src="{{ srcImageOwn }}" class="image rounded" alt="">
-                    </div>
+                        <div class="col-xl-6 artifact_container mt-3"
+                             data-toggle="tooltip" data-placement="top" title="{{ singeArtifact.getName() }}">
+                            <img src="{{ srcImageOwn }}" class="image rounded" alt="">
+                        </div>
                     {% endfor %}
                 </div>
             </div>
@@ -111,22 +111,19 @@
                             <tbody>
                             <tr class="rounded">
                                 <th scope="row">1</th>
-                                <td>QuestName</td>
-                                <td>Solo/Team</td>
-                                <td>GainedExp</td>
+                                <td>Quest Name</td>
+                                <td>Quest exp</td>
+                                <td>Quest count done</td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>QuestName</td>
-                                <td>Solo/Team</td>
-                                <td>GainedExp</td>
+                            {% for entry in questDoneMap %}
+{#                                {% set qName = questDone.getName() %}#}
+                            <tr class="rounded">
+                                <th scope="row">{{ entry }}</th>
+                                <td>{{ entry.getKey().getName() }}</td>
+                                <td>{{ entry.getKey().getExp() }}</td>
+                                <td>{{ entry.getValue() }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>QuestName</td>
-                                <td>Solo/Team</td>
-                                <td>GainedExp</td>
-                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -196,6 +193,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </section>
 <section id="quests">
     <div class="container text-center p-5">

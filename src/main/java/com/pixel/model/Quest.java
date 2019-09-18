@@ -84,4 +84,15 @@ public class Quest {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
+
+    public String toString(){
+        return getName()+ " "+getExp();
+    }
+
+    public static void main(String[] args) {
+        Quest q1 = new Quest();
+        Quest q2 = new Quest();
+        System.out.println(q1.hashCode());
+        System.out.println(q2.hashCode());
+    }
 }
