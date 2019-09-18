@@ -29,7 +29,7 @@ public class App {
 
 
         UserController userController = new UserController(userDAOI);
-        StudentController studentController = new StudentController(studentDAOI,levelsDAOI);
+        StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI);
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
 

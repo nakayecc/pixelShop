@@ -1,22 +1,26 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.LevelsDAOI;
+import com.pixel.dao.postgresql.implementations.MentorDAOI;
+import com.pixel.dao.postgresql.implementations.QuestDAOI;
 import com.pixel.dao.postgresql.implementations.StudentDAOI;
+import com.pixel.model.Quest;
 import com.pixel.model.Student;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static java.util.Collections.emptyMap;
 
 public class StudentController {
     StudentDAOI studentDAOI ;
     LevelsDAOI levelsDAOI;
+    QuestDAOI questDAOI;
 
-    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI) {
+    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI) {
         this.studentDAOI = studentDAOI;
         this.levelsDAOI = levelsDAOI;
+        this.questDAOI = questDAOI;
     }
 
     public List<Student> getStudentList() throws SQLException {
@@ -57,7 +61,36 @@ public class StudentController {
             }
         }
         return rankName;
+    }
 
+    public HashMap<Quest, Integer> getAllQuestCompleted(Student student){
+        try {
+            return studentDAOI.getQuestCompleted(student);
+        } catch (SQLException e) {
+            return new HashMap<>();
+        }
+    }
+
+    public float getPercentageOfCompleted(Student student){
+        int questCompleted = getUniqueQuestCompleted(student);
+        int totalQuests = new QuestController(questDAOI).getNumberOfActiveQuest();
+        return (float) questCompleted/totalQuests*100;
+    }
+
+    public String getMentorName(Student student){
+        try {
+            return studentDAOI.getMentorName(student);
+        } catch (SQLException e) {
+            return "";
+        }
+    }
+
+    private int getUniqueQuestCompleted(Student student){
+        try {
+            return studentDAOI.getQuestCompleted(student).keySet().size();
+        } catch (SQLException e) {
+            return 0;
+        }
     }
 
 }
