@@ -7,10 +7,12 @@ import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpCookie;
+import java.net.URLDecoder;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,47 +21,82 @@ public class Login implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         String response = "";
-        Student student = null; //find by cookie
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/login.twig");
-        JtwigModel model = JtwigModel.newModel();
-        CookieHandler cookieHandler = new CookieHandler();
-        HttpCookie httpCookie = new HttpCookie("SESSIONID", generateSessionID());
-        cookieHandler.createCookie(httpExchange, httpCookie);
-
-        response = template.render(model);
-        //todo  login dao, przesylac do bazy session id, user id
         String method = httpExchange.getRequestMethod();
-        sendResponse(httpExchange, response);
-        //System.out.println(cookieHandler.getCookie(httpExchange,"SESSIONID"));
-        Optional<HttpCookie> loginCookie = cookieHandler.getCookie(httpExchange, "SESSIONID");
-        //System.out.println(loginCookie.get());
-        String ciastko = cookieHandler.extractCookieToString(loginCookie);
-        SessionDAOI sessionDAOI = new SessionDAOI();
-//        try {
-//            sessionDAOI.createSession(ciastko, 8);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            sessionDAOI.deleteSessionById(8);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        try {
-            System.out.println(sessionDAOI.getUserId("f712a932-c971-48ca-9930-37e86caf7c8f"));
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+
+        // Send a form if it wasn't submitted yet.
+        if(method.equals("GET")){
+            response = getLoginTemplate();
         }
 
+        // If the form was submitted, retrieve it's content.
+        if(method.equals("POST")){
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
 
+            //System.out.println(formData);
+            Map inputs = parseFormData(formData);
+
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("template/index.twig");
+            JtwigModel model = JtwigModel.newModel();
+
+            httpExchange.getResponseHeaders().set("Location", "/");
+            httpExchange.sendResponseHeaders(303, -1);
+            //redirectToUserLandPage(httpExchange, userId);
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+
+        }
+
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
+
+
+
+
 
     private String generateSessionID() {
         UUID generatedId = UUID.randomUUID();
         return generatedId.toString();
     }
-
+    private String getLoginTemplate() {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/login.twig");
+        JtwigModel model = JtwigModel.newModel();
+        String response = template.render(model);
+        return response;
+    }
+    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
+        Map<String, String> map = new HashMap<>();
+        String[] pairs = formData.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
+            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
+            map.put(keyValue[0], value);
+        }
+        return map;
+    }
+    private String loginUser(HttpExchange httpExchange) throws IOException {
+        //todo get user id and identify
+        String userType = "student";
+        switch (userType) {
+            case "creep":
+                //todo
+                break;
+            case "mentor":
+                //todo
+                break;
+            case "student":
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("template/index.twig");
+                JtwigModel model = JtwigModel.newModel();
+                String response = template.render(model);
+                return response;
+        }
+        return "elo";
+    }
 
 
     private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
