@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassesDAOI {
-    private Connection c;
-    private PreparedStatement ps;
-    private ResultSet rs;
-    private Statement stmt;
+    private Connection connection;
+
+    public ClassesDAOI(Connection connection) {
+        this.connection = connection;
+    }
 
     public StudentsClass getClassById(int id) throws SQLException {
         String query = "select id, name from classes WHERE (id = ?);";
-        this.ps = c.prepareStatement(query);
+        PreparedStatement ps = connection.prepareStatement(query);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         return getListFromRS(rs).get(0);

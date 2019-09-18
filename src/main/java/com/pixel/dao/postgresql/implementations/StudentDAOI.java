@@ -34,7 +34,7 @@ public class StudentDAOI implements StudentDAO {
     }
 
     public String getClassName(Student s) throws SQLException {
-        return new ClassesDAOI().getClassById(s.getCass_id()).getName();
+        return new ClassesDAOI(connection).getClassById(s.getCass_id()).getName();
     }
 
 

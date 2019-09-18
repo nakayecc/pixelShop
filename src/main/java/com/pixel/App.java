@@ -26,10 +26,11 @@ public class App {
         QuestDAOI questDAOI = new QuestDAOI(postgreSQLJDBC.getConnection());
         QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(postgreSQLJDBC.getConnection());
         LevelsDAOI levelsDAOI = new LevelsDAOI(postgreSQLJDBC.getConnection());
+        ClassesDAOI classesDAOI = new ClassesDAOI(postgreSQLJDBC.getConnection());
 
 
         UserController userController = new UserController(userDAOI);
-        StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI);
+        StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI, classesDAOI);
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
 
