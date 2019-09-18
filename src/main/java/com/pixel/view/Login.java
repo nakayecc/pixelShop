@@ -1,6 +1,7 @@
 package com.pixel.view;
 
 import com.pixel.dao.postgresql.implementations.SessionDAOI;
+import com.pixel.helper.Common;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -17,34 +18,67 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class Login implements HttpHandler {
+    private SessionDAOI sessionDAOI;
+    private Common common;
+
+    public Login() {
+        this.sessionDAOI = new SessionDAOI();
+        this.common = new Common();
+    }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
+        CookieHandler cookieHandler = new CookieHandler();
         String response = "";
         String method = httpExchange.getRequestMethod();
+        Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
+        HttpCookie cookies;
 
 
-        // Send a form if it wasn't submitted yet.
-        if(method.equals("GET")){
-            response = getLoginTemplate();
+        if (method.equals("GET")) {
+            if (cookie.isPresent()) {
+                try {
+                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))){
+                        httpExchange.getResponseHeaders().set("Location", "/");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    } else {
+                        response = common.getLoginTemplate();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                response = common.getLoginTemplate();
+            }
         }
 
+
         // If the form was submitted, retrieve it's content.
-        if(method.equals("POST")){
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-            BufferedReader br = new BufferedReader(isr);
-            String formData = br.readLine();
+        if (method.equals("POST")) {
+            //todo check user and password, create new cookie, insert it to db, redirect to
 
-            //System.out.println(formData);
-            Map inputs = parseFormData(formData);
 
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("template/index.twig");
-            JtwigModel model = JtwigModel.newModel();
-
-            httpExchange.getResponseHeaders().set("Location", "/");
-            httpExchange.sendResponseHeaders(303, -1);
-            //redirectToUserLandPage(httpExchange, userId);
-            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+            if (cookie != null) {
+                InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+                BufferedReader br = new BufferedReader(isr);
+                String formData = br.readLine();
+                Map inputs = common.parseFormData(formData);
+                //todo check password and username
+                cookies = new HttpCookie("sessionId", generateSessionID());
+                httpExchange.getResponseHeaders().add("Set-Cookie", cookies.toString());
+                try {
+                    sessionDAOI.createSession(cookies.getValue(), 8);
+                    System.out.println("create session");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                //response = loginUser(httpExchange);
+                httpExchange.getResponseHeaders().set("Location", "/");
+                //redirectToUserLandPage(httpExchange, userId);
+                httpExchange.sendResponseHeaders(303, response.getBytes().length);
+            } else {
+                response = common.getLoginTemplate();
+            }
 
         }
 
@@ -55,30 +89,15 @@ public class Login implements HttpHandler {
     }
 
 
-
-
-
     private String generateSessionID() {
         UUID generatedId = UUID.randomUUID();
         return generatedId.toString();
     }
-    private String getLoginTemplate() {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/login.twig");
-        JtwigModel model = JtwigModel.newModel();
-        String response = template.render(model);
-        return response;
-    }
-    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
-    }
+
+
+
+
+
     private String loginUser(HttpExchange httpExchange) throws IOException {
         //todo get user id and identify
         String userType = "student";
@@ -98,11 +117,4 @@ public class Login implements HttpHandler {
         return "elo";
     }
 
-
-    private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
 }

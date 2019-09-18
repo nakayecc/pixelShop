@@ -1,7 +1,8 @@
 package com.pixel.view;
 
+import com.pixel.controller.ArtifactController;
+import com.pixel.controller.QuestController;
 import com.pixel.controller.StudentController;
-import com.pixel.controller.UserController;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -14,9 +15,13 @@ import java.sql.SQLException;
 
 public class Index implements HttpHandler {
     private StudentController studentController;
+    private QuestController questController;
+    private ArtifactController artifactController;
 
-    public Index(StudentController studentController) {
+    public Index(StudentController studentController, QuestController questController, ArtifactController artifactController) {
+        this.artifactController = artifactController;
         this.studentController = studentController;
+        this.questController = questController;
     }
 
     @Override
@@ -25,7 +30,7 @@ public class Index implements HttpHandler {
         String response = "";
         Student student = null; //find by cookie
         try {
-            student = studentController.getStudent(7);
+            student = studentController.getStudent(8);
 
             System.out.println(student.getName());
         } catch (SQLException e) {
@@ -34,9 +39,15 @@ public class Index implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Index.twig");
         JtwigModel model = JtwigModel.newModel();
 
+        int index = 0;
+
         model.with("userName", student.getName());
-        model.with("exp", 100); //TODO exp counting
-        model.with("lvl", 10); //TODO lvl
+        model.with("exp", studentController.getStudentExperience(student)); //TODO exp counting
+        model.with("lvl", studentController.getUserLevel(student)); //TODO lvl
+        model.with("indexQuest", index);
+        model.with("QuestList", questController.getQuestList());
+        model.with("artifactGroupList",artifactController.getGroupArtifact());
+        model.with("artifactSoloList",artifactController.getSoloArtifact());
 
         response = template.render(model);
         sendResponse(httpExchange, response);

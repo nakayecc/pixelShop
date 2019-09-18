@@ -10,19 +10,17 @@ import java.util.List;
 
 public class ArtifactDAOI implements ArtifactDao {
 
-    private Connection c;
-    private PreparedStatement ps;
-    private ResultSet rs;
-    private Statement stmt;
+    private Connection connection;
 
-    public ArtifactDAOI() {
-        this.c = new PostgreSQLJDBC().getConnection();
+    public ArtifactDAOI(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
     public List<Artifact> getListFull() throws SQLException {
-        this.rs = getAllArtifactRS();
-        return getListFromRS(rs);
+        ResultSet resultSet;
+        resultSet = getAllArtifactRS();
+        return getListFromRS(resultSet);
     }
 
     @Override
@@ -32,36 +30,46 @@ public class ArtifactDAOI implements ArtifactDao {
 
     @Override
     public boolean updateArtifact(Artifact artifact) throws SQLException {
+        PreparedStatement preparedStatement;
 
         String query = "UPDATE artifacts SET name = ?, description = ?, price = ?,is_global = ? " +
                 "WHERE id = " + artifact.getId() + "";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, artifact.getName());
-        ps.setString(2, artifact.getDescription());
-        ps.setInt(3, artifact.getPrice());
-        ps.setBoolean(4, artifact.isGlobal());
-        int i = ps.executeUpdate();
-
-        return i == 1;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, artifact.getName());
+        preparedStatement.setString(2, artifact.getDescription());
+        preparedStatement.setInt(3, artifact.getPrice());
+        preparedStatement.setBoolean(4, artifact.isGlobal());
+        int i = preparedStatement.executeUpdate();
+        if(i == 1){
+            preparedStatement.close();
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean insertArtifact(Artifact artifact) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "INSERT INTO artifacts(name, description, price, is_global) VALUES (?,?,?,?)";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, artifact.getName());
-        ps.setString(2, artifact.getDescription());
-        ps.setInt(3, artifact.getPrice());
-        ps.setBoolean(4, artifact.isGlobal());
-        int i = ps.executeUpdate();
-        return i == 1;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, artifact.getName());
+        preparedStatement.setString(2, artifact.getDescription());
+        preparedStatement.setInt(3, artifact.getPrice());
+        preparedStatement.setBoolean(4, artifact.isGlobal());
+        int i = preparedStatement.executeUpdate();
+        if(i == 1){
+            preparedStatement.close();
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean deleteArtifact(Artifact artifact) throws SQLException {
+        Statement statement;
         String query = "DELETE FROM artifacts WHERE id = " + artifact.getId() + "";
-        this.stmt = c.createStatement();
-        return stmt.execute(query);
+        statement = connection.createStatement();
+        return statement.execute(query);
 
     }
 
@@ -74,11 +82,12 @@ public class ArtifactDAOI implements ArtifactDao {
 
     @Override
     public Artifact getById(int id) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "select id, name, description, price, is_global from artifacts " +
                 "WHERE id = ?";
-        this.ps = c.prepareStatement(query);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
         return getListFromRS(rs).get(0);
     }
 
@@ -93,15 +102,21 @@ public class ArtifactDAOI implements ArtifactDao {
 
     private ResultSet getAllArtifactRS() throws SQLException {
         String query = " SELECT id, name, description, price, is_global FROM artifacts";
-        Statement stmt = c.createStatement();
+        Statement stmt = connection.createStatement();
         return stmt.executeQuery(query);
     }
 
     private ResultSet getRSByValue(String valueName, String value) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "select id, name, description, price, is_global from artifacts " +
                 "WHERE " + valueName + " = ?));";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, value);
-        return ps.executeQuery();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, value);
+        return preparedStatement.executeQuery();
+    }
+
+    public void connClose() throws SQLException {
+        connection.close();
+
     }
 }

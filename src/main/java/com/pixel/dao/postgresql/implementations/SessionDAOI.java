@@ -35,8 +35,12 @@ public class SessionDAOI implements Session {
     }
 
     @Override
-    public boolean isCurrentSession(String session) {
-        return false;
+    public boolean isCurrentSession(String session) throws SQLException {
+        String query = "SELECT * FROM session WHERE sessionid = ?";
+        this.ps = c.prepareStatement(query);
+        ps.setString(1, session);
+        rs = ps.executeQuery();
+        return rs.next();
     }
 
     @Override
