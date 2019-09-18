@@ -5,7 +5,7 @@ import com.pixel.controller.QuestController;
 import com.pixel.controller.StudentController;
 import com.pixel.controller.UserController;
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
-import com.pixel.dao.postgresql.implementations.ArtifactDAOI;
+import com.pixel.dao.postgresql.implementations.*;
 import com.pixel.view.Index;
 import com.pixel.view.Static;
 import com.sun.net.httpserver.HttpServer;
@@ -21,10 +21,16 @@ public class App {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
 
         ArtifactDAOI artifactDAOI = new ArtifactDAOI(postgreSQLJDBC.getConnection());
+        UserDAOI userDAOI = new UserDAOI(postgreSQLJDBC.getConnection());
+        StudentDAOI studentDAOI = new StudentDAOI(postgreSQLJDBC.getConnection());
+        QuestDAOI questDAOI = new QuestDAOI(postgreSQLJDBC.getConnection());
+        QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(postgreSQLJDBC.getConnection());
+        LevelsDAOI levelsDAOI = new LevelsDAOI(postgreSQLJDBC.getConnection());
 
-        UserController userController = new UserController();
-        StudentController studentController = new StudentController();
-        QuestController questController = new QuestController();
+
+        UserController userController = new UserController(userDAOI);
+        StudentController studentController = new StudentController(studentDAOI,levelsDAOI);
+        QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
 
         HttpServer server = null;

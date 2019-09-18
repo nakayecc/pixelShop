@@ -19,18 +19,32 @@ public class ArtifactController {
         List<Artifact> groupArtifact = new ArrayList<>();
         try {
             allArtifactList = artifactDAOI.getListFull();
-            artifactDAOI.connClose();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         for(Artifact singleArtifact : allArtifactList){
+            System.out.println(singleArtifact.getName());
             if(singleArtifact.isGlobal()){
                 groupArtifact.add(singleArtifact);
             }
         }
-
-
         return groupArtifact;
+    }
+
+    public List<Artifact> getSoloArtifact(){
+        List<Artifact> allArtifactList = new ArrayList<>();
+        List<Artifact> SoloArtifact = new ArrayList<>();
+        try {
+            allArtifactList = artifactDAOI.getListFull();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for(Artifact singleArtifact : allArtifactList){
+            System.out.println(singleArtifact.getName());
+            if(!singleArtifact.isGlobal()){
+                SoloArtifact.add(singleArtifact);
+            }
+        }
+        return SoloArtifact;
     }
 }

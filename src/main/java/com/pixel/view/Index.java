@@ -46,8 +46,8 @@ public class Index implements HttpHandler {
         model.with("lvl", studentController.getUserLevel(student)); //TODO lvl
         model.with("indexQuest", index);
         model.with("QuestList", questController.getQuestList());
-        model.with("artefactGroupList",artifactController.getGroupArtifact());
-        model.with("artifactPictureId",004);
+        model.with("artifactGroupList",artifactController.getGroupArtifact());
+        model.with("artifactSoloList",artifactController.getSoloArtifact());
 
         response = template.render(model);
         sendResponse(httpExchange, response);

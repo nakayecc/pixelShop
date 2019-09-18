@@ -10,19 +10,17 @@ import java.util.List;
 
 public class QuestDAOI implements QuestDAO {
 
-    public QuestDAOI() {
-        this.c = new PostgreSQLJDBC().getConnection();
-    }
+    private Connection connection;
 
-    private Connection c;
-    private PreparedStatement ps;
-    private ResultSet rs;
-    private Statement stmt;
+    public QuestDAOI(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public List<Quest> getListFull() throws SQLException {
-        this.rs = getAllQuestRS();
-        return getListFromRS(rs);
+        ResultSet resultSet;
+        resultSet = getAllQuestRS();
+        return getListFromRS(resultSet);
     }
 
     public List<Quest> getListActive() throws SQLException {
@@ -38,53 +36,57 @@ public class QuestDAOI implements QuestDAO {
     @Override
     public boolean updateQuest(Quest quest) throws SQLException {
 
+        PreparedStatement preparedStatement;
+
         String query = "UPDATE quests SET name = ?, exp = ?, category_id = ?, description = ? " +
                 "WHERE id = " + quest.getId() + "";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, quest.getName());
-        ps.setInt(2, quest.getExp());
-        ps.setInt(3, quest.getCategoryId());
-        ps.setString(4, quest.getDescription());
-        int i = ps.executeUpdate();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, quest.getName());
+        preparedStatement.setInt(2, quest.getExp());
+        preparedStatement.setInt(3, quest.getCategoryId());
+        preparedStatement.setString(4, quest.getDescription());
+        int i = preparedStatement.executeUpdate();
 
         return i == 1;
     }
 
     @Override
     public boolean insertQuest(Quest quest) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "INSERT INTO quests(name, exp, category_id, description)  VALUES (?,?,?,?)";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, quest.getName());
-        ps.setInt(2, quest.getExp());
-        ps.setInt(3, quest.getCategoryId());
-        ps.setString(4, quest.getDescription());
-        int i = ps.executeUpdate();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, quest.getName());
+        preparedStatement.setInt(2, quest.getExp());
+        preparedStatement.setInt(3, quest.getCategoryId());
+        preparedStatement.setString(4, quest.getDescription());
+        int i = preparedStatement.executeUpdate();
         return i == 1;
     }
 
     @Override
     public boolean deleteQuest(Quest artifact) throws SQLException {
+        Statement statement;
         String query = "DELETE FROM quests WHERE id = " + artifact.getId() + "";
-        this.stmt = c.createStatement();
-        return stmt.execute(query);
+        statement = connection.createStatement();
+        return statement.execute(query);
 
     }
 
     private List<Quest> getListFromRS(ResultSet rs) throws SQLException {
         List<Quest> questList = new ArrayList<>();
         while (rs.next()) questList.add(extractQuestFromRS(rs));
-        c.close();
         return questList;
 
     }
 
     @Override
     public Quest getById(int id) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "select id, name, exp, category_id, description from quests " +
                 "WHERE id = ?";
-        this.ps = c.prepareStatement(query);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
         return getListFromRS(rs).get(0);
     }
 
@@ -100,7 +102,7 @@ public class QuestDAOI implements QuestDAO {
 
     private ResultSet getAllQuestRS() throws SQLException {
         String query = " SELECT id, name, exp, category_id, description FROM quests";
-        Statement stmt = c.createStatement();
+        Statement stmt = connection.createStatement();
         return stmt.executeQuery(query);
     }
 
@@ -111,11 +113,12 @@ public class QuestDAOI implements QuestDAO {
     }
 
     private ResultSet getRSByValue(String valueName, String value) throws SQLException {
+        PreparedStatement preparedStatement;
         String query = "select id, name, exp, category_id, description FROM quests " +
                 "WHERE " + valueName + " = ?));";
-        this.ps = c.prepareStatement(query);
-        ps.setString(1, value);
-        return ps.executeQuery();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, value);
+        return preparedStatement.executeQuery();
     }
 
 }
