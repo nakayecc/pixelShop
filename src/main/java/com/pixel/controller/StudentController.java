@@ -1,7 +1,9 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.*;
+import com.pixel.model.Artifact;
 import com.pixel.model.Quest;
+import com.pixel.model.SackInventory;
 import com.pixel.model.Student;
 
 import java.sql.SQLException;
@@ -15,12 +17,16 @@ StudentController {
     LevelsDAOI levelsDAOI;
     QuestDAOI questDAOI;
     ClassesDAOI classesDAOI;
+    ArtifactDAOI artifactDAOI;
+    SackInventoryDAOI sackInventoryDAOI;
 
-    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI, ClassesDAOI classesDAOI) {
+    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI, ClassesDAOI classesDAOI, ArtifactDAOI artifactDAOI, SackInventoryDAOI sackInventoryDAOI) {
         this.studentDAOI = studentDAOI;
         this.levelsDAOI = levelsDAOI;
         this.questDAOI = questDAOI;
         this.classesDAOI = classesDAOI;
+        this.artifactDAOI = artifactDAOI;
+        this.sackInventoryDAOI = sackInventoryDAOI;
     }
 
     public List<Student> getStudentList() throws SQLException {
@@ -90,6 +96,16 @@ StudentController {
             return classesDAOI.getClassById(student.getCass_id()).getName();
         } catch (SQLException e) {
             return "";
+        }
+    }
+
+    public void buyArtifactById(int user_id, int artifact_id){
+        try {
+            Student buyer = studentDAOI.getById(user_id);
+            Artifact toBuy = artifactDAOI.getById(artifact_id);
+            sackInventoryDAOI.insertSackInventory(new SackInventory(buyer.getId(), toBuy.getId(), true, toBuy.getPrice()));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
