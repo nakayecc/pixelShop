@@ -17,12 +17,14 @@ MentorController {
     ClassesDAOI classesDAOI;
     QuestDAOI questDAOI;
     ArtifactDAOI artifactDAOI;
+    QuestCompletedDAOI questCompletedDAOI;
 
-    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI) {
+    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI, QuestCompletedDAOI questCompletedDAOI) {
         this.studentDAOI = studentDAOI;
         this.classesDAOI = classesDAOI;
         this.questDAOI = questDAOI;
         this.artifactDAOI = artifactDAOI;
+        this.questCompletedDAOI = questCompletedDAOI;
     }
 
     public void createStudent(String name, String password, int mentor_id, int cass_id){
@@ -60,6 +62,14 @@ MentorController {
     public void updateArtifact(int id, String name, String description, int price, boolean is_global){
         try {
             artifactDAOI.updateArtifact(new Artifact(id, name, description, price, is_global));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void completeQuestByStudent(int studentId, int questId){
+        try {
+            questCompletedDAOI.completeQuest(studentDAOI.getById(studentId), questDAOI.getById(questId));
         } catch (SQLException e) {
             e.printStackTrace();
         }
