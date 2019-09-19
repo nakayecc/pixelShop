@@ -88,6 +88,11 @@ public class Index implements HttpHandler {
 
         }
         httpExchange.sendResponseHeaders(303, response.getBytes().length);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -116,9 +121,13 @@ public class Index implements HttpHandler {
         int index = 0;
 
         model.with("userName", student.getName());
+        model.with("coin",studentController.getStudentMoney(student));
+        model.with("level",studentController.getStudentExperience(student));
         model.with("exp", studentController.getStudentExperience(student)); //TODO exp counting
         model.with("lvl", studentController.getUserLevel(student)); //TODO lvl
         model.with("indexQuest", index);
+        //model.with("mentorName",studentController.getMentorName(student));
+        model.with("className",studentController.getClassName(student));
         model.with("QuestList", questController.getQuestList());
         model.with("artifactGroupList", artifactController.getGroupArtifact());
         model.with("artifactSoloList", artifactController.getSoloArtifact());
