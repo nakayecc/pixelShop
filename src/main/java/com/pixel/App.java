@@ -19,7 +19,7 @@ public class App {
 
         HttpServer server = null;
         try {
-            server = HttpServer.create(new InetSocketAddress(8080), 0);
+            server = HttpServer.create(new InetSocketAddress(8000), 0);
             server.createContext("/", new Index());
             server.createContext("/static", new Static());
             server.setExecutor(null);

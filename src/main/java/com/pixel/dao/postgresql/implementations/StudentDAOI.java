@@ -77,9 +77,11 @@ public class StudentDAOI implements StudentDAO {
                 "    INSERT INTO users(name, password, role_name)" +
                 "        VALUES (?, ?, ?)" +
                 "        RETURNING id AS user_id" +
-                ") " +
+                ")" +
                 "INSERT INTO students (user_id, mentor_id, class_id)" +
-                "SELECT user_id, ?, ? FROM ins1;";
+                "SELECT user_id, ?, ? FROM ins1;" +
+                "INSERT INTO sacks (user_id)" +
+                "VALUES (user_id)";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, s.getName());
         preparedStatement.setString(2, s.getPassword());
