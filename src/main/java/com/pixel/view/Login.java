@@ -77,7 +77,6 @@ public class Login implements HttpHandler {
                     try {
                         int userId = userController.getUserIdFromCredentials(username, password);
                         sessionDAOI.createSession(cookies.getValue(), userId);
-                        System.out.println("create session");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -85,7 +84,6 @@ public class Login implements HttpHandler {
                     httpExchange.getResponseHeaders().set("Location", "/");
                     httpExchange.sendResponseHeaders(303, response.getBytes().length);
                 } else {
-                    System.out.println("bad password");
                     response = common.getLoginTemplate();
                 }
             } catch (SQLException e) {
