@@ -49,6 +49,22 @@ MentorController {
         }
     }
 
+    public void updateQuest(int id,String name, String description, int exp, int categoryId){
+        try {
+            questDAOI.updateQuest(new Quest(id, name, description, exp, categoryId));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateArtifact(int id, String name, String description, int price, boolean is_global){
+        try {
+            artifactDAOI.updateArtifact(new Artifact(id, name, description, price, is_global));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 
