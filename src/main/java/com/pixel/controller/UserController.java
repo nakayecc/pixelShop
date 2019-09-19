@@ -12,15 +12,20 @@ public class UserController {
 
     public int getUserIdFromCredentials(String name, String password) throws SQLException {
         return userDAOI.getIdFromCredentials(name, password);
-        }
+    }
+
+    public boolean checkIfPasswordIsCorrect(String name, String password) throws SQLException {
+        return getUserIdFromCredentials(name, password) > 1;
+    }
 
     public String checkUserRank(int id) throws SQLException {
 
-        if (userDAOI.checkIfUserIsCreep(id)){
+
+        if (userDAOI.checkIfUserIsCreep(id)) {
             return "creep";
-        } else if (userDAOI.checkIfUserIsMentor(id)){
+        } else if (userDAOI.checkIfUserIsMentor(id)) {
             return "mentor";
-        } else if (userDAOI.checkIfUserIsStudent(id)){
+        } else if (userDAOI.checkIfUserIsStudent(id)) {
             return "student";
         }
         return null;

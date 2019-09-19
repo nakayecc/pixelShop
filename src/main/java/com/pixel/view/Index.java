@@ -34,6 +34,9 @@ public class Index implements HttpHandler {
         ClassesDAOI classesDAOI = new ClassesDAOI(connection);
         SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
         SackDAOI sackDAOI = new SackDAOI(connection);
+        SessionDAOI sessionDAOI = new SessionDAOI(connection);
+        CookieHandler cookieHandler = new CookieHandler();
+
 
 
 
@@ -42,11 +45,15 @@ public class Index implements HttpHandler {
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         OwnItemController ownItemController = new OwnItemController(sackDAOI,sackInventoryDAOI,artifactDAOI);
+        SessionController sessionController = new SessionController(sessionDAOI, cookieHandler);
 
         String response = "";
         Student student = null; //find by cookie
+        int userId = sessionController.getUserIdBySession(httpExchange);
+        System.out.println(userId);
         try {
-            student = studentController.getStudent(8);
+
+            student = studentController.getStudent(userId);
 
             System.out.println(student.getName());
         } catch (SQLException e) {
