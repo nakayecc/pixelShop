@@ -1,9 +1,9 @@
 package com.pixel;
 
-import com.pixel.controller.*;
-import com.pixel.dao.postgresql.PostgreSQLJDBC;
-import com.pixel.dao.postgresql.implementations.*;
+
 import com.pixel.view.Index;
+import com.pixel.view.Login;
+import com.pixel.view.Logout;
 import com.pixel.view.Static;
 import com.sun.net.httpserver.HttpServer;
 
@@ -22,6 +22,8 @@ public class App {
             server = HttpServer.create(new InetSocketAddress(8000), 0);
             server.createContext("/", new Index());
             server.createContext("/static", new Static());
+            server.createContext("/login", new Login());
+            server.createContext("/logout", new Logout());
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {

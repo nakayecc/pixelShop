@@ -84,4 +84,9 @@ public class Quest {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
+
+    public String toString(){
+        return getName()+ " "+getExp();
+    }
+
 }

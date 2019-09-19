@@ -36,7 +36,7 @@
         </ul>
         <ul class="navbar-nav ml-auto"><p>
                 {{ coin }}<img src="/static/img/coin.png" width="20px"> \
-                {{ level }}<img src="/static/img/lvl.png" width="20px"> | <a href="../index.html">Logout</a>
+                {{ level }}<img src="/static/img/lvl.png" width="20px"> | <a href="/logout">Logout</a>
             </p>
         </ul>
     </div>
@@ -92,10 +92,10 @@
                 <div class="row mx-auto p-2">
                     {% for singeArtifact in studentArtifactList %}
                         {% set srcImageOwn = "/static/img/store/" ~ singeArtifact.getId() ~ ".jpg" %}
-                    <div class="col-xl-6 artifact_container mt-3"
-                         data-toggle="tooltip" data-placement="top" title="{{ singeArtifact.getName() }}">
-                        <img src="{{ srcImageOwn }}" class="image rounded" alt="">
-                    </div>
+                        <div class="col-xl-6 artifact_container mt-3"
+                             data-toggle="tooltip" data-placement="top" title="{{ singeArtifact.getName() }}">
+                            <img src="{{ srcImageOwn }}" class="image rounded" alt="">
+                        </div>
                     {% endfor %}
                 </div>
             </div>
@@ -110,23 +110,20 @@
 
                             <tbody>
                             <tr class="rounded">
-                                <th scope="row">1</th>
-                                <td>QuestName</td>
-                                <td>Solo/Team</td>
-                                <td>GainedExp</td>
+                                <th scope="row">LP</th>
+                                <td>Quest Name</td>
+                                <td>Quest exp</td>
+                                <td>Quest count done</td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>QuestName</td>
-                                <td>Solo/Team</td>
-                                <td>GainedExp</td>
+                            {% for entry in questDoneMap %}
+                                {% set doneQuestcounter = doneQuestcounter | default(0) + 1 %}
+                            <tr class="rounded">
+                                <th scope="row">{{ doneQuestcounter }}</th>
+                                <td>{{ entry.getKey().getName() }}</td>
+                                <td>{{ entry.getKey().getExp() }}</td>
+                                <td>{{ entry.getValue() }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>QuestName</td>
-                                <td>Solo/Team</td>
-                                <td>GainedExp</td>
-                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -142,7 +139,8 @@
         <h3>Solo artefact's</h3>
         <div class="row text-center">
             {% for artifactSolo in artifactSoloList %}
-                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                {% set itemBoxSolo = "#" ~ artifactSolo.getName().replaceAll(" ","") ~ artifactSolo.getId()  %}
+                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="{{ itemBoxSolo }}">
                     {% set srcImageSolo = "/static/img/store/" ~ artifactSolo.getId() ~ ".jpg" %}
                     <img src="{{ srcImageSolo }}" class="image rounded">
                     <div class="artifact_overlay mx-auto">
@@ -160,7 +158,9 @@
         </div>
         <div class="row text-center">
             {% for artifactGroup in artifactGroupList %}
-                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                {% set itemBoxGroup = "#" ~ artifactGroup.getName().replaceAll(" ","") ~ artifactGroup.getId() %}
+
+                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="{{ itemBoxGroup }}">
                     {% set srcImageGroup = "/static/img/store/" ~ artifactGroup.getId() ~ ".jpg" %}
                     <img src="{{ srcImageGroup }}" class="image rounded">
                     <div class="artifact_overlay mx-auto">
@@ -174,28 +174,30 @@
             {% endfor %}
         </div>
 
-        <div class="modal fade" id="shopBuyItemBox" tabindex="-1" role="dialog"
+        {% for artifactShop in artifactShopSList %}
+        <div class="modal fade" id="{{ artifactShop.getName().replaceAll(" ","") ~ artifactShop.getId() }}" tabindex="-1" role="dialog"
              aria-labelledby="shopBuyItemBoxTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Item Name</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">{{ artifactShop.getName() }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras diam magna, tempor sed dui eget,
-                        porta rhoncus libero. Nulla pretium laoreet mi et cursus. Mauris ullamcorper sollicitudin orci,
-                        sed vulputate velit interdum eu. Quisque tristique vestibulum cursus. Donec id suscipit nunc.
-                        Nullam sed sapien quam. Sed consequat ultricies commodo. Quisque sit amet tincidunt eros.
+                        {{ artifactShop.getDescription() }}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Buy</button>
+                    <div class="modal-footer mx-auto">
+                        <form method="POST">
+                            <button type="submit" name="id" value="{{ artifactShop.getId() }}" class="btn btn-primary mx-auto">BUY</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
+    </div>
 </section>
 <section id="quests">
     <div class="container text-center p-5">
