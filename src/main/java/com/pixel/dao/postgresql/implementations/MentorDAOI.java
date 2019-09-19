@@ -113,5 +113,10 @@ public class MentorDAOI extends UserDAOI implements MentorDAO {
                 rs.getInt("class_id"));
     }
 
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
+
 
 }

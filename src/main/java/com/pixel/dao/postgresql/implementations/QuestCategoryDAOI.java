@@ -98,5 +98,9 @@ public class QuestCategoryDAOI implements QuestCategoryDAO {
         preparedStatement.setString(1, value);
         return preparedStatement.executeQuery();
     }
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
 }
 

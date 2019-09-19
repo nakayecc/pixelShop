@@ -47,7 +47,7 @@ public class SessionDAOI implements Session {
     public int getUserId(String session) throws SQLException {
         PreparedStatement ps;
         ResultSet rs;
-        String query = "SELECT * FROM session WHERE sessionid = ?";
+        String query = "SELECT * FROM session WHERE sessionid = ? LIMIT 1";
         ps = c.prepareStatement(query);
         ps.setString(1, session);
         rs = ps.executeQuery();

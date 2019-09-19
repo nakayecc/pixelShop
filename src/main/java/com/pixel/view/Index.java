@@ -1,11 +1,9 @@
 package com.pixel.view;
 
-import com.pixel.controller.ArtifactController;
-import com.pixel.controller.OwnItemController;
-import com.pixel.controller.QuestController;
-import com.pixel.controller.StudentController;
+import com.pixel.controller.*;
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
-import com.pixel.dao.postgresql.implementations.SessionDAOI;
+import com.pixel.dao.postgresql.implementations.*;
+import com.pixel.model.Quest;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -16,39 +14,45 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class Index implements HttpHandler {
-    private StudentController studentController;
-    private QuestController questController;
-    private ArtifactController artifactController;
-    private OwnItemController ownItemController;
 
-    public Index(
-            StudentController studentController,
-            QuestController questController,
-            ArtifactController artifactController,
-            OwnItemController ownItemController
-    )
-    {
-        this.artifactController = artifactController;
-        this.studentController = studentController;
-        this.questController = questController;
-        this.ownItemController = ownItemController;
-    }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+
         Connection connection = postgreSQLJDBC.getConnection();
+
+        ArtifactDAOI artifactDAOI = new ArtifactDAOI(connection);
+        UserDAOI userDAOI = new UserDAOI(connection);
+        StudentDAOI studentDAOI = new StudentDAOI(connection);
+        QuestDAOI questDAOI = new QuestDAOI(connection);
+        QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(connection);
+        LevelsDAOI levelsDAOI = new LevelsDAOI(connection);
+        ClassesDAOI classesDAOI = new ClassesDAOI(connection);
+        SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
+        SackDAOI sackDAOI = new SackDAOI(connection);
         SessionDAOI sessionDAOI = new SessionDAOI(connection);
         CookieHandler cookieHandler = new CookieHandler();
 
 
+
+
+        UserController userController = new UserController(userDAOI);
+        StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI, classesDAOI);
+        QuestController questController = new QuestController(questDAOI);
+        ArtifactController artifactController = new ArtifactController(artifactDAOI);
+        OwnItemController ownItemController = new OwnItemController(sackDAOI,sackInventoryDAOI,artifactDAOI);
+        SessionController sessionController = new SessionController(sessionDAOI, cookieHandler);
+
         String response = "";
         Student student = null; //find by cookie
+        int userId = sessionController.getUserIdBySession(httpExchange);
+        System.out.println(userId);
         try {
-//            System.out.println(cookieHandler.extractCookieToString(cookieHandler.getCookie(httpExchange, "sessionId")));
-            int userId = sessionDAOI.getUserId(cookieHandler.extractCookieToString(cookieHandler.getCookie(httpExchange, "sessionId")));
+
             student = studentController.getStudent(userId);
 
             System.out.println(student.getName());
@@ -68,8 +72,14 @@ public class Index implements HttpHandler {
         model.with("artifactGroupList", artifactController.getGroupArtifact());
         model.with("artifactSoloList", artifactController.getSoloArtifact());
         model.with("studentArtifactList",ownItemController.getStudentOwnArtifact(student));
+        model.with("questDoneMap",studentController.getAllQuestCompleted(student).entrySet());
 
         response = template.render(model);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         sendResponse(httpExchange, response);
 
     }
@@ -80,4 +90,5 @@ public class Index implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
+
 }

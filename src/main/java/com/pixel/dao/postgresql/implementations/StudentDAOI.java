@@ -163,4 +163,8 @@ public class StudentDAOI implements StudentDAO {
                 rs.getInt("mentor_id"),
                 rs.getInt("class_id"));
     }
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
 }

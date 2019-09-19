@@ -120,6 +120,10 @@ public class SackDAOI implements SackDAO {
         preparedStatement.setInt(1, value);
         return preparedStatement.executeQuery();
     }
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
 
 
 }

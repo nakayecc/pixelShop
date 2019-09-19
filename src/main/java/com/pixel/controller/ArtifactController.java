@@ -47,4 +47,5 @@ public class ArtifactController {
         }
         return SoloArtifact;
     }
+
 }

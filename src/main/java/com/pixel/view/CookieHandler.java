@@ -24,7 +24,7 @@ public class CookieHandler {
         return cookieStr;
     }
 
-    Optional<HttpCookie> getCookie(HttpExchange httpExchange, String nameCookie) {
+    public Optional<HttpCookie> getCookie(HttpExchange httpExchange, String nameCookie) {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookieList = cookieHelper.parseCookies(cookieStr);
         return cookieHelper.findCookieByName(nameCookie,cookieList);

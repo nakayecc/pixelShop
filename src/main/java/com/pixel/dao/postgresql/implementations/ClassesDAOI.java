@@ -32,5 +32,9 @@ public class ClassesDAOI {
                 rs.getInt("id"),
                 rs.getString("name"));
     }
+    public void connClose() throws SQLException {
+        connection.close();
+
+    }
 
 }
