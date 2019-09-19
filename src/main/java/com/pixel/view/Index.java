@@ -96,7 +96,7 @@ public class Index implements HttpHandler {
 
 
         UserController userController = new UserController(userDAOI);
-        StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI, classesDAOI);
+        StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI);
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         OwnItemController ownItemController = new OwnItemController(sackDAOI,sackInventoryDAOI,artifactDAOI);
