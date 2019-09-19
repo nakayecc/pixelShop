@@ -57,6 +57,14 @@ MentorController {
         }
     }
 
+    public void updateArtifact(int id, String name, String description, int price, boolean is_global){
+        try {
+            artifactDAOI.updateArtifact(new Artifact(id, name, description, price, is_global));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 
