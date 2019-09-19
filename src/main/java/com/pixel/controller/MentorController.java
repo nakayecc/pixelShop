@@ -7,22 +7,23 @@ import com.pixel.model.Quest;
 import com.pixel.model.Student;
 
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class
 MentorController {
+    MentorDAOI mentorDAOI;
     StudentDAOI studentDAOI ;
-    ClassesDAOI classesDAOI;
+    ClassDAOI classDAOI;
     QuestDAOI questDAOI;
     ArtifactDAOI artifactDAOI;
 
-    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI) {
+    public MentorController(StudentDAOI studentDAOI, ClassDAOI classDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI, MentorDAOI mentorDAOI) {
         this.studentDAOI = studentDAOI;
-        this.classesDAOI = classesDAOI;
+        this.classDAOI = classDAOI;
         this.questDAOI = questDAOI;
         this.artifactDAOI = artifactDAOI;
+        this.mentorDAOI = mentorDAOI;
     }
 
     public void createStudent(String name, String password, int mentor_id, int cass_id){
@@ -63,6 +64,18 @@ MentorController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Mentor> getMentorList(){
+        List<Mentor> mentorList = new ArrayList<>();
+
+        try {
+            mentorList = mentorDAOI.getListFull();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mentorList;
     }
 
 }

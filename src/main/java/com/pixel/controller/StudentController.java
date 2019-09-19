@@ -9,28 +9,32 @@ import com.pixel.model.Student;
 import java.sql.SQLException;
 import java.util.*;
 
-import static java.util.Collections.emptyMap;
-
 public class
 StudentController {
     StudentDAOI studentDAOI ;
     LevelsDAOI levelsDAOI;
     QuestDAOI questDAOI;
-    ClassesDAOI classesDAOI;
+    ClassDAOI classDAOI;
     ArtifactDAOI artifactDAOI;
     SackInventoryDAOI sackInventoryDAOI;
 
-    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI, ClassesDAOI classesDAOI, ArtifactDAOI artifactDAOI, SackInventoryDAOI sackInventoryDAOI) {
+    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI, ClassDAOI classDAOI, ArtifactDAOI artifactDAOI, SackInventoryDAOI sackInventoryDAOI) {
         this.studentDAOI = studentDAOI;
         this.levelsDAOI = levelsDAOI;
         this.questDAOI = questDAOI;
-        this.classesDAOI = classesDAOI;
+        this.classDAOI = classDAOI;
         this.artifactDAOI = artifactDAOI;
         this.sackInventoryDAOI = sackInventoryDAOI;
     }
 
-    public List<Student> getStudentList() throws SQLException {
-        return studentDAOI.getListFull();
+    public List<Student> getStudentList() {
+        List<Student> studentList = new ArrayList<>();
+        try {
+            studentList = studentDAOI.getListFull();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return studentList;
     }
 
     public Student getStudent(int id) throws SQLException {
@@ -94,7 +98,7 @@ StudentController {
 
     public String getClassName(Student student){
         try {
-            return classesDAOI.getClassById(student.getCass_id()).getName();
+            return classDAOI.getClassById(student.getCass_id()).getName();
         } catch (SQLException e) {
             return "";
         }

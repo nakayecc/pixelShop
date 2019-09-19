@@ -31,7 +31,7 @@ public class StudentHandler implements HttpHandler {
         StudentDAOI studentDAOI = new StudentDAOI(connection);
         QuestDAOI questDAOI = new QuestDAOI(connection);
         LevelsDAOI levelsDAOI = new LevelsDAOI(connection);
-        ClassesDAOI classesDAOI = new ClassesDAOI(connection);
+        ClassDAOI classDAOI = new ClassDAOI(connection);
         SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
         SackDAOI sackDAOI = new SackDAOI(connection);
         SessionDAOI sessionDAOI = new SessionDAOI(connection);
@@ -39,7 +39,7 @@ public class StudentHandler implements HttpHandler {
 
 
         UserController userController = new UserController(userDAOI);
-        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI);
+        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classDAOI, artifactDAOI, sackInventoryDAOI);
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         OwnItemController ownItemController = new OwnItemController(sackInventoryDAOI, artifactDAOI);
@@ -112,7 +112,7 @@ public class StudentHandler implements HttpHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/StudentHandler.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Student.twig");
         JtwigModel model = JtwigModel.newModel();
 
 
