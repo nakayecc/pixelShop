@@ -72,6 +72,8 @@ public class Index implements HttpHandler {
                 httpExchange.getResponseHeaders().set("Location", "/login");
                 httpExchange.sendResponseHeaders(303, response.getBytes().length);
             }
+            httpExchange.getResponseHeaders().set("Location", "/login");
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
 
 
         }
