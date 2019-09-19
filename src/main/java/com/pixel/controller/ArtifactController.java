@@ -48,4 +48,15 @@ public class ArtifactController {
         return SoloArtifact;
     }
 
+    public List<Artifact> getAllArtifact(){
+        List<Artifact> artifactList = new ArrayList<>();
+        try {
+            artifactList = artifactDAOI.getListFull();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return artifactList;
+    }
+
 }
