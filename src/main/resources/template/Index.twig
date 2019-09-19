@@ -139,7 +139,8 @@
         <h3>Solo artefact's</h3>
         <div class="row text-center">
             {% for artifactSolo in artifactSoloList %}
-                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#shopBuyItemBox">
+                {% set itemBoxSolo = "#" ~ artifactSolo.getName().replaceAll(" ","") ~ artifactSolo.getId()  %}
+                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="{{ itemBoxSolo }}">
                     {% set srcImageSolo = "/static/img/store/" ~ artifactSolo.getId() ~ ".jpg" %}
                     <img src="{{ srcImageSolo }}" class="image rounded">
                     <div class="artifact_overlay mx-auto">
@@ -157,7 +158,9 @@
         </div>
         <div class="row text-center">
             {% for artifactGroup in artifactGroupList %}
-                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="#1">
+                {% set itemBoxGroup = "#" ~ artifactGroup.getName().replaceAll(" ","") ~ artifactGroup.getId() %}
+
+                <div class="col-lg-4 mb-5 artifact_container" data-toggle="modal" data-target="{{ itemBoxGroup }}">
                     {% set srcImageGroup = "/static/img/store/" ~ artifactGroup.getId() ~ ".jpg" %}
                     <img src="{{ srcImageGroup }}" class="image rounded">
                     <div class="artifact_overlay mx-auto">
@@ -171,21 +174,19 @@
             {% endfor %}
         </div>
 
-        <div class="modal fade" id="1" tabindex="-1" role="dialog"
+        {% for artifactShop in artifactShopSList %}
+        <div class="modal fade" id="{{ artifactShop.getName().replaceAll(" ","") ~ artifactShop.getId() }}" tabindex="-1" role="dialog"
              aria-labelledby="shopBuyItemBoxTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Item Name</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">{{ artifactShop.getName() }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras diam magna, tempor sed dui eget,
-                        porta rhoncus libero. Nulla pretium laoreet mi et cursus. Mauris ullamcorper sollicitudin orci,
-                        sed vulputate velit interdum eu. Quisque tristique vestibulum cursus. Donec id suscipit nunc.
-                        Nullam sed sapien quam. Sed consequat ultricies commodo. Quisque sit amet tincidunt eros.
+                        {{ artifactShop.getDescription() }}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary mx-auto">Buy</button>
@@ -193,6 +194,7 @@
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </section>
 <section id="quests">

@@ -73,6 +73,7 @@ public class Index implements HttpHandler {
         model.with("artifactSoloList", artifactController.getSoloArtifact());
         model.with("studentArtifactList",ownItemController.getStudentOwnArtifact(student));
         model.with("questDoneMap",studentController.getAllQuestCompleted(student).entrySet());
+        model.with("artifactShopSList",artifactController.getAllArtifact());
 
         response = template.render(model);
         try {
@@ -89,6 +90,13 @@ public class Index implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+    }
+
+
+    public static void main(String[] args) {
+        String text = "ala ma kota";
+
+        System.out.println(text.replaceAll(" ",""));
     }
 
 }
