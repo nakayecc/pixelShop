@@ -36,7 +36,7 @@
         </ul>
         <ul class="navbar-nav ml-auto"><p>
                 {{ coin }}<img src="/static/img/coin.png" width="20px"> \
-                {{ level }}<img src="/static/img/lvl.png" width="20px"> | <a href="../index.html">Logout</a>
+                {{ level }}<img src="/static/img/lvl.png" width="20px"> | <a href="/logout">Logout</a>
             </p>
         </ul>
     </div>
@@ -188,8 +188,10 @@
                     <div class="modal-body">
                         {{ artifactShop.getDescription() }}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Buy</button>
+                    <div class="modal-footer mx-auto">
+                        <form method="POST">
+                            <button type="submit" name="id" value="{{ artifactShop.getId() }}" class="btn btn-primary mx-auto">BUY</button>
+                        </form>
                     </div>
                 </div>
             </div>

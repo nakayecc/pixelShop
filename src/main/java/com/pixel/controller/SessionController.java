@@ -27,4 +27,16 @@ public class SessionController {
         return userId;
 
     }
+
+    public void logout(HttpExchange httpExchange){
+        String session = cookieHandler.extractCookieToString(cookieHandler.getCookie(httpExchange, "sessionId"));
+        int userId = 0;
+        try {
+            userId = sessionDAOI.getUserId(session);
+            sessionDAOI.deleteSessionById(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
