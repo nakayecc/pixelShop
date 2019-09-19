@@ -110,15 +110,15 @@
 
                             <tbody>
                             <tr class="rounded">
-                                <th scope="row">1</th>
+                                <th scope="row">LP</th>
                                 <td>Quest Name</td>
                                 <td>Quest exp</td>
                                 <td>Quest count done</td>
                             </tr>
                             {% for entry in questDoneMap %}
-{#                                {% set qName = questDone.getName() %}#}
+                                {% set doneQuestcounter = doneQuestcounter | default(0) + 1 %}
                             <tr class="rounded">
-                                <th scope="row">{{ entry }}</th>
+                                <th scope="row">{{ doneQuestcounter }}</th>
                                 <td>{{ entry.getKey().getName() }}</td>
                                 <td>{{ entry.getKey().getExp() }}</td>
                                 <td>{{ entry.getValue() }}</td>

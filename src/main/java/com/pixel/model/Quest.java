@@ -89,10 +89,4 @@ public class Quest {
         return getName()+ " "+getExp();
     }
 
-    public static void main(String[] args) {
-        Quest q1 = new Quest();
-        Quest q2 = new Quest();
-        System.out.println(q1.hashCode());
-        System.out.println(q2.hashCode());
-    }
 }
