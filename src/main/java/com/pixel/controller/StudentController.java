@@ -9,7 +9,8 @@ import java.util.*;
 
 import static java.util.Collections.emptyMap;
 
-public class StudentController {
+public class
+StudentController {
     StudentDAOI studentDAOI ;
     LevelsDAOI levelsDAOI;
     QuestDAOI questDAOI;

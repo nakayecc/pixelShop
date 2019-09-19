@@ -39,8 +39,8 @@ public class OwnItemController {
         List<SackInventory> sackInventoryList = new ArrayList<>();
 
         try {
-            System.out.println(studentGetSack(student).getId());
-            sackInventoryList = sackInventoryDAOI.getListBy("sack_id", studentGetSack(student).getId());
+            System.out.println(student.getId());
+            sackInventoryList = sackInventoryDAOI.getListBy("user_id", student.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -3,21 +3,21 @@ package com.pixel.model;
 public class SackInventory {
 
     private int id;
-    private int sackId;
+    private int userId;
     private int artifactId;
     private boolean ready;
     private int price;
 
-    public SackInventory(int id, int sackId, int artifactId, boolean ready, int price) {
+    public SackInventory(int id, int userId, int artifactId, boolean ready, int price) {
         this.id = id;
-        this.sackId = sackId;
+        this.userId = userId;
         this.artifactId = artifactId;
         this.ready = ready;
         this.price = price;
     }
 
-    public SackInventory(int sackId, int artifactId, boolean ready, int price) {
-        this.sackId = sackId;
+    public SackInventory(int userId, int artifactId, boolean ready, int price) {
+        this.userId = userId;
         this.artifactId = artifactId;
         this.ready = ready;
         this.price = price;
@@ -34,12 +34,12 @@ public class SackInventory {
         this.id = id;
     }
 
-    public int getSackId() {
-        return sackId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setSackId(int sackId) {
-        this.sackId = sackId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getArtifactId() {

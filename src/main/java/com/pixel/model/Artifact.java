@@ -1,5 +1,7 @@
 package com.pixel.model;
 
+import java.util.Objects;
+
 public class Artifact {
 
     private int id;
@@ -67,4 +69,20 @@ public class Artifact {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Artifact artifact = (Artifact) o;
+        return id == artifact.id &&
+                price == artifact.price &&
+                global == artifact.global &&
+                name.equals(artifact.name) &&
+                description.equals(artifact.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price, global);
+    }
 }
