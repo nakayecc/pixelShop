@@ -32,7 +32,6 @@ public class Index implements HttpHandler {
         UserDAOI userDAOI = new UserDAOI(connection);
         StudentDAOI studentDAOI = new StudentDAOI(connection);
         QuestDAOI questDAOI = new QuestDAOI(connection);
-        QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(connection);
         LevelsDAOI levelsDAOI = new LevelsDAOI(connection);
         ClassesDAOI classesDAOI = new ClassesDAOI(connection);
         SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
@@ -45,11 +44,8 @@ public class Index implements HttpHandler {
         StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI);
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
-        OwnItemController ownItemController = new OwnItemController(sackDAOI, sackInventoryDAOI, artifactDAOI);
+        OwnItemController ownItemController = new OwnItemController(sackInventoryDAOI, artifactDAOI);
         SessionController sessionController = new SessionController(sessionDAOI, cookieHandler);
-
-
-        //StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI);
 
         Common common = new Common();
 
@@ -63,11 +59,9 @@ public class Index implements HttpHandler {
             if (cookie.isPresent()) {
                 try {
                     if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
-                        System.out.println("dupa tak");
                         handleRequest(httpExchange, connection, cookieHandler, userController,
                                 studentController, artifactController, ownItemController, sessionController, questController);
                     } else {
-                        System.out.println("dupa nie");
                         httpExchange.getResponseHeaders().set("Location", "/login");
                         httpExchange.sendResponseHeaders(303, response.getBytes().length);
                     }
@@ -81,7 +75,6 @@ public class Index implements HttpHandler {
 
 
         }
-        System.out.println("dupa");
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
@@ -101,10 +94,9 @@ public class Index implements HttpHandler {
     public void handleRequest(HttpExchange httpExchange, Connection connection, CookieHandler cookieHandler, UserController userController,
                               StudentController studentController, ArtifactController artifactController,
                               OwnItemController ownItemController, SessionController sessionController,
-                              QuestController questController){
+                              QuestController questController) {
 
 
-        System.out.println("dupa1");
         String response = "";
         Student student = null; //find by cookie
         int userId = sessionController.getUserIdBySession(httpExchange);
@@ -120,15 +112,6 @@ public class Index implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Index.twig");
         JtwigModel model = JtwigModel.newModel();
 
-        List<Artifact>artifacts = new ArrayList<>();
-
-        artifacts = ownItemController.getStudentOwnArtifact(student);
-
-        for (Artifact artifact: artifacts){
-            System.out.println(artifact.getId() +" " +artifact.getName());
-        }
-
-        System.out.println(artifacts);
 
         int index = 0;
 

@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OwnItemController {
-    private SackDAOI sackDAOI;
+
     private SackInventoryDAOI sackInventoryDAOI;
     private ArtifactDAOI artifactDAOI;
 
-    public OwnItemController(SackDAOI sackDAOI, SackInventoryDAOI sackInventoryDAOI, ArtifactDAOI artifactDAOI) {
-        this.sackDAOI = sackDAOI;
+    public OwnItemController(SackInventoryDAOI sackInventoryDAOI, ArtifactDAOI artifactDAOI) {
+
         this.sackInventoryDAOI = sackInventoryDAOI;
         this.artifactDAOI = artifactDAOI;
     }
@@ -37,7 +37,6 @@ public class OwnItemController {
 
     public List<Artifact> getStudentOwnArtifact(Student student) {
         List<Artifact> sackList = new ArrayList<>();
-        List<SackInventory> allArtif = getListStudentArtifactId(student);
         for (SackInventory sackItem : getListStudentArtifactId(student)) {
             try {
                 sackList.add(artifactDAOI.getById(sackItem.getArtifactId()));
