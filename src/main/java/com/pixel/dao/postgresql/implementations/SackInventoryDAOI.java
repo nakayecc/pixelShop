@@ -1,7 +1,9 @@
 package com.pixel.dao.postgresql.implementations;
 
 import com.pixel.dao.postgresql.interfaces.SackInventoryDAO;
+import com.pixel.model.Artifact;
 import com.pixel.model.SackInventory;
+import com.pixel.model.Student;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,13 +56,12 @@ public class SackInventoryDAOI implements SackInventoryDAO {
     @Override
     public boolean insertSackInventory(SackInventory sackInventory) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "INSERT INTO sacks_inventory(user_id, artifact_id, ready, id, price) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO sacks_inventory(user_id, artifact_id, ready, price) VALUES (?,?,?,?)";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, sackInventory.getUserId());
         preparedStatement.setInt(2, sackInventory.getArtifactId());
         preparedStatement.setBoolean(3, sackInventory.isReady());
-        preparedStatement.setInt(4, sackInventory.getId());
-        preparedStatement.setInt(5, sackInventory.getPrice());
+        preparedStatement.setInt(4, sackInventory.getPrice());
         int i = preparedStatement.executeUpdate();
         if (i == 1) {
             preparedStatement.close();
@@ -84,6 +85,11 @@ public class SackInventoryDAOI implements SackInventoryDAO {
         return sacksList;
 
     }
+
+//    public void markArtifactAsUsedBy(Student student, Artifact artifact){
+//
+//
+//    }
 
     @Override
     public SackInventory getById(int id) throws SQLException {
