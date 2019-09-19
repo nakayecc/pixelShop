@@ -36,7 +36,7 @@ public class SackInventoryDAOI implements SackInventoryDAO {
     public boolean updateSackInventory(SackInventory sackInventory) throws SQLException {
         PreparedStatement preparedStatement;
 
-        String query = "UPDATE sacks_inventory SET sack_id =?,artifact_id = ?,ready = ?, id = ?, price = ?  " +
+        String query = "UPDATE sacks_inventory SET user_id =?,artifact_id = ?,ready = ?, id = ?, price = ?  " +
                 "WHERE id = " + sackInventory.getId() + "";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, sackInventory.getSackId());
@@ -55,7 +55,7 @@ public class SackInventoryDAOI implements SackInventoryDAO {
     @Override
     public boolean insertSackInventory(SackInventory sackInventory) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "INSERT INTO sacks_inventory(sack_id, artifact_id, ready, id, price) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO sacks_inventory(user_id, artifact_id, ready, id, price) VALUES (?,?,?,?,?)";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, sackInventory.getSackId());
         preparedStatement.setInt(2, sackInventory.getArtifactId());
@@ -89,7 +89,7 @@ public class SackInventoryDAOI implements SackInventoryDAO {
     @Override
     public SackInventory getById(int id) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "select sack_id, artifact_id, ready, id, price from sacks_inventory " +
+        String query = "select user_id, artifact_id, ready, id, price from sacks_inventory " +
                 "WHERE id = ?";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id);
@@ -108,14 +108,14 @@ public class SackInventoryDAOI implements SackInventoryDAO {
     }
 
     private ResultSet getAllArtifactRS() throws SQLException {
-        String query = " SELECT sack_id, artifact_id, ready, id, price FROM sacks_inventory";
+        String query = " SELECT user_id, artifact_id, ready, id, price FROM sacks_inventory";
         Statement stmt = connection.createStatement();
         return stmt.executeQuery(query);
     }
 
     private ResultSet getRSByValue(String valueName, String value) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "SELECT sack_id, artifact_id, ready, id, price FROM sacks_inventory " +
+        String query = "SELECT user_id, artifact_id, ready, id, price FROM sacks_inventory " +
                 "WHERE " + valueName + " = ?";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, value);
@@ -124,7 +124,7 @@ public class SackInventoryDAOI implements SackInventoryDAO {
 
     private ResultSet getRSByValue(String valueName, int value) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "SELECT sack_id, artifact_id, ready, id, price FROM sacks_inventory " +
+        String query = "SELECT user_id, artifact_id, ready, id, price FROM sacks_inventory " +
                 "WHERE " + valueName + " = ?";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, value);
