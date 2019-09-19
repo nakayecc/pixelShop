@@ -1,7 +1,6 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.UserDAOI;
-
 import java.sql.SQLException;
 
 public class UserController {
@@ -20,6 +19,7 @@ public class UserController {
     }
 
     public String checkUserRank(int id) throws SQLException {
+
 
         if (userDAOI.checkIfUserIsCreep(id)) {
             return "creep";

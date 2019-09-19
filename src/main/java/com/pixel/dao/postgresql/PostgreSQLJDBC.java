@@ -27,11 +27,4 @@ public class PostgreSQLJDBC {
     }
 
 
-
-//    public void execute(String query) throws SQLException {
-//        PreparedStatement ps = c.prepareStatement(query);
-//        ps.executeUpdate();
-//        c.close();
-//    }
-
 }

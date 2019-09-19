@@ -1,9 +1,6 @@
 package com.pixel;
 
-import com.pixel.controller.ArtifactController;
-import com.pixel.controller.QuestController;
-import com.pixel.controller.StudentController;
-import com.pixel.controller.UserController;
+import com.pixel.controller.*;
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.implementations.*;
 import com.pixel.view.Index;
@@ -27,18 +24,23 @@ public class App {
         QuestDAOI questDAOI = new QuestDAOI(postgreSQLJDBC.getConnection());
         QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(postgreSQLJDBC.getConnection());
         LevelsDAOI levelsDAOI = new LevelsDAOI(postgreSQLJDBC.getConnection());
+        SessionDAOI sessionDAOI = new SessionDAOI(postgreSQLJDBC.getConnection());
         ClassesDAOI classesDAOI = new ClassesDAOI(postgreSQLJDBC.getConnection());
+        SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(postgreSQLJDBC.getConnection());
+        SackDAOI sackDAOI = new SackDAOI(postgreSQLJDBC.getConnection());
+
 
 
         UserController userController = new UserController(userDAOI);
         StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI, classesDAOI);
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
+        OwnItemController ownItemController = new OwnItemController(sackDAOI,sackInventoryDAOI,artifactDAOI);
 
         HttpServer server = null;
         try {
             server = HttpServer.create(new InetSocketAddress(8080), 0);
-            server.createContext("/", new Index(studentController, questController,artifactController));
+            server.createContext("/", new Index(studentController, questController,artifactController,ownItemController));
             server.createContext("/static", new Static());
             server.createContext("/login", new Login());
             server.setExecutor(null);

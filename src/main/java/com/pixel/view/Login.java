@@ -26,7 +26,6 @@ public class Login implements HttpHandler {
     private Common common;
 
     public Login() {
-        sessionDAOI = new SessionDAOI();
         common = new Common();
 
     }
@@ -35,6 +34,7 @@ public class Login implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         Connection connection = postgreSQLJDBC.getConnection();
+        sessionDAOI = new SessionDAOI(connection);
         UserController userController = new UserController(new UserDAOI(connection));
         CookieHandler cookieHandler = new CookieHandler();
         String response = "";

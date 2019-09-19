@@ -7,12 +7,8 @@ import java.sql.*;
 
 public class SessionDAOI implements Session {
     private Connection c;
-    private PreparedStatement ps;
-    private ResultSet rs;
-    private Statement stmt;
-
-    public SessionDAOI() {
-        this.c = new PostgreSQLJDBC().getConnection();
+    public SessionDAOI(Connection connection) {
+        this.c = connection;
     }
 
 
@@ -20,8 +16,9 @@ public class SessionDAOI implements Session {
 
     @Override
     public void createSession(String session, int userId) throws SQLException {
+        PreparedStatement ps;
         String query = "INSERT INTO session(sessionid, id_user)  VALUES (?,?)";
-        this.ps = c.prepareStatement(query);
+        ps = c.prepareStatement(query);
         ps.setString(1, session);
         ps.setInt(2, userId);
         ps.executeUpdate();
@@ -29,15 +26,18 @@ public class SessionDAOI implements Session {
 
     @Override
     public void deleteSessionById(int userId) throws SQLException {
+        Statement stmt;
         String query = "DELETE FROM session WHERE id_user = " + userId + "";
-        this.stmt = c.createStatement();
+        stmt = c.createStatement();
         stmt.execute(query);
     }
 
     @Override
     public boolean isCurrentSession(String session) throws SQLException {
+        PreparedStatement ps;
+        ResultSet rs;
         String query = "SELECT * FROM session WHERE sessionid = ?";
-        this.ps = c.prepareStatement(query);
+        ps = c.prepareStatement(query);
         ps.setString(1, session);
         rs = ps.executeQuery();
         return rs.next();
@@ -45,8 +45,10 @@ public class SessionDAOI implements Session {
 
     @Override
     public int getUserId(String session) throws SQLException {
+        PreparedStatement ps;
+        ResultSet rs;
         String query = "SELECT * FROM session WHERE sessionid = ?";
-        this.ps = c.prepareStatement(query);
+        ps = c.prepareStatement(query);
         ps.setString(1, session);
         rs = ps.executeQuery();
         if (rs.next()){
