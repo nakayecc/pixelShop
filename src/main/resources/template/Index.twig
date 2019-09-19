@@ -188,8 +188,10 @@
                     <div class="modal-body">
                         {{ artifactShop.getDescription() }}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Buy</button>
+                    <div class="modal-footer mx-auto">
+                        <form method="POST">
+                            <button type="submit" name="id" value="{{ artifactShop.getId() }}" class="btn btn-primary mx-auto">BUY</button>
+                        </form>
                     </div>
                 </div>
             </div>
