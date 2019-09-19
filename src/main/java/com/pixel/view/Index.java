@@ -33,7 +33,6 @@ public class Index implements HttpHandler {
         Common common = new Common();
 
 
-
         String response = "";
         String method = httpExchange.getRequestMethod();
         Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
@@ -64,7 +63,6 @@ public class Index implements HttpHandler {
             String formData = br.readLine();
             Map inputs = common.parseFormData(formData);
             String artifactId = String.valueOf(inputs.get("id"));
-            System.out.println(artifactId);
             httpExchange.getResponseHeaders().set("Location", "/");
             httpExchange.sendResponseHeaders(303, response.getBytes().length);
 
@@ -72,7 +70,6 @@ public class Index implements HttpHandler {
         httpExchange.sendResponseHeaders(303, response.getBytes().length);
 
     }
-
 
 
     public void handleRequest(HttpExchange httpExchange) throws IOException {
@@ -93,24 +90,21 @@ public class Index implements HttpHandler {
         CookieHandler cookieHandler = new CookieHandler();
 
 
-
-
         UserController userController = new UserController(userDAOI);
-        StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI, classesDAOI);
+        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI);
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
-        OwnItemController ownItemController = new OwnItemController(sackDAOI,sackInventoryDAOI,artifactDAOI);
+        OwnItemController ownItemController = new OwnItemController(sackDAOI, sackInventoryDAOI, artifactDAOI);
         SessionController sessionController = new SessionController(sessionDAOI, cookieHandler);
 
         String response = "";
         Student student = null; //find by cookie
         int userId = sessionController.getUserIdBySession(httpExchange);
-        System.out.println(userId);
         try {
 
             student = studentController.getStudent(userId);
 
-            System.out.println(student.getName());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -126,9 +120,9 @@ public class Index implements HttpHandler {
         model.with("QuestList", questController.getQuestList());
         model.with("artifactGroupList", artifactController.getGroupArtifact());
         model.with("artifactSoloList", artifactController.getSoloArtifact());
-        model.with("studentArtifactList",ownItemController.getStudentOwnArtifact(student));
-        model.with("questDoneMap",studentController.getAllQuestCompleted(student).entrySet());
-        model.with("artifactShopSList",artifactController.getAllArtifact());
+        model.with("studentArtifactList", ownItemController.getStudentOwnArtifact(student));
+        model.with("questDoneMap", studentController.getAllQuestCompleted(student).entrySet());
+        model.with("artifactShopSList", artifactController.getAllArtifact());
 
         response = template.render(model);
         try {
@@ -146,13 +140,5 @@ public class Index implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-
-
-    public static void main(String[] args) {
-        String text = "ala ma kota";
-
-        System.out.println(text.replaceAll(" ",""));
-    }
-
 
 }
