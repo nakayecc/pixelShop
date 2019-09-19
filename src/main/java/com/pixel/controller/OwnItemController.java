@@ -24,20 +24,8 @@ public class OwnItemController {
     }
 
 
-    public Sack studentGetSack(Student student) {
-        Sack sack = new Sack();
-        try {
-            sack = sackDAOI.getListBy("user_id", student.getId()).get(0);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return sack;
-    }
-
-
     public List<SackInventory> getListStudentArtifactId(Student student) {
         List<SackInventory> sackInventoryList = new ArrayList<>();
-
         try {
             sackInventoryList = sackInventoryDAOI.getListBy("user_id", student.getId());
         } catch (SQLException e) {
@@ -49,15 +37,18 @@ public class OwnItemController {
 
     public List<Artifact> getStudentOwnArtifact(Student student) {
         List<Artifact> sackList = new ArrayList<>();
+        List<SackInventory> allArtif = getListStudentArtifactId(student);
         for (SackInventory sackItem : getListStudentArtifactId(student)) {
             try {
-                sackList.add(artifactDAOI.getById(sackItem.getId()));
+                sackList.add(artifactDAOI.getById(sackItem.getArtifactId()));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return sackList;
     }
+
+
 
 }
 

@@ -4,6 +4,7 @@ import com.pixel.controller.*;
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.implementations.*;
 import com.pixel.helper.Common;
+import com.pixel.model.Artifact;
 import com.pixel.model.Quest;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
@@ -18,61 +19,11 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Index implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-        Connection connection = postgreSQLJDBC.getConnection();
-
-        SessionDAOI sessionDAOI = new SessionDAOI(connection);
-        CookieHandler cookieHandler = new CookieHandler();
-        Common common = new Common();
-
-
-        String response = "";
-        String method = httpExchange.getRequestMethod();
-        Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
-
-        if (method.equals("GET")) {
-            if (cookie.isPresent()) {
-                try {
-                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
-                        handleRequest(httpExchange);
-
-                    } else {
-                        httpExchange.getResponseHeaders().set("Location", "/login");
-                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                response = common.getLoginTemplate();
-            }
-
-            httpExchange.sendResponseHeaders(303, response.getBytes().length);
-        }
-
-        if (method.equals("POST")) {
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-            BufferedReader br = new BufferedReader(isr);
-            String formData = br.readLine();
-            Map inputs = common.parseFormData(formData);
-            String artifactId = String.valueOf(inputs.get("id"));
-            httpExchange.getResponseHeaders().set("Location", "/");
-            httpExchange.sendResponseHeaders(303, response.getBytes().length);
-
-        }
-        httpExchange.sendResponseHeaders(303, response.getBytes().length);
-
-    }
-
-
-    public void handleRequest(HttpExchange httpExchange) throws IOException {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
 
         Connection connection = postgreSQLJDBC.getConnection();
@@ -91,15 +42,73 @@ public class Index implements HttpHandler {
 
 
         UserController userController = new UserController(userDAOI);
-        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI);
+        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI);
         QuestController questController = new QuestController(questDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         OwnItemController ownItemController = new OwnItemController(sackDAOI, sackInventoryDAOI, artifactDAOI);
         SessionController sessionController = new SessionController(sessionDAOI, cookieHandler);
 
+
+        //StudentController studentController = new StudentController(studentDAOI,levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI);
+
+        Common common = new Common();
+
+
+        String response = "";
+        String method = httpExchange.getRequestMethod();
+        Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
+
+
+        if (method.equals("GET")) {
+            if (cookie.isPresent()) {
+                try {
+                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
+                        System.out.println("dupa tak");
+                        handleRequest(httpExchange, connection, cookieHandler, userController,
+                                studentController, artifactController, ownItemController, sessionController, questController);
+                    } else {
+                        System.out.println("dupa nie");
+                        httpExchange.getResponseHeaders().set("Location", "/login");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                httpExchange.getResponseHeaders().set("Location", "/login");
+                httpExchange.sendResponseHeaders(303, response.getBytes().length);
+            }
+
+
+        }
+        System.out.println("dupa");
+
+        if (method.equals("POST")) {
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+            Map inputs = common.parseFormData(formData);
+            String artifactId = String.valueOf(inputs.get("id"));
+            studentController.buyArtifactById(sessionController.getUserIdBySession(httpExchange), Integer.valueOf(artifactId));
+            httpExchange.getResponseHeaders().set("Location", "/");
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+
+        }
+        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+    }
+
+
+    public void handleRequest(HttpExchange httpExchange, Connection connection, CookieHandler cookieHandler, UserController userController,
+                              StudentController studentController, ArtifactController artifactController,
+                              OwnItemController ownItemController, SessionController sessionController,
+                              QuestController questController){
+
+
+        System.out.println("dupa1");
         String response = "";
         Student student = null; //find by cookie
         int userId = sessionController.getUserIdBySession(httpExchange);
+        System.out.println(userId);
         try {
 
             student = studentController.getStudent(userId);
@@ -110,6 +119,16 @@ public class Index implements HttpHandler {
         }
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Index.twig");
         JtwigModel model = JtwigModel.newModel();
+
+        List<Artifact>artifacts = new ArrayList<>();
+
+        artifacts = ownItemController.getStudentOwnArtifact(student);
+
+        for (Artifact artifact: artifacts){
+            System.out.println(artifact.getId() +" " +artifact.getName());
+        }
+
+        System.out.println(artifacts);
 
         int index = 0;
 
@@ -123,14 +142,13 @@ public class Index implements HttpHandler {
         model.with("studentArtifactList", ownItemController.getStudentOwnArtifact(student));
         model.with("questDoneMap", studentController.getAllQuestCompleted(student).entrySet());
         model.with("artifactShopSList", artifactController.getAllArtifact());
-
+        System.out.println(ownItemController.getStudentOwnArtifact(student));
         response = template.render(model);
         try {
-            connection.close();
-        } catch (SQLException e) {
+            sendResponse(httpExchange, response);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        sendResponse(httpExchange, response);
 
     }
 
@@ -140,5 +158,6 @@ public class Index implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
+
 
 }
