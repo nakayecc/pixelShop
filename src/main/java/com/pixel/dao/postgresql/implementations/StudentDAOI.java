@@ -69,6 +69,20 @@ public class StudentDAOI implements StudentDAO {
         return total_exp;
     }
 
+    public int getSpendings(Student s) throws SQLException {
+        PreparedStatement preparedStatement;
+        int id = s.getId();
+        String query = "select price from sacks_inventory WHERE (user_id = ?);";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+        int total_spend = 0;
+        while (rs.next()) {
+            total_spend += rs.getInt("price");
+        }
+        return total_spend;
+    }
+
     @Override
     public boolean save(Student s) throws SQLException {
         PreparedStatement preparedStatement;

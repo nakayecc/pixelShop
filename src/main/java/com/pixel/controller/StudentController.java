@@ -99,13 +99,29 @@ StudentController {
         }
     }
 
-    public void buyArtifactById(int user_id, int artifact_id){
+    public boolean buyArtifactById(int user_id, int artifact_id){
         try {
             Student buyer = studentDAOI.getById(user_id);
             Artifact toBuy = artifactDAOI.getById(artifact_id);
-            sackInventoryDAOI.insertSackInventory(new SackInventory(buyer.getId(), toBuy.getId(), true, toBuy.getPrice()));
+            if (getStudentMoney(buyer) > toBuy.getPrice()) {
+                sackInventoryDAOI.insertSackInventory(new SackInventory(buyer.getId(), toBuy.getId(), true, toBuy.getPrice()));
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int getStudentMoney(Student student){
+        return getStudentExperience(student) - getStudentSpending(student);
+    }
+
+    private int getStudentSpending(Student student){
+        try {
+            return studentDAOI.getSpendings(student);
+        } catch (SQLException e) {
+            return 0;
         }
     }
 
