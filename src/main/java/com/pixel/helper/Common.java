@@ -1,12 +1,20 @@
 package com.pixel.helper;
 
+import com.pixel.dao.postgresql.PostgreSQLJDBC;
+import com.pixel.dao.postgresql.implementations.SessionDAOI;
+import com.pixel.view.CookieHandler;
+import com.sun.net.httpserver.HttpExchange;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.UnsupportedEncodingException;
+import java.net.HttpCookie;
 import java.net.URLDecoder;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Common {
 
@@ -27,4 +35,5 @@ public class Common {
         String response = template.render(model);
         return response;
     }
+
 }

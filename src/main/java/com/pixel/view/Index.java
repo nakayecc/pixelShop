@@ -3,6 +3,7 @@ package com.pixel.view;
 import com.pixel.controller.*;
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.implementations.*;
+import com.pixel.helper.Common;
 import com.pixel.model.Quest;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
@@ -12,15 +13,52 @@ import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class Index implements HttpHandler {
-
-
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
+        Connection connection = postgreSQLJDBC.getConnection();
+
+        SessionDAOI sessionDAOI = new SessionDAOI(connection);
+        CookieHandler cookieHandler = new CookieHandler();
+        Common common = new Common();
+
+
+
+        String response = "";
+        String method = httpExchange.getRequestMethod();
+        Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
+
+        if (method.equals("GET")) {
+            if (cookie.isPresent()) {
+                try {
+                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
+                        handleRequest(httpExchange);
+
+                    } else {
+                        httpExchange.getResponseHeaders().set("Location", "/login");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                response = common.getLoginTemplate();
+            }
+
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+        }
+    }
+
+
+
+    public void handleRequest(HttpExchange httpExchange) throws IOException {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
 
         Connection connection = postgreSQLJDBC.getConnection();
@@ -98,5 +136,6 @@ public class Index implements HttpHandler {
 
         System.out.println(text.replaceAll(" ",""));
     }
+
 
 }
