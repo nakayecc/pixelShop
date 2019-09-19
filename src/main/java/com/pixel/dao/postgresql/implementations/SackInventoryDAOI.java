@@ -1,7 +1,6 @@
 package com.pixel.dao.postgresql.implementations;
 
 import com.pixel.dao.postgresql.interfaces.SackInventoryDAO;
-import com.pixel.model.Sack;
 import com.pixel.model.SackInventory;
 
 import java.sql.*;
@@ -39,7 +38,7 @@ public class SackInventoryDAOI implements SackInventoryDAO {
         String query = "UPDATE sacks_inventory SET user_id =?,artifact_id = ?,ready = ?, id = ?, price = ?  " +
                 "WHERE id = " + sackInventory.getId() + "";
         preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, sackInventory.getSackId());
+        preparedStatement.setInt(1, sackInventory.getUserId());
         preparedStatement.setInt(2, sackInventory.getArtifactId());
         preparedStatement.setBoolean(3, sackInventory.isReady());
         preparedStatement.setInt(4, sackInventory.getId());
@@ -57,7 +56,7 @@ public class SackInventoryDAOI implements SackInventoryDAO {
         PreparedStatement preparedStatement;
         String query = "INSERT INTO sacks_inventory(user_id, artifact_id, ready, id, price) VALUES (?,?,?,?,?)";
         preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, sackInventory.getSackId());
+        preparedStatement.setInt(1, sackInventory.getUserId());
         preparedStatement.setInt(2, sackInventory.getArtifactId());
         preparedStatement.setBoolean(3, sackInventory.isReady());
         preparedStatement.setInt(4, sackInventory.getId());
@@ -100,7 +99,7 @@ public class SackInventoryDAOI implements SackInventoryDAO {
     private SackInventory extractArtifactFromRS(ResultSet rs) throws SQLException {
         return new SackInventory(
                 rs.getInt("id"),
-                rs.getInt("sack_id"),
+                rs.getInt("user_id"),
                 rs.getInt("artifact_id"),
                 rs.getBoolean("ready"),
                 rs.getInt("price"));
