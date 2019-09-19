@@ -1,7 +1,7 @@
 package com.pixel;
 
 
-import com.pixel.view.Index;
+import com.pixel.view.StudentHandler;
 import com.pixel.view.Login;
 import com.pixel.view.Logout;
 import com.pixel.view.Static;
@@ -20,7 +20,7 @@ public class App {
         HttpServer server = null;
         try {
             server = HttpServer.create(new InetSocketAddress(8000), 0);
-            server.createContext("/", new Index());
+            server.createContext("/", new StudentHandler());
             server.createContext("/static", new Static());
             server.createContext("/login", new Login());
             server.createContext("/logout", new Logout());

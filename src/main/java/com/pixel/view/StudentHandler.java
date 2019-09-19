@@ -4,8 +4,6 @@ import com.pixel.controller.*;
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.implementations.*;
 import com.pixel.helper.Common;
-import com.pixel.model.Artifact;
-import com.pixel.model.Quest;
 import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -21,7 +19,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Index implements HttpHandler {
+public class StudentHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
@@ -114,7 +112,7 @@ public class Index implements HttpHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Index.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/StudentHandler.twig");
         JtwigModel model = JtwigModel.newModel();
 
 
@@ -126,7 +124,10 @@ public class Index implements HttpHandler {
         model.with("exp", studentController.getStudentExperience(student)); //TODO exp counting
         model.with("lvl", studentController.getUserLevel(student)); //TODO lvl
         model.with("indexQuest", index);
-        //model.with("mentorName",studentController.getMentorName(student));
+        model.with("mentorName",studentController.getMentorName(student));
+        model.with("activeBoost",ownItemController.getStudentOwnArtifact(student).size());
+        model.with("doneQuest",studentController.getAllQuestCompleted(student).size());
+        model.with("numberOfQuest",questController.getQuestList().size());
         model.with("className",studentController.getClassName(student));
         model.with("QuestList", questController.getQuestList());
         model.with("artifactGroupList", artifactController.getGroupArtifact());
