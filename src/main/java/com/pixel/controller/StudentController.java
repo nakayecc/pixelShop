@@ -1,10 +1,7 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.*;
-import com.pixel.model.Artifact;
-import com.pixel.model.Quest;
-import com.pixel.model.SackInventory;
-import com.pixel.model.Student;
+import com.pixel.model.*;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -14,11 +11,12 @@ StudentController {
     StudentDAOI studentDAOI ;
     LevelsDAOI levelsDAOI;
     QuestDAOI questDAOI;
+    QuestCategoryDAOI questCategoryDAOI;
     ClassDAOI classDAOI;
     ArtifactDAOI artifactDAOI;
     SackInventoryDAOI sackInventoryDAOI;
 
-    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI, ClassDAOI classDAOI, ArtifactDAOI artifactDAOI, SackInventoryDAOI sackInventoryDAOI) {
+    public StudentController(StudentDAOI studentDAOI, LevelsDAOI levelsDAOI, QuestDAOI questDAOI, ClassDAOI classDAOI, ArtifactDAOI artifactDAOI, SackInventoryDAOI sackInventoryDAOI,QuestCategoryDAOI questCategoryDAOI) {
         this.studentDAOI = studentDAOI;
         this.levelsDAOI = levelsDAOI;
         this.questDAOI = questDAOI;
@@ -83,7 +81,7 @@ StudentController {
 
     public float getPercentageOfCompleted(Student student){
         int questCompleted = getUniqueQuestCompleted(student);
-        int totalQuests = new QuestController(questDAOI).getNumberOfActiveQuest();
+        int totalQuests = new QuestController(questDAOI,questCategoryDAOI).getNumberOfActiveQuest();
         return (float) questCompleted/totalQuests*100;
     }
 

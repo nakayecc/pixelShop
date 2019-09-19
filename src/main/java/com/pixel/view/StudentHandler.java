@@ -35,12 +35,13 @@ public class StudentHandler implements HttpHandler {
         SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
         SackDAOI sackDAOI = new SackDAOI(connection);
         SessionDAOI sessionDAOI = new SessionDAOI(connection);
+        QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(connection);
         CookieHandler cookieHandler = new CookieHandler();
 
 
         UserController userController = new UserController(userDAOI);
-        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classDAOI, artifactDAOI, sackInventoryDAOI);
-        QuestController questController = new QuestController(questDAOI);
+        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classDAOI, artifactDAOI, sackInventoryDAOI,questCategoryDAOI);
+        QuestController questController = new QuestController(questDAOI,questCategoryDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         OwnItemController ownItemController = new OwnItemController(sackInventoryDAOI, artifactDAOI);
         SessionController sessionController = new SessionController(sessionDAOI, cookieHandler);

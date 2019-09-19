@@ -204,44 +204,16 @@
                                 <td>Value</td>
                                 <td>Edit</td>
                             </tr>
-
+                            {% for quest in questList %}
+                                {% set modalEditQuest = "#" ~ quest.getName().replaceAll(" ","") ~ quest.getId() %}
+                                {% set questCounter = questCounter | default(0) + 1 %}
                             <tr class="rounded">
-                                <th scope="row">1</th>
-                                <td>QuestName</td>
-                                <td>Value</td>
-                                <td data-toggle="modal" data-target="#questListEditBox">>>></td>
+                                <th scope="row">{{ questCounter }}</th>
+                                <td>{{ quest.getName() }}</td>
+                                <td>{{quest.getExp}}</td>
+                                <td data-toggle="modal" data-target="{{modalEditQuest}}">>>></td>
                             </tr>
-
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>QuestName</td>
-                                <td>Value</td>
-                                <td data-toggle="modal" data-target="#questListEditBox">>>></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>QuestName</td>
-                                <td>Value</td>
-                                <td data-toggle="modal" data-target="#questListEditBox">>>></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>QuestName</td>
-                                <td>Value</td>
-                                <td data-toggle="modal" data-target="#questListEditBox">>>></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>QuestName</td>
-                                <td>Value</td>
-                                <td data-toggle="modal" data-target="#questListEditBox">>>></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td>QuestName</td>
-                                <td>Value</td>
-                                <td data-toggle="modal" data-target="#questListEditBox">>>></td>
-                            </tr>
+                            {% endfor %}
                             <tr>
                                 <th colspan="5" data-toggle="modal" data-target="#addNewQuest">Add New Quest</th>
 
@@ -257,7 +229,7 @@
         </div>
     </div>
     <!--    ADD NEW QUEST MODAL BOX-->
-
+    {% for quest in questList %}
     <div class="modal fade" id="addNewQuest" tabindex="-1" role="dialog"
          aria-labelledby="addNewQuestTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -278,15 +250,14 @@
                             <div class="col-lg-12">Quest Category</div>
                             <div class="col-lg-12">
                                 <select class="browser-default custom-select w-75">
-                                    <option selected>Quest Category</option>
-                                    <option value="1">Basic</option>
-                                    <option value="2">Extra</option>
+                                    {% for category in categoryList %}
+                                    <option value="{{ category.getId()}}">{{ category.getName()}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="col-lg-12">Value</div>
                             <div class="col-lg-12"><input type="text"
                                                           name="class" value="100"></div>
-                            >
 
                         </div>
                     </form>
@@ -297,11 +268,13 @@
             </div>
         </div>
     </div>
+    {% endfor %}
     <!--END ADD NEW QUEST BOX-->
 
-    <!--    ADD NEW USER MODAL BOX-->
-
-    <div class="modal fade" id="questListEditBox" tabindex="-1" role="dialog"
+    <!--    ADD NEW Quest MODAL BOX-->
+    {% for quest in questList %}
+        {% set modalEditQuestExe = quest.getName().replaceAll(" ","") ~ quest.getId() %}
+    <div class="modal fade" id="{{  modalEditQuestExe }}" tabindex="-1" role="dialog"
          aria-labelledby="questListEditBoxTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -322,8 +295,9 @@
                             <div class="col-lg-12">
                                 <select class="browser-default custom-select w-75">
                                     <option selected>Quest Category</option>
-                                    <option value="1">Basic</option>
-                                    <option value="2">Extra</option>
+                                    {% for category in categoryList %}
+                                        <option value="{{ category.getId()}}">{{ category.getName()}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="col-lg-12">Value</div>
@@ -340,6 +314,7 @@
             </div>
         </div>
     </div>
+    {% endfor %}
     <!--END EDIT QUEST BOX-->
 </section>
 
@@ -357,58 +332,26 @@
                             <tbody>
                             <tr class="rounded">
                                 <th scope="row">Id</th>
-                                <td>ItemName</td>
+                                <td>Item Name</td>
                                 <td>Cost</td>
-                                <td>Type</td>
+                                <td>Group Item</td>
                                 <td>Edit</td>
                             </tr>
 
+                            {% for artifact in artifactList %}
+                                {% set modalEditArtifact = "#" ~ artifact.getName().replaceAll(" ","") ~ artifact.getId() %}
+                                {% set artifactCounter = artifactCounter | default(0) + 1 %}
                             <tr class="rounded">
-                                <th scope="row">1</th>
-                                <td>ItemName</td>
-                                <td>Cost</td>
-                                <td>Type</td>
-                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
+                                <th scope="row">{{ artifactCounter }}</th>
+                                <td>{{ artifact.getName()}}</td>
+                                <td>{{ artifact.getPrice() }}</td>
+                                <td>{{ artifact.isGlobal }}</td>
+                                <td data-toggle="modal" data-target="{{ modalEditArtifact }}">>>></td>
                             </tr>
+                            {% endfor %}
 
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>ItemName</td>
-                                <td>Cost</td>
-                                <td>Type</td>
-                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>ItemName</td>
-                                <td>Cost</td>
-                                <td>Type</td>
-                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>ItemName</td>
-                                <td>Cost</td>
-                                <td>Type</td>
-                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>ItemName</td>
-                                <td>Cost</td>
-                                <td>Type</td>
-                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td>ItemName</td>
-                                <td>Cost</td>
-                                <td>Type</td>
-                                <td data-toggle="modal" data-target="#itemListEditBox">>>></td>
-                            </tr>
                             <tr>
                                 <th colspan="5" data-toggle="modal" data-target="#addNewItem">Add New Item</th>
-
                             </tr>
                             </tbody>
                         </table>
@@ -446,8 +389,8 @@
                             <div class="col-lg-12">
                                 <select class="browser-default custom-select w-75">
                                     <option selected>Item Type</option>
-                                    <option value="1">Basic</option>
-                                    <option value="2">Extra</option>
+                                    <option value="1">true</option>
+                                    <option value="2">false</option>
                                 </select>
                             </div>
 
@@ -464,8 +407,9 @@
     <!--END ADD NEW QUEST BOX-->
 
     <!--    ADD NEW USER MODAL BOX-->
-
-    <div class="modal fade" id="itemListEditBox" tabindex="-1" role="dialog"
+    {% for artifact in artifactList %}
+    {% set modalEditArtifactExe = artifact.getName().replaceAll(" ","") ~ artifact.getId() %}
+    <div class="modal fade" id="{{ modalEditArtifactExe }}" tabindex="-1" role="dialog"
          aria-labelledby="itemListEditBoxTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -489,8 +433,8 @@
                             <div class="col-lg-12">
                                 <select class="browser-default custom-select w-75">
                                     <option selected>Item Type</option>
-                                    <option value="1">Basic</option>
-                                    <option value="2">Extra</option>
+                                    <option value="1">true</option>
+                                    <option value="2">false</option>
                                 </select>
                             </div>
 
@@ -504,6 +448,7 @@
             </div>
         </div>
     </div>
+    {% endfor %}
     <!--END EDIT QUEST BOX-->
 </section>
 
