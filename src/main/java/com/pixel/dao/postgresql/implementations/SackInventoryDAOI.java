@@ -31,6 +31,10 @@ public class SackInventoryDAOI implements com.pixel.dao.postgresql.interfaces.Sa
         return getListFromRS(getRSByValue(valueName, value));
     }
 
+    public List<SackInventory> getListOfActiveBy(String valueName, int value) throws SQLException {
+        return getListFromRS(getActiveArtifactByValue(valueName, value));
+    }
+
     @Override
     public boolean updateSackInventory(SackInventory sackInventory) throws SQLException {
         PreparedStatement preparedStatement;
@@ -142,6 +146,16 @@ public class SackInventoryDAOI implements com.pixel.dao.postgresql.interfaces.Sa
         preparedStatement.setInt(1, value);
         return preparedStatement.executeQuery();
     }
+
+    private ResultSet getActiveArtifactByValue(String valueName, int value) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "SELECT user_id, artifact_id, ready, id, price FROM sacks_inventory " +
+                "WHERE " + valueName + " = ? AND ready";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, value);
+        return preparedStatement.executeQuery();
+    }
+
     public void connClose() throws SQLException {
         connection.close();
 

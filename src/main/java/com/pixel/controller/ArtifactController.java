@@ -57,4 +57,8 @@ public class ArtifactController {
         return artifactList;
     }
 
+    public Artifact getById(int id) throws SQLException {
+        return artifactDAOI.getById(id);
+    }
+
 }

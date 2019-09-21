@@ -4,6 +4,7 @@ import com.pixel.controller.*;
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.implementations.*;
 import com.pixel.helper.Common;
+import com.pixel.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -39,6 +40,7 @@ public class MentorHandler implements HttpHandler {
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         ClassController classController = new ClassController(classesDAOI);
         CookieHandler cookieHandler = new CookieHandler();
+        OwnItemController ownItemController = new OwnItemController(sackInventoryDAOI, artifactDAOI);
         MentorController mentorController = new MentorController(studentDAOI, classesDAOI,questDAOI,artifactDAOI,mentorDAOI, questCompletedDAOI, sackInventoryDAOI);
         Common common = new Common();
 
@@ -50,7 +52,8 @@ public class MentorHandler implements HttpHandler {
             if (cookie.isPresent()) {
                 try {
                     if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
-                        handleRequest(httpExchange, connection,studentController, artifactController, questController, classController ,mentorController);
+                        handleRequest(httpExchange, connection,studentController, artifactController, questController, classController ,
+                                mentorController, ownItemController, cookieHandler, sessionDAOI);
 
                     } else {
                         httpExchange.getResponseHeaders().set("Location", "/login");
@@ -115,6 +118,9 @@ public class MentorHandler implements HttpHandler {
                 int price = Integer.parseInt(inputs.get("price").toString());
                 boolean isGlobal = Boolean.getBoolean(inputs.get("isGlobal").toString());
                 mentorController.createArtifact(itemName, description, price, isGlobal);
+            } else if(formId.equals("useItem")) {
+                int sackId = Integer.parseInt(inputs.get("deactivate").toString());
+                mentorController.disableArtifactsInSack(sackId);
             }
             httpExchange.getResponseHeaders().set("Location", "/mentor");
             httpExchange.sendResponseHeaders(303, response.getBytes().length);
@@ -125,7 +131,8 @@ public class MentorHandler implements HttpHandler {
 
     public void handleRequest(HttpExchange httpExchange, Connection connection,
                               StudentController studentController, ArtifactController artifactController,
-                              QuestController questController,ClassController classController, MentorController mentorController) {
+                              QuestController questController,ClassController classController, MentorController mentorController,
+                              OwnItemController ownItemController, CookieHandler cookieHandler, SessionDAOI sessionDAOI) throws SQLException {
 
         String response = "";
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Mentor.twig");
@@ -137,6 +144,9 @@ public class MentorHandler implements HttpHandler {
         model.with("questList",questController.getQuestList());
         model.with("categoryList",questController.getQuestCategory());
         model.with("artifactList",artifactController.getAllArtifact());
+        model.with("artifact",artifactController);
+        model.with("studentArtifactList", ownItemController);
+
         response = template.render(model);
 
 
