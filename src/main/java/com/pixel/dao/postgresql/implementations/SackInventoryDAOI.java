@@ -1,15 +1,13 @@
 package com.pixel.dao.postgresql.implementations;
 
-import com.pixel.dao.postgresql.interfaces.SackInventoryDAO;
-import com.pixel.model.Artifact;
 import com.pixel.model.SackInventory;
-import com.pixel.model.Student;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SackInventoryDAOI implements SackInventoryDAO {
+
+public class SackInventoryDAOI implements com.pixel.dao.postgresql.interfaces.SackInventoryDAO {
     private Connection connection;
 
     public SackInventoryDAOI(Connection connection) {

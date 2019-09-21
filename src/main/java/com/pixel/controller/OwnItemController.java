@@ -1,10 +1,8 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.ArtifactDAOI;
-import com.pixel.dao.postgresql.implementations.SackDAOI;
 import com.pixel.dao.postgresql.implementations.SackInventoryDAOI;
 import com.pixel.model.Artifact;
-import com.pixel.model.Sack;
 import com.pixel.model.SackInventory;
 import com.pixel.model.Student;
 

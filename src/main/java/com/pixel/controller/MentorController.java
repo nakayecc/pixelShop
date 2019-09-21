@@ -83,7 +83,11 @@ MentorController {
     }
 
     public void disableArtifactsInSack(int sackItemId){
-        sackInventoryDAOI.deactivateArtifact(sackItemId);
+        try {
+            sackInventoryDAOI.disableArtifact(sackInventoryDAOI.getById(sackItemId));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
