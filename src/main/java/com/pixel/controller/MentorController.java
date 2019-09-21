@@ -20,7 +20,7 @@ MentorController {
     QuestCompletedDAOI questCompletedDAOI;
     SackInventoryDAOI sackInventoryDAOI;
 
-    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI, MentorDAOI mentorDAOI) {
+    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI, MentorDAOI mentorDAOI, QuestCompletedDAOI questCompletedDAOI, SackInventoryDAOI sackInventoryDAOI) {
         this.studentDAOI = studentDAOI;
         this.classesDAOI = classesDAOI;
         this.questDAOI = questDAOI;

@@ -25,6 +25,7 @@ public class MentorHandler implements HttpHandler {
         ArtifactDAOI artifactDAOI = new ArtifactDAOI(connection);
         StudentDAOI studentDAOI = new StudentDAOI(connection);
         QuestDAOI questDAOI = new QuestDAOI(connection);
+        QuestCompletedDAOI questCompletedDAOI = new QuestCompletedDAOI(connection);
         LevelsDAOI levelsDAOI = new LevelsDAOI(connection);
         ClassesDAOI classesDAOI = new ClassesDAOI(connection);
         SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
@@ -38,7 +39,7 @@ public class MentorHandler implements HttpHandler {
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         ClassController classController = new ClassController(classesDAOI);
         CookieHandler cookieHandler = new CookieHandler();
-        MentorController mentorController = new MentorController(studentDAOI, classesDAOI,questDAOI,artifactDAOI,mentorDAOI);
+        MentorController mentorController = new MentorController(studentDAOI, classesDAOI,questDAOI,artifactDAOI,mentorDAOI, questCompletedDAOI, sackInventoryDAOI);
         Common common = new Common();
 
         String response = "";
