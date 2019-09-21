@@ -79,10 +79,10 @@ StudentController {
         }
     }
 
-    public float getPercentageOfCompleted(Student student){
+    public int getPercentageOfCompleted(Student student){
         int questCompleted = getUniqueQuestCompleted(student);
         int totalQuests = new QuestController(questDAOI,questCategoryDAOI).getNumberOfActiveQuest();
-        return (float) questCompleted/totalQuests*100;
+        return 100*questCompleted /totalQuests;
     }
 
     public String getMentorName(Student student){

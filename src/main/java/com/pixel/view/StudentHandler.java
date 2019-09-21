@@ -135,6 +135,7 @@ public class StudentHandler implements HttpHandler {
         model.with("artifactSoloList", artifactController.getSoloArtifact());
         model.with("studentArtifactList", ownItemController.getStudentOwnArtifact(student));
         model.with("questDoneMap", studentController.getAllQuestCompleted(student).entrySet());
+        model.with("percentageQuestCompleted", studentController.getPercentageOfCompleted(student));
         model.with("artifactShopSList", artifactController.getAllArtifact());
         System.out.println(ownItemController.getStudentOwnArtifact(student));
         response = template.render(model);

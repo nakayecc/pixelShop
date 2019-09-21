@@ -81,7 +81,7 @@
                     <p>Done quests: {{ doneQuest }}</p>
                     <div class="progress mb-3">
                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                             aria-valuenow="{{ doneQuest }}" aria-valuemin="0" aria-valuemax="{{ numberOfQuest }}" style="width: 15%"></div>
+                             aria-valuenow="{{ doneQuest }}" aria-valuemin="0" aria-valuemax="{{ numberOfQuest }}" style="width: {{ percentageQuestCompleted }}%"></div>
                     </div>
                     <p>Your Personal Mentor: {{ mentorName }}</p>
                     <p>Your class: {{ className }}</p>
