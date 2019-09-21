@@ -100,36 +100,47 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="" method="post">
+                    <form action="" method="POST">
+                        <div class="modal-body">
+
                             <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="userId" value="{{student.getId()}}">
+                                </div>
                                 <div class="col-lg-12">Username</div>
                                 <div class="col-lg-12">
                                     <input type="text" name="username" value="Username">
                                 </div>
                                 <div class="col-lg-12">Class</div>
                                 <div class="col-lg-12">
-                                    <select class="form-control">
-                                        {% for class in classList %}
-                                            <option id="{{ class.getId() }}">{{ class.getName() }}</option>
-                                        {% endfor %}
-                                    </select>
+                                    <label>
+                                        <select name="class" class="form-control">
+                                            {% for class in classList %}
+                                                <option id="{{ class.getId() }}" value="{{ class.getId() }}">{{ class.getName() }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
                                 </div>
                                 <div class="col-lg-12">Mentor</div>
                                 <div class="col-lg-12">
-                                    <select class="form-control">
+                                    <select name="mentor" class="form-control">
                                         {% for mentor in mentorList %}
-                                            <option id="{{ mentor.getId() }}">{{ mentor.getName() }}</option>
+                                            <option id="{{ mentor.getId() }}" value="{{ mentor.getId() }}">{{ mentor.getName() }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
 
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Save Changes</button>
-                    </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="editUser" class="btn btn-primary mx-auto">Save
+                                Changes
+                            </button>
+
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -176,7 +187,9 @@
                                 </select>
 
                             </div>
+                        </div>
                     </form>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary mx-auto">Add User</button>
@@ -207,12 +220,12 @@
                             {% for quest in questList %}
                                 {% set modalEditQuest = "#" ~ quest.getName().replaceAll(" ","") ~ quest.getId() %}
                                 {% set questCounter = questCounter | default(0) + 1 %}
-                            <tr class="rounded">
-                                <th scope="row">{{ questCounter }}</th>
-                                <td>{{ quest.getName() }}</td>
-                                <td>{{quest.getExp}}</td>
-                                <td data-toggle="modal" data-target="{{modalEditQuest}}">>>></td>
-                            </tr>
+                                <tr class="rounded">
+                                    <th scope="row">{{ questCounter }}</th>
+                                    <td>{{ quest.getName() }}</td>
+                                    <td>{{ quest.getExp }}</td>
+                                    <td data-toggle="modal" data-target="{{ modalEditQuest }}">>>></td>
+                                </tr>
                             {% endfor %}
                             <tr>
                                 <th colspan="5" data-toggle="modal" data-target="#addNewQuest">Add New Quest</th>
@@ -230,90 +243,90 @@
     </div>
     <!--    ADD NEW QUEST MODAL BOX-->
     {% for quest in questList %}
-    <div class="modal fade" id="addNewQuest" tabindex="-1" role="dialog"
-         aria-labelledby="addNewQuestTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Quest</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post">
-                        <div class="row mx-auto text-center">
-                            <div class="col-lg-12">Quest Name</div>
-                            <div class="col-lg-12">
-                                <input type="text" name="questName" value="QuestName">
-                            </div>
-                            <div class="col-lg-12">Quest Category</div>
-                            <div class="col-lg-12">
-                                <select class="browser-default custom-select w-75">
-                                    {% for category in categoryList %}
-                                    <option value="{{ category.getId()}}">{{ category.getName()}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-lg-12">Value</div>
-                            <div class="col-lg-12"><input type="text"
-                                                          name="class" value="100"></div>
+        <div class="modal fade" id="addNewQuest" tabindex="-1" role="dialog"
+             aria-labelledby="addNewQuestTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Quest</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">Quest Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="questName" value="QuestName">
+                                </div>
+                                <div class="col-lg-12">Quest Category</div>
+                                <div class="col-lg-12">
+                                    <select class="browser-default custom-select w-75">
+                                        {% for category in categoryList %}
+                                            <option value="{{ category.getId() }}">{{ category.getName() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">Value</div>
+                                <div class="col-lg-12"><input type="text"
+                                                              name="class" value="100"></div>
 
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Add Quest</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto">Add Quest</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endfor %}
     <!--END ADD NEW QUEST BOX-->
 
     <!--    ADD NEW Quest MODAL BOX-->
     {% for quest in questList %}
         {% set modalEditQuestExe = quest.getName().replaceAll(" ","") ~ quest.getId() %}
-    <div class="modal fade" id="{{  modalEditQuestExe }}" tabindex="-1" role="dialog"
-         aria-labelledby="questListEditBoxTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Quest</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post">
-                        <div class="row mx-auto text-center">
-                            <div class="col-lg-12">Quest Name</div>
-                            <div class="col-lg-12">
-                                <input type="text" name="questName" value="QuestName">
-                            </div>
-                            <div class="col-lg-12">Quest Category</div>
-                            <div class="col-lg-12">
-                                <select class="browser-default custom-select w-75">
-                                    <option selected>Quest Category</option>
-                                    {% for category in categoryList %}
-                                        <option value="{{ category.getId()}}">{{ category.getName()}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-lg-12">Value</div>
-                            <div class="col-lg-12"><input type="text"
-                                                          name="class" value="100"></div>
+        <div class="modal fade" id="{{ modalEditQuestExe }}" tabindex="-1" role="dialog"
+             aria-labelledby="questListEditBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Quest</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">Quest Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="questName" value="QuestName">
+                                </div>
+                                <div class="col-lg-12">Quest Category</div>
+                                <div class="col-lg-12">
+                                    <select class="browser-default custom-select w-75">
+                                        <option selected>Quest Category</option>
+                                        {% for category in categoryList %}
+                                            <option value="{{ category.getId() }}">{{ category.getName() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">Value</div>
+                                <div class="col-lg-12"><input type="text"
+                                                              name="class" value="100"></div>
 
 
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Edit Quest</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto">Edit Quest</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endfor %}
     <!--END EDIT QUEST BOX-->
 </section>
@@ -341,13 +354,13 @@
                             {% for artifact in artifactList %}
                                 {% set modalEditArtifact = "#" ~ artifact.getName().replaceAll(" ","") ~ artifact.getId() %}
                                 {% set artifactCounter = artifactCounter | default(0) + 1 %}
-                            <tr class="rounded">
-                                <th scope="row">{{ artifactCounter }}</th>
-                                <td>{{ artifact.getName()}}</td>
-                                <td>{{ artifact.getPrice() }}</td>
-                                <td>{{ artifact.isGlobal }}</td>
-                                <td data-toggle="modal" data-target="{{ modalEditArtifact }}">>>></td>
-                            </tr>
+                                <tr class="rounded">
+                                    <th scope="row">{{ artifactCounter }}</th>
+                                    <td>{{ artifact.getName() }}</td>
+                                    <td>{{ artifact.getPrice() }}</td>
+                                    <td>{{ artifact.isGlobal }}</td>
+                                    <td data-toggle="modal" data-target="{{ modalEditArtifact }}">>>></td>
+                                </tr>
                             {% endfor %}
 
                             <tr>
@@ -408,46 +421,46 @@
 
     <!--    ADD NEW USER MODAL BOX-->
     {% for artifact in artifactList %}
-    {% set modalEditArtifactExe = artifact.getName().replaceAll(" ","") ~ artifact.getId() %}
-    <div class="modal fade" id="{{ modalEditArtifactExe }}" tabindex="-1" role="dialog"
-         aria-labelledby="itemListEditBoxTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post">
-                        <div class="row mx-auto text-center">
-                            <div class="col-lg-12">Item Name</div>
-                            <div class="col-lg-12">
-                                <input type="text" name="itemName" value="ItemName">
-                            </div>
-                            <div class="col-lg-12">Cost</div>
-                            <div class="col-lg-12"><input type="text"
-                                                          name="class" value="100"></div>
-                            <div class="col-lg-12">Item Category</div>
-                            <div class="col-lg-12">
-                                <select class="browser-default custom-select w-75">
-                                    <option selected>Item Type</option>
-                                    <option value="1">true</option>
-                                    <option value="2">false</option>
-                                </select>
-                            </div>
+        {% set modalEditArtifactExe = artifact.getName().replaceAll(" ","") ~ artifact.getId() %}
+        <div class="modal fade" id="{{ modalEditArtifactExe }}" tabindex="-1" role="dialog"
+             aria-labelledby="itemListEditBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">Item Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="itemName" value="ItemName">
+                                </div>
+                                <div class="col-lg-12">Cost</div>
+                                <div class="col-lg-12"><input type="text"
+                                                              name="class" value="100"></div>
+                                <div class="col-lg-12">Item Category</div>
+                                <div class="col-lg-12">
+                                    <select class="browser-default custom-select w-75">
+                                        <option selected>Item Type</option>
+                                        <option value="1">true</option>
+                                        <option value="2">false</option>
+                                    </select>
+                                </div>
 
 
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Edit Item</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto">Edit Item</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endfor %}
     <!--END EDIT QUEST BOX-->
 </section>

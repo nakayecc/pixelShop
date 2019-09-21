@@ -11,15 +11,17 @@ import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class MentorHandler implements HttpHandler {
     @Override
-    public void handle(HttpExchange httpExchange) {
+    public void handle(HttpExchange httpExchange) throws IOException {
         PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
         Connection connection = postgreSQLJDBC.getConnection();
 
@@ -31,15 +33,54 @@ public class MentorHandler implements HttpHandler {
         SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
         MentorDAOI mentorDAOI = new MentorDAOI(connection);
         QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(connection);
+        SessionDAOI sessionDAOI = new SessionDAOI(connection);
+
 
         StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classDAOI, artifactDAOI, sackInventoryDAOI,questCategoryDAOI);
         QuestController questController = new QuestController(questDAOI,questCategoryDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         ClassController classController = new ClassController(classDAOI);
+        CookieHandler cookieHandler = new CookieHandler();
         MentorController mentorController = new MentorController(studentDAOI,classDAOI,questDAOI,artifactDAOI,mentorDAOI);
+        Common common = new Common();
 
-        handleRequest(httpExchange, connection,studentController, artifactController, questController, classController ,mentorController);
+        String response = "";
+        String method = httpExchange.getRequestMethod();
+        Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
 
+        if (method.equals("GET")) {
+            if (cookie.isPresent()) {
+                try {
+                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
+                        handleRequest(httpExchange, connection,studentController, artifactController, questController, classController ,mentorController);
+
+                    } else {
+                        httpExchange.getResponseHeaders().set("Location", "/login");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                httpExchange.getResponseHeaders().set("Location", "/login");
+                httpExchange.sendResponseHeaders(303, response.getBytes().length);
+            }
+
+
+        }
+
+        if (method.equals("POST")) {
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+            Map inputs = common.parseFormData(formData);
+
+            String formId = String.valueOf(inputs.get("id"));
+            System.out.println(inputs);
+//            httpExchange.getResponseHeaders().set("Location", "/");
+//            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+
+        }
     }
 
     public void handleRequest(HttpExchange httpExchange, Connection connection,

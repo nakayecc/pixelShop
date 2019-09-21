@@ -24,7 +24,6 @@ import java.util.UUID;
 public class Login implements HttpHandler {
     private SessionDAOI sessionDAOI;
     private Common common;
-
     public Login() {
         common = new Common();
 
@@ -72,6 +71,7 @@ public class Login implements HttpHandler {
             String password = String.valueOf(inputs.get("password"));
             try {
                 if (userController.checkIfPasswordIsCorrect(username, password)) {
+                    //todo nie zwracac -1 dodatkowa metoda czy user istnieje
                     cookies = new HttpCookie("sessionId", generateSessionID());
                     httpExchange.getResponseHeaders().add("Set-Cookie", cookies.toString());
                     try {
@@ -108,28 +108,12 @@ public class Login implements HttpHandler {
 
 
     private String generateSessionID() {
+        //todo poczytac o uuid
         UUID generatedId = UUID.randomUUID();
         return generatedId.toString();
     }
 
 
-    private String loginUser(HttpExchange httpExchange) throws IOException {
-        //todo get user id and identify
-        String userType = "student";
-        switch (userType) {
-            case "creep":
-                //todo
-                break;
-            case "mentor":
-                //todo
-                break;
-            case "student":
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("template/index.twig");
-                JtwigModel model = JtwigModel.newModel();
-                String response = template.render(model);
-                return response;
-        }
-        return "elo";
-    }
+
 
 }

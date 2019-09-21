@@ -22,6 +22,7 @@ public class PostgreSQLJDBC {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
+            //todo obsluga wyjatku
         }
         return c;
     }
