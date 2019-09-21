@@ -1,6 +1,6 @@
 package com.pixel.model;
 
-public class SackInventory {
+public class  SackInventory {
 
     private int id;
     private int userId;
