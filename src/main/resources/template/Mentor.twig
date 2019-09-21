@@ -105,7 +105,7 @@
 
                             <div class="row mx-auto text-center">
                                 <div class="col-lg-12">
-                                    <input type="hidden" name="userId" value="{{student.getId()}}">
+                                    <input type="hidden" name="userId" value="{{ student.getId() }}">
                                 </div>
                                 <div class="col-lg-12">Username</div>
                                 <div class="col-lg-12">
@@ -116,7 +116,8 @@
                                     <label>
                                         <select name="class" class="form-control">
                                             {% for class in classList %}
-                                                <option id="{{ class.getId() }}" value="{{ class.getId() }}">{{ class.getName() }}</option>
+                                                <option id="{{ class.getId() }}"
+                                                        value="{{ class.getId() }}">{{ class.getName() }}</option>
                                             {% endfor %}
                                         </select>
                                     </label>
@@ -125,7 +126,8 @@
                                 <div class="col-lg-12">
                                     <select name="mentor" class="form-control">
                                         {% for mentor in mentorList %}
-                                            <option id="{{ mentor.getId() }}" value="{{ mentor.getId() }}">{{ mentor.getName() }}</option>
+                                            <option id="{{ mentor.getId() }}"
+                                                    value="{{ mentor.getId() }}">{{ mentor.getName() }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -159,8 +161,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="" method="post">
+                <form action="" method="post">
+                    <div class="modal-body">
+
                         <div class="row mx-auto text-center">
                             <div class="col-lg-12">Username</div>
                             <div class="col-lg-12">
@@ -168,32 +171,36 @@
                             </div>
                             <div class="col-lg-12">Password</div>
                             <div class="col-lg-12">
-                                <input type="password" name="pasword" value="Pasword">
+                                <input type="password" name="password" value="Password">
                             </div>
                             <div class="col-lg-12">Class</div>
                             <div class="col-lg-12">
-                                <select class="form-control">
+                                <select name="class" class="form-control">
                                     {% for class in classList %}
-                                        <option id="{{ class.getId() }}">{{ class.getName() }}</option>
+                                        <option id="{{ class.getId() }}"
+                                                value="{{ class.getId() }}">{{ class.getName() }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="col-lg-12">Mentor</div>
                             <div class="col-lg-12">
-                                <select class="form-control">
+                                <select name="mentor" class="form-control">
                                     {% for mentor in mentorList %}
-                                        <option id="{{ mentor.getId() }}">{{ mentor.getName() }}</option>
+                                        <option id="{{ mentor.getId() }}"
+                                                value="{{ mentor.getId() }}">{{ mentor.getName() }}</option>
                                     {% endfor %}
                                 </select>
 
                             </div>
                         </div>
-                    </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Add User</button>
-                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="id" value="addUser" class="btn btn-primary mx-auto">Add User
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -253,31 +260,38 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="" method="post">
+                    <form method="POST">
+                        <div class="modal-body">
+
                             <div class="row mx-auto text-center">
                                 <div class="col-lg-12">Quest Name</div>
                                 <div class="col-lg-12">
                                     <input type="text" name="questName" value="QuestName">
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">Quest Description</div>
+                                    <textarea name="description"></textarea>
+                                </div>
                                 <div class="col-lg-12">Quest Category</div>
                                 <div class="col-lg-12">
-                                    <select class="browser-default custom-select w-75">
+                                    <select name="questCategory" class="browser-default custom-select w-75">
                                         {% for category in categoryList %}
                                             <option value="{{ category.getId() }}">{{ category.getName() }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-lg-12">Value</div>
+                                <div class="col-lg-12">Experience</div>
                                 <div class="col-lg-12"><input type="text"
-                                                              name="class" value="100"></div>
+                                                              name="exp" value="100"></div>
 
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Add Quest</button>
-                    </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="addQuest" class="btn btn-primary mx-auto">Add Quest
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -297,33 +311,44 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="" method="post">
+                    <form method="POST">
+                        <div class="modal-body">
+
                             <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="questId" value="{{ quest.getId() }}">
+                                </div>
                                 <div class="col-lg-12">Quest Name</div>
                                 <div class="col-lg-12">
                                     <input type="text" name="questName" value="QuestName">
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">Quest Description</div>
+                                    <textarea name="description"></textarea>
+                                </div>
                                 <div class="col-lg-12">Quest Category</div>
                                 <div class="col-lg-12">
-                                    <select class="browser-default custom-select w-75">
+                                    <select name="questCategory" class="browser-default custom-select w-75">
                                         <option selected>Quest Category</option>
                                         {% for category in categoryList %}
                                             <option value="{{ category.getId() }}">{{ category.getName() }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-lg-12">Value</div>
+                                <div class="col-lg-12">Experience</div>
                                 <div class="col-lg-12"><input type="text"
-                                                              name="class" value="100"></div>
+                                                              name="exp" value="100"></div>
 
 
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Edit Quest</button>
-                    </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="editQuest" class="btn btn-primary mx-auto">Edit
+                                Quest
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -364,6 +389,7 @@
                             {% endfor %}
 
                             <tr>
+                            <tr>
                                 <th colspan="5" data-toggle="modal" data-target="#addNewItem">Add New Item</th>
                             </tr>
                             </tbody>
@@ -389,30 +415,42 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
-                        <div class="row mx-auto text-center">
-                            <div class="col-lg-12">Item Name</div>
-                            <div class="col-lg-12">
-                                <input type="text" name="itemName" value="ItemName">
-                            </div>
-                            <div class="col-lg-12">Cost</div>
-                            <div class="col-lg-12"><input type="text"
-                                                          name="class" value="100"></div>
-                            <div class="col-lg-12">Type</div>
-                            <div class="col-lg-12">
-                                <select class="browser-default custom-select w-75">
-                                    <option selected>Item Type</option>
-                                    <option value="1">true</option>
-                                    <option value="2">false</option>
-                                </select>
-                            </div>
+                    <form method="POST">
+                        <div class="modal-body">
 
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="itemId" value="{{ artifact.getId() }}">
+                                </div>
+                                <div class="col-lg-12">Item Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="itemName" value="ItemName">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">Item Description</div>
+                                    <label>
+                                        <textarea name="description"></textarea>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">Cost</div>
+                                <div class="col-lg-12"><input type="text"
+                                                              name="price" value="100"></div>
+                                <div class="col-lg-12">Item Category</div>
+                                <div class="col-lg-12">
+                                    <select name="isGlobal" class="browser-default custom-select w-75">
+                                        <option selected>Item Type</option>
+                                        <option value="True">true</option>
+                                        <option value="False">false</option>
+                                    </select>
+                                </div>
+                            </div>
 
                         </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="addItem" class="btn btn-primary mx-auto">Add Item
+                            </button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Add Item</button>
                 </div>
             </div>
         </div>
@@ -432,32 +470,42 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="" method="post">
+                    <form method="POST">
+                        <div class="modal-body">
+
                             <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="itemId" value="{{ artifact.getId() }}">
+                                </div>
                                 <div class="col-lg-12">Item Name</div>
                                 <div class="col-lg-12">
                                     <input type="text" name="itemName" value="ItemName">
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">Item Description</div>
+                                    <label>
+                                        <textarea name="description"></textarea>
+                                    </label>
+                                </div>
                                 <div class="col-lg-12">Cost</div>
                                 <div class="col-lg-12"><input type="text"
-                                                              name="class" value="100"></div>
+                                                              name="price" value="100"></div>
                                 <div class="col-lg-12">Item Category</div>
                                 <div class="col-lg-12">
-                                    <select class="browser-default custom-select w-75">
+                                    <select name="isGlobal" class="browser-default custom-select w-75">
                                         <option selected>Item Type</option>
-                                        <option value="1">true</option>
-                                        <option value="2">false</option>
+                                        <option value="True">true</option>
+                                        <option value="False">false</option>
                                     </select>
                                 </div>
-
-
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Edit Item</button>
-                    </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="editItem" class="btn btn-primary mx-auto">Edit Item
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

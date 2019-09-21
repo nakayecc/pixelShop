@@ -63,22 +63,64 @@ public class MentorHandler implements HttpHandler {
                 httpExchange.getResponseHeaders().set("Location", "/login");
                 httpExchange.sendResponseHeaders(303, response.getBytes().length);
             }
+            System.out.println(method);
 
 
         }
+        System.out.println(method);
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
             Map inputs = common.parseFormData(formData);
-
             String formId = String.valueOf(inputs.get("id"));
             System.out.println(inputs);
-//            httpExchange.getResponseHeaders().set("Location", "/");
-//            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+            if(formId.equals("editUser")) {
+                int userId = Integer.parseInt(inputs.get("userId").toString());
+                String newUsername = String.valueOf(inputs.get("username"));
+                int classId = Integer.parseInt(inputs.get("class").toString());
+                int mentorId = Integer.parseInt(inputs.get("mentor").toString());
+                System.out.println(inputs);
+                mentorController.updateStudent(userId, newUsername, mentorId, classId);
+            } else if(formId.equals("addUser")) {
+                String username = String.valueOf(inputs.get("username"));
+                String password = String.valueOf(inputs.get("password"));
+                int classId = Integer.parseInt(inputs.get("class").toString());
+                int mentorId = Integer.parseInt(inputs.get("mentor").toString());
+                mentorController.createStudent(username, password, mentorId, classId);
+            } else if(formId.equals("editQuest")) {
+                int questId = Integer.parseInt(inputs.get("questId").toString());
+                String questName = String.valueOf(inputs.get("questName"));
+                String description = String.valueOf(inputs.get("description"));
+                int exp = Integer.parseInt(inputs.get("exp").toString());
+                int categoryId = Integer.parseInt(inputs.get("questCategory").toString());
+                mentorController.updateQuest(questId, questName, description, exp, categoryId);
+            } else if(formId.equals("addQuest")) {
+                String questName = String.valueOf(inputs.get("questName"));
+                String description = String.valueOf(inputs.get("description"));
+                int exp = Integer.parseInt(inputs.get("exp").toString());
+                int categoryId = Integer.parseInt(inputs.get("questCategory").toString());
+                mentorController.createQuest(questName, description, exp, categoryId);
+            } else if(formId.equals("editItem")) {
+                int itemId = Integer.parseInt(inputs.get("itemId").toString());
+                String itemName = String.valueOf(inputs.get("itemName"));
+                String description = String.valueOf(inputs.get("description"));
+                int price = Integer.parseInt(inputs.get("price").toString());
+                boolean isGlobal = Boolean.getBoolean(inputs.get("isGlobal").toString());
+                mentorController.updateArtifact(itemId, itemName, description, price, isGlobal);
+            } else if(formId.equals("addItem")) {
+                String itemName = String.valueOf(inputs.get("itemName"));
+                String description = String.valueOf(inputs.get("description"));
+                int price = Integer.parseInt(inputs.get("price").toString());
+                boolean isGlobal = Boolean.getBoolean(inputs.get("isGlobal").toString());
+                mentorController.createArtifact(itemName, description, price, isGlobal);
+            }
+            httpExchange.getResponseHeaders().set("Location", "/mentor");
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
 
         }
+        httpExchange.sendResponseHeaders(303, response.getBytes().length);
     }
 
     public void handleRequest(HttpExchange httpExchange, Connection connection,
