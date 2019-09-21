@@ -1,15 +1,18 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.*;
-import com.pixel.dao.postgresql.interfaces.SackInventoryDAO;
 import com.pixel.model.Artifact;
+import com.pixel.model.Mentor;
 import com.pixel.model.Quest;
 import com.pixel.model.Student;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class
 MentorController {
+    MentorDAOI mentorDAOI;
     StudentDAOI studentDAOI ;
     ClassesDAOI classesDAOI;
     QuestDAOI questDAOI;
@@ -17,11 +20,12 @@ MentorController {
     QuestCompletedDAOI questCompletedDAOI;
     SackInventoryDAOI sackInventoryDAOI;
 
-    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI, QuestCompletedDAOI questCompletedDAOI, SackInventoryDAOI sackInventoryDAOI) {
+    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI, MentorDAOI mentorDAOI) {
         this.studentDAOI = studentDAOI;
         this.classesDAOI = classesDAOI;
         this.questDAOI = questDAOI;
         this.artifactDAOI = artifactDAOI;
+        this.mentorDAOI = mentorDAOI;
         this.questCompletedDAOI = questCompletedDAOI;
         this.sackInventoryDAOI = sackInventoryDAOI;
     }
@@ -88,6 +92,18 @@ MentorController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Mentor> getMentorList(){
+        List<Mentor> mentorList = new ArrayList<>();
+
+        try {
+            mentorList = mentorDAOI.getListFull();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mentorList;
     }
 
 }

@@ -1,6 +1,5 @@
 package com.pixel.dao.postgresql.implementations;
 
-import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.interfaces.StudentDAO;
 import com.pixel.model.Quest;
 import com.pixel.model.Student;
@@ -9,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class StudentDAOI implements StudentDAO {
     private Connection connection;
