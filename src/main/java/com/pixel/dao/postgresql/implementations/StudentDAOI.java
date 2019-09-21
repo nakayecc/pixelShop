@@ -108,11 +108,10 @@ public class StudentDAOI implements StudentDAO {
         PreparedStatement preparedStatement;
         int id = s.getId();
 
-        String query = "UPDATE users SET name = ?, password = ?, role_name = ? WHERE id = "+id+"";
+        String query = "UPDATE users SET name = ?, role_name = ? WHERE id = "+id+"";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, s.getName());
-        preparedStatement.setString(2, s.getPassword());
-        preparedStatement.setString(3, s.getRoleName());
+        preparedStatement.setString(2, "student");
         preparedStatement.executeUpdate();
 
         query = "UPDATE students SET mentor_id = ?, class_id = ? WHERE user_id = "+id+"";

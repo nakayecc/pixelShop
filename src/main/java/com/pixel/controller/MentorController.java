@@ -34,6 +34,14 @@ MentorController {
         }
     }
 
+    public void updateStudent(int id, String name, int mentor_id, int cass_id){
+        try {
+            studentDAOI.update(new Student(id, name, "student", mentor_id, cass_id));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void createQuest(String name, String description, int exp, int categoryId){
         try {
             questDAOI.insertQuest(new Quest(name, description, exp, categoryId));

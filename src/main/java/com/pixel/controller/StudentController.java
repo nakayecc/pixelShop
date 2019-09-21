@@ -9,8 +9,6 @@ import com.pixel.model.Student;
 import java.sql.SQLException;
 import java.util.*;
 
-import static java.util.Collections.emptyMap;
-
 public class
 StudentController {
     StudentDAOI studentDAOI ;

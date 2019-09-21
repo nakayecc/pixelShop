@@ -11,6 +11,12 @@ public class Student extends User {
         this.cass_id = cass_id;
     }
 
+    public Student(int id, String name, String roleName, int mentor_id, int cass_id) {
+        super(id, name, roleName);
+        this.mentor_id = mentor_id;
+        this.cass_id = cass_id;
+    }
+
     public Student(String name, String password, String roleName, int mentor_id, int cass_id) {
         super(name, password, roleName);
         this.mentor_id = mentor_id;
