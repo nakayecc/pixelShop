@@ -23,6 +23,15 @@ public class UserDAOI implements UsersDAO {
         preparedStatement.executeUpdate();
     }
 
+    public void updateInUserTableNoPassword(int id, String name, String roleName) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "UPDATE users SET name = ?, role_name = ? WHERE id = "+id+"";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, roleName);
+        preparedStatement.executeUpdate();
+    }
+
     public int getIdFromCredentials(String name, String password) throws SQLException {
         PreparedStatement preparedStatement;
         String query = "SELECT * FROM users WHERE name = ? AND password = ? LIMIT 1";
