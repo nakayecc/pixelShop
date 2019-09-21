@@ -53,6 +53,15 @@ public class SackInventoryDAOI implements SackInventoryDAO {
         return false;
     }
 
+    public boolean disableArtifact(SackInventory sackInventory) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "UPDATE sacks_inventory SET ready = false  " +
+                "WHERE id = " + sackInventory.getId() + "";
+        preparedStatement = connection.prepareStatement(query);
+        int i = preparedStatement.executeUpdate();
+        return i == 1;
+    }
+
     @Override
     public boolean insertSackInventory(SackInventory sackInventory) throws SQLException {
         PreparedStatement preparedStatement;

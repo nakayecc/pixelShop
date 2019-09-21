@@ -1,15 +1,12 @@
 package com.pixel.controller;
 
 import com.pixel.dao.postgresql.implementations.*;
+import com.pixel.dao.postgresql.interfaces.SackInventoryDAO;
 import com.pixel.model.Artifact;
-import com.pixel.model.Mentor;
 import com.pixel.model.Quest;
 import com.pixel.model.Student;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class
 MentorController {
@@ -18,13 +15,15 @@ MentorController {
     QuestDAOI questDAOI;
     ArtifactDAOI artifactDAOI;
     QuestCompletedDAOI questCompletedDAOI;
+    SackInventoryDAOI sackInventoryDAOI;
 
-    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI, QuestCompletedDAOI questCompletedDAOI) {
+    public MentorController(StudentDAOI studentDAOI, ClassesDAOI classesDAOI, QuestDAOI questDAOI, ArtifactDAOI artifactDAOI, QuestCompletedDAOI questCompletedDAOI, SackInventoryDAOI sackInventoryDAOI) {
         this.studentDAOI = studentDAOI;
         this.classesDAOI = classesDAOI;
         this.questDAOI = questDAOI;
         this.artifactDAOI = artifactDAOI;
         this.questCompletedDAOI = questCompletedDAOI;
+        this.sackInventoryDAOI = sackInventoryDAOI;
     }
 
     public void createStudent(String name, String password, int mentor_id, int cass_id){
@@ -73,6 +72,10 @@ MentorController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void disableArtifactsInSack(int sackItemId){
+        sackInventoryDAOI.deactivateArtifact(sackItemId);
     }
 
 }
