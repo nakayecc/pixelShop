@@ -51,7 +51,7 @@ public class MentorDAOI extends UserDAOI implements MentorDAO {
         PreparedStatement preparedStatement;
         int id = mentor.getId();
 
-        updateInUserTable(id,mentor.getName(),mentor.getPassword(),mentor.getRoleName());
+        updateInUserTableNoPassword(id,mentor.getName(),mentor.getRoleName());
 
         String query = "UPDATE mentors SET class_id = ? WHERE user_id = "+id+"";
         preparedStatement = connection.prepareStatement(query);

@@ -14,6 +14,15 @@ public class ClassesDAOI implements ClassesDAO {
         this.connection = connection;
     }
 
+    public boolean createClass(String name) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "INSERT INTO classes(name)  VALUES (?)";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, name);
+        return preparedStatement.execute();
+
+    }
+
     public StudentsClass getClassById(int id) throws SQLException {
         String query = "select id, name from classes WHERE (id = ?);";
         PreparedStatement ps = connection.prepareStatement(query);

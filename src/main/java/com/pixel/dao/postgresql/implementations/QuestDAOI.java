@@ -64,9 +64,9 @@ public class QuestDAOI implements QuestDAO {
     }
 
     @Override
-    public boolean deleteQuest(Quest artifact) throws SQLException {
+    public boolean deleteQuest(Quest quest) throws SQLException {
         Statement statement;
-        String query = "DELETE FROM quests WHERE id = " + artifact.getId() + "";
+        String query = "DELETE FROM quests WHERE id = " + quest.getId() + "";
         statement = connection.createStatement();
         return statement.execute(query);
 
