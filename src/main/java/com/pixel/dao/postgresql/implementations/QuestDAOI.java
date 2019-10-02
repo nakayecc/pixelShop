@@ -38,13 +38,14 @@ public class QuestDAOI implements QuestDAO {
 
         PreparedStatement preparedStatement;
 
-        String query = "UPDATE quests SET name = ?, exp = ?, category_id = ?, description = ? " +
+        String query = "UPDATE quests SET name = ?, exp = ?, category_id = ?, description = ?, is_active = ? " +
                 "WHERE id = " + quest.getId() + "";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, quest.getName());
         preparedStatement.setInt(2, quest.getExp());
         preparedStatement.setInt(3, quest.getCategoryId());
         preparedStatement.setString(4, quest.getDescription());
+        preparedStatement.setBoolean(4, quest.isActive());
         int i = preparedStatement.executeUpdate();
 
         return i == 1;
@@ -97,24 +98,25 @@ public class QuestDAOI implements QuestDAO {
                 rs.getString("name"),
                 rs.getString("description"),
                 rs.getInt("exp"),
-                rs.getInt("category_id"));
+                rs.getInt("category_id"),
+                rs.getBoolean("is_active"));
     }
 
     private ResultSet getAllQuestRS() throws SQLException {
-        String query = " SELECT id, name, exp, category_id, description FROM quests";
+        String query = " SELECT id, name, exp, category_id, description, is_active FROM quests";
         Statement stmt = connection.createStatement();
         return stmt.executeQuery(query);
     }
 
     private ResultSet getActiveQuestRS() throws SQLException {
-        String query = " SELECT id, name, exp, category_id, description FROM quests WHERE is_active = true";
+        String query = " SELECT id, name, exp, category_id, description, is_active FROM quests WHERE is_active = true";
         Statement stmt = connection.createStatement();
         return stmt.executeQuery(query);
     }
 
     private ResultSet getRSByValue(String valueName, String value) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "select id, name, exp, category_id, description FROM quests " +
+        String query = "select id, name, exp, category_id, description, is_active FROM quests " +
                 "WHERE " + valueName + " = ?));";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, value);

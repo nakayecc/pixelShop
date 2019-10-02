@@ -25,7 +25,16 @@ public class Quest {
     private String description;
     private int exp;
     private int categoryId;
+    private boolean isActive;
 
+    public Quest(int id, String name, String description, int exp, int categoryId, boolean isActive) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.exp = exp;
+        this.categoryId = categoryId;
+        this.isActive = isActive;
+    }
 
     public Quest(int id, String name, String description, int exp, int categoryId) {
         this.id = id;
@@ -45,6 +54,13 @@ public class Quest {
     public Quest() {
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
     public int getId() {
         return id;
     }
