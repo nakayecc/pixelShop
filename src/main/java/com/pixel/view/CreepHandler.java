@@ -29,25 +29,19 @@ public class CreepHandler implements HttpHandler {
         ClassesDAOI classesDAOI = new ClassesDAOI(connection);
         SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
         MentorDAOI mentorDAOI = new MentorDAOI(connection);
-        QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(connection);
         SessionDAOI sessionDAOI = new SessionDAOI(connection);
 
 
-        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI, questCategoryDAOI);
-        QuestController questController = new QuestController(questDAOI, questCategoryDAOI);
-        ArtifactController artifactController = new ArtifactController(artifactDAOI);
         ClassController classController = new ClassController(classesDAOI);
         CookieHandler cookieHandler = new CookieHandler();
-        OwnItemController ownItemController = new OwnItemController(sackInventoryDAOI, artifactDAOI);
-        MentorController mentorController = new MentorController(studentDAOI, classesDAOI, questDAOI, artifactDAOI, mentorDAOI, questCompletedDAOI, sackInventoryDAOI);
+        MentorController mentorController = new MentorController(studentDAOI, classesDAOI, questDAOI, artifactDAOI,
+                mentorDAOI, questCompletedDAOI, sackInventoryDAOI);
         LvlController lvlController = new LvlController(levelsDAOI);
         Common common = new Common();
 
-        handleRequest(httpExchange, connection,studentController, artifactController, questController, classController ,
-                mentorController, ownItemController, cookieHandler, sessionDAOI,lvlController);
+        handleRequest(httpExchange, connection, classController, mentorController, cookieHandler, sessionDAOI,
+                lvlController);
 
-
-        System.out.println(classController.getClassNameBy(1));
 
         try {
             connection.close();
@@ -57,35 +51,32 @@ public class CreepHandler implements HttpHandler {
     }
 
 
+    public void handleRequest(HttpExchange httpExchange, Connection connection,
+                              ClassController classController, MentorController mentorController,
+                              CookieHandler cookieHandler, SessionDAOI sessionDAOI, LvlController lvlController) {
 
-        public void handleRequest(HttpExchange httpExchange, Connection connection,
-                StudentController studentController, ArtifactController artifactController,
-                QuestController questController,ClassController classController, MentorController mentorController,
-                OwnItemController ownItemController, CookieHandler cookieHandler, SessionDAOI sessionDAOI,
-                                  LvlController lvlController) {
+        String response = "";
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Creep.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentorList", mentorController.getMentorList());
+        model.with("classList", classController.getClassList());
+        model.with("classController", classController);
+        model.with("lvlMap", lvlController.getAllLevel().entrySet());
+        response = template.render(model);
 
-            String response = "";
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Creep.twig");
-            JtwigModel model = JtwigModel.newModel();
-            model.with("mentorList",mentorController.getMentorList());
-            model.with("classList",classController.getClassList());
-            model.with("classController",classController);
-            model.with("lvlMap",lvlController.getAllLevel().entrySet());
-            response = template.render(model);
-
-            try {
-                sendResponse(httpExchange, response);
-                connection.close();
-            } catch (IOException | SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            sendResponse(httpExchange, response);
+            connection.close();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
         }
-
-        private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
-            httpExchange.sendResponseHeaders(200, response.length());
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-        }
-
     }
+
+    private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+
+}
