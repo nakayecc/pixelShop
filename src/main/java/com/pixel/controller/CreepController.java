@@ -27,6 +27,16 @@ CreepController {
         }
     }
 
+    public Mentor viewMentorByID(int id){
+        Mentor mentor = new Mentor();
+        try {
+            mentor = mentorDAOI.getById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mentor;
+    }
+
     public void updateMentor(int id, String name, int cass_id){
         try {
             mentorDAOI.update(new Mentor(id, name, "mentor", cass_id));
