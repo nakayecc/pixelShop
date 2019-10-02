@@ -346,7 +346,8 @@
                             <tr class="rounded">
                                 <th scope="row">Id</th>
                                 <td>QuestName</td>
-                                <td>Value</td>
+                                <td>Experience</td>
+                                <td>IsActive</td>
                                 <td>Edit</td>
                             </tr>
                             {% for quest in questList %}
@@ -356,6 +357,7 @@
                                     <th scope="row">{{ questCounter }}</th>
                                     <td>{{ quest.getName() }}</td>
                                     <td>{{ quest.getExp }}</td>
+                                    <td>{{ quest.isActive() }}</td>
                                     <td data-toggle="modal" data-target="{{ modalEditQuest }}">>>></td>
                                 </tr>
                             {% endfor %}
@@ -445,7 +447,7 @@
                                 </div>
                                 <div class="col-lg-12">Quest Name</div>
                                 <div class="col-lg-12">
-                                    <input type="text" name="questName" value="QuestName">
+                                    <input type="text" name="questName" value="{{ quest.getName() }}">
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="col-lg-12">Quest Description</div>
@@ -462,7 +464,19 @@
                                 </div>
                                 <div class="col-lg-12">Experience</div>
                                 <div class="col-lg-12"><input type="text"
-                                                              name="exp" value="100"></div>
+                                                              name="exp" value="{{ quest.getExp() }}"></div>
+                                <div class="col-lg-12">IsActive?</div>
+                                <div class="col-lg-12">
+                                    <select name="isActive" class="browser-default custom-select w-75">
+                                        <option selected>Choose</option>
+
+                                        <option value="True">true</option>
+                                        <option value="False">false</option>
+
+                                    </select>
+
+
+                                </div>
 
 
                             </div>

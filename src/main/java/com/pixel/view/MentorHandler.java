@@ -96,7 +96,8 @@ public class MentorHandler implements HttpHandler {
                 String description = String.valueOf(inputs.get("description"));
                 int exp = Integer.parseInt(inputs.get("exp").toString());
                 int categoryId = Integer.parseInt(inputs.get("questCategory").toString());
-                mentorController.updateQuest(questId, questName, description, exp, categoryId);
+                boolean isActive = Boolean.parseBoolean(inputs.get("isActive").toString());
+                mentorController.updateQuest(questId, questName, description, exp, categoryId,isActive);
             } else if(formId.equals("addQuest")) {
                 String questName = String.valueOf(inputs.get("questName"));
                 String description = String.valueOf(inputs.get("description"));
@@ -114,7 +115,7 @@ public class MentorHandler implements HttpHandler {
                 String itemName = String.valueOf(inputs.get("itemName"));
                 String description = String.valueOf(inputs.get("description"));
                 int price = Integer.parseInt(inputs.get("price").toString());
-                boolean isGlobal = Boolean.getBoolean(inputs.get("isGlobal").toString());
+                boolean isGlobal = Boolean.parseBoolean(inputs.get("isGlobal").toString());
                 mentorController.createArtifact(itemName, description, price, isGlobal);
             } else if(formId.equals("useItem")) {
                 int sackId = Integer.parseInt(inputs.get("deactivate").toString());
