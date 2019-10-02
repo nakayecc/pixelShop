@@ -140,8 +140,9 @@ public class StudentHandler implements HttpHandler {
         System.out.println(ownItemController.getStudentOwnArtifact(student));
         response = template.render(model);
         try {
+            connection.close();
             sendResponse(httpExchange, response);
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
 

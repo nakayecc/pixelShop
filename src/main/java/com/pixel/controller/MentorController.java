@@ -62,13 +62,15 @@ MentorController {
         }
     }
 
-    public void updateQuest(int id,String name, String description, int exp, int categoryId){
+    public void updateQuest(int id,String name, String description, int exp, int categoryId, boolean isActive){
         try {
-            questDAOI.updateQuest(new Quest(id, name, description, exp, categoryId));
+            questDAOI.updateQuest(new Quest(id, name, description, exp, categoryId, isActive));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public void updateArtifact(int id, String name, String description, int price, boolean is_global){
         try {
