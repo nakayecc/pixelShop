@@ -28,6 +28,16 @@ public class QuestController {
         return questList;
     }
 
+    public List<Quest> getActiveQuest(){
+        List<Quest> questList = new ArrayList<>();
+        try {
+            questList = questDAOI.getListActive();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return questList;
+    }
+
     public int getNumberOfActiveQuest(){
         try {
             return questDAOI.getListActive().size();
