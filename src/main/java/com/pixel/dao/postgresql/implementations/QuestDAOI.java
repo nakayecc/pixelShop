@@ -45,7 +45,7 @@ public class QuestDAOI implements QuestDAO {
         preparedStatement.setInt(2, quest.getExp());
         preparedStatement.setInt(3, quest.getCategoryId());
         preparedStatement.setString(4, quest.getDescription());
-        preparedStatement.setBoolean(5, quest.isActive());
+        preparedStatement.setBoolean(4, quest.isActive());
         int i = preparedStatement.executeUpdate();
 
         return i == 1;

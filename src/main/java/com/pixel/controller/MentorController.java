@@ -62,9 +62,9 @@ MentorController {
         }
     }
 
-    public void updateQuest(int id,String name, String description, int exp, int categoryId, boolean isActive){
+    public void updateQuest(int id,String name, String description, int exp, int categoryId){
         try {
-            questDAOI.updateQuest(new Quest(id, name, description, exp, categoryId, isActive));
+            questDAOI.updateQuest(new Quest(id, name, description, exp, categoryId));
         } catch (SQLException e) {
             e.printStackTrace();
         }
