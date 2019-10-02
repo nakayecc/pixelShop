@@ -53,6 +53,22 @@ CreepController {
         }
     }
 
+    public void addLevel(String levelName, int expRequired){
+        try {
+            levelDAOI.addLevel(new Level(levelName, expRequired));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeLevelByID(int id){
+        try {
+            levelDAOI.deleteLevelById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
 
