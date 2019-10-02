@@ -1,6 +1,7 @@
 package com.pixel;
 
 
+import com.pixel.model.Creep;
 import com.pixel.view.*;
 import com.sun.net.httpserver.HttpServer;
 
@@ -22,6 +23,7 @@ public class App {
             server.createContext("/static", new Static());
             server.createContext("/login", new Login());
             server.createContext("/logout", new Logout());
+            server.createContext("/creep", new CreepHandler());
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {
