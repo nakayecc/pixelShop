@@ -1,6 +1,7 @@
 package com.pixel.dao.postgresql.implementations;
 
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
+import com.pixel.model.Level;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -29,5 +30,21 @@ public class LevelsDAOI {
     public void connClose() throws SQLException {
         connection.close();
 
+    }
+
+    public boolean addLevel(Level level) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "INSERT INTO levels(level_name, exp_req)  VALUES (?,?)";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, level.getLevelName());
+        preparedStatement.setInt(2, level.getExpReq());
+        return preparedStatement.executeUpdate() == 1;
+    }
+
+    public boolean deleteLevelById(int id) throws SQLException {
+        Statement statement;
+        String query = "DELETE FROM levels WHERE id = " + id + "";
+        statement = connection.createStatement();
+        return statement.execute(query);
     }
 }

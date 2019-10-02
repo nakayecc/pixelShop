@@ -71,7 +71,7 @@
                                 {% set getMentorName = studentController.getMentorName(student) %}
                                 {% set modalEditUser = "#" ~ student.getName() %}
                                 {% set modalUseItem = "#" ~ student.getName() ~ student.getId() %}
-                                {% set modalCompleteQuest = "#" ~ student.getName() %}
+                                {% set modalCompleteQuest = "#" ~ student.getName() ~ "complete" %}
                                 <tr>
                                     <th scope="row">{{ studentCounter }}</th>
                                     <td>{{ student.getName() }}</td>
@@ -189,8 +189,8 @@
                                                     {% endfor %}
 
                                                 </select>
-                                                {% else %}
-                                            <p class="btn-warning mt-2">No items</p>
+                                            {% else %}
+                                                <p class="btn-warning mt-2">No items</p>
                                             {% endif %}
 
                                         </label>
@@ -215,6 +215,64 @@
         </div>
     {% endfor %}
     <!--    END USER USE ITEM-->
+
+    <!--    MODAL BOX COMPLETE QUEST -->
+    {% for student in studentList %}
+
+        <div class="modal fade" id="{{ student.getName() ~ "complete" }}" tabindex="-1" role="dialog"
+             aria-labelledby="completeQuestBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="completeQuestBoxTitle">Complete Quest</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="" method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="userId" value="{{ student.getId() }}">
+                                    <div class="col-lg-12">Complete Quest</div>
+                                    <div class="col-lg-12">
+                                        <label>
+                                            <select name="questId" class="form-control">
+                                                <option>Choose quest</option>
+                                                {% for quest in activeQuest %}
+
+
+                                                    <option id="{{ quest.getId() }}"
+                                                            value="{{ quest.getId() }}">{{ quest.getName() }}</option>
+
+                                                {% endfor %}
+
+                                            </select>
+
+
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer mx-auto">
+                            <button type="submit" name="id" value="completeQuest" class="btn btn-primary mx-auto">Save
+                                Changes
+                            </button>
+
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--    END COMPLETE QUEST-->
 
     <!--    ADD NEW USER MODAL BOX-->
 

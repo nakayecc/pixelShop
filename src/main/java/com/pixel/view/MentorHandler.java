@@ -66,7 +66,6 @@ public class MentorHandler implements HttpHandler {
                 httpExchange.getResponseHeaders().set("Location", "/login");
                 httpExchange.sendResponseHeaders(303, response.getBytes().length);
             }
-            System.out.println(method);
 
 
         }
@@ -78,7 +77,6 @@ public class MentorHandler implements HttpHandler {
             String formData = br.readLine();
             Map inputs = common.parseFormData(formData);
             String formId = String.valueOf(inputs.get("id"));
-            System.out.println(inputs);
             if(formId.equals("editUser")) {
                 int userId = Integer.parseInt(inputs.get("userId").toString());
                 String newUsername = String.valueOf(inputs.get("username"));
@@ -121,6 +119,11 @@ public class MentorHandler implements HttpHandler {
             } else if(formId.equals("useItem")) {
                 int sackId = Integer.parseInt(inputs.get("deactivate").toString());
                 mentorController.disableArtifactsInSack(sackId);
+            } else if (formId.equals("completeQuest")){
+                int userId = Integer.parseInt(inputs.get("userId").toString());
+                int questId = Integer.parseInt(inputs.get("questId").toString());
+                mentorController.completeQuestByStudent(userId,questId);
+
             }
             httpExchange.getResponseHeaders().set("Location", "/mentor");
             httpExchange.sendResponseHeaders(303, response.getBytes().length);
@@ -146,6 +149,7 @@ public class MentorHandler implements HttpHandler {
         model.with("artifactList",artifactController.getAllArtifact());
         model.with("artifact",artifactController);
         model.with("studentArtifactList", ownItemController);
+        model.with("activeQuest", questController.getActiveQuest());
 
         response = template.render(model);
 
