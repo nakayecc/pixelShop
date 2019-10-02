@@ -53,7 +53,7 @@ public class QuestDAOI implements QuestDAO {
     @Override
     public boolean insertQuest(Quest quest) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "INSERT INTO quests(name, exp, category_id, description)  VALUES (?,?,?,?)";
+        String query = "INSERT INTO quests(name, exp, category_id, description, is_active)  VALUES (?,?,?,?, true)";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, quest.getName());
         preparedStatement.setInt(2, quest.getExp());
