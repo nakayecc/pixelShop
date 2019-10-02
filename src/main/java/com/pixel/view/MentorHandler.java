@@ -136,7 +136,7 @@ public class MentorHandler implements HttpHandler {
     public void handleRequest(HttpExchange httpExchange, Connection connection,
                               StudentController studentController, ArtifactController artifactController,
                               QuestController questController,ClassController classController, MentorController mentorController,
-                              OwnItemController ownItemController, CookieHandler cookieHandler, SessionDAOI sessionDAOI) throws SQLException {
+                              OwnItemController ownItemController, CookieHandler cookieHandler, SessionDAOI sessionDAOI) {
 
         String response = "";
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Mentor.twig");

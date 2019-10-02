@@ -24,4 +24,15 @@ public class ClassController {
         }
         return studentsClasses;
     }
+
+    public String getClassNameBy(int id){
+        String className= "";
+        try {
+            className = classesDAOI.getClassById(id).getName();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return className;
+    }
 }
