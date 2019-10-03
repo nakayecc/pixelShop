@@ -91,7 +91,6 @@ public class CreepHandler implements HttpHandler {
                     int mentorId = Integer.parseInt(inputs.get("mentorId").toString());
                     String mentorName = String.valueOf(inputs.get("mentorName"));
                     int classId = Integer.parseInt(inputs.get("classId").toString());
-                    System.out.println(formData);
                     creepController.updateMentor(mentorId, mentorName, classId);
                     break;
                 }

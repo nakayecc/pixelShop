@@ -77,54 +77,70 @@ public class MentorHandler implements HttpHandler {
             String formData = br.readLine();
             Map inputs = common.parseFormData(formData);
             String formId = String.valueOf(inputs.get("id"));
-            if(formId.equals("editUser")) {
-                int userId = Integer.parseInt(inputs.get("userId").toString());
-                String newUsername = String.valueOf(inputs.get("username"));
-                int classId = Integer.parseInt(inputs.get("class").toString());
-                int mentorId = Integer.parseInt(inputs.get("mentor").toString());
-                System.out.println(inputs);
-                mentorController.updateStudent(userId, newUsername, mentorId, classId);
-            } else if(formId.equals("addUser")) {
-                String username = String.valueOf(inputs.get("username"));
-                String password = String.valueOf(inputs.get("password"));
-                int classId = Integer.parseInt(inputs.get("class").toString());
-                int mentorId = Integer.parseInt(inputs.get("mentor").toString());
-                mentorController.createStudent(username, password, mentorId, classId);
-            } else if(formId.equals("editQuest")) {
-                int questId = Integer.parseInt(inputs.get("questId").toString());
-                String questName = String.valueOf(inputs.get("questName"));
-                String description = String.valueOf(inputs.get("description"));
-                int exp = Integer.parseInt(inputs.get("exp").toString());
-                int categoryId = Integer.parseInt(inputs.get("questCategory").toString());
-                boolean isActive = Boolean.parseBoolean(inputs.get("isActive").toString());
-                mentorController.updateQuest(questId, questName, description, exp, categoryId,isActive);
-            } else if(formId.equals("addQuest")) {
-                String questName = String.valueOf(inputs.get("questName"));
-                String description = String.valueOf(inputs.get("description"));
-                int exp = Integer.parseInt(inputs.get("exp").toString());
-                int categoryId = Integer.parseInt(inputs.get("questCategory").toString());
-                mentorController.createQuest(questName, description, exp, categoryId);
-            } else if(formId.equals("editItem")) {
-                int itemId = Integer.parseInt(inputs.get("itemId").toString());
-                String itemName = String.valueOf(inputs.get("itemName"));
-                String description = String.valueOf(inputs.get("description"));
-                int price = Integer.parseInt(inputs.get("price").toString());
-                boolean isGlobal = Boolean.getBoolean(inputs.get("isGlobal").toString());
-                mentorController.updateArtifact(itemId, itemName, description, price, isGlobal);
-            } else if(formId.equals("addItem")) {
-                String itemName = String.valueOf(inputs.get("itemName"));
-                String description = String.valueOf(inputs.get("description"));
-                int price = Integer.parseInt(inputs.get("price").toString());
-                boolean isGlobal = Boolean.getBoolean(inputs.get("isGlobal").toString());
-                mentorController.createArtifact(itemName, description, price, isGlobal);
-            } else if(formId.equals("useItem")) {
-                int sackId = Integer.parseInt(inputs.get("deactivate").toString());
-                mentorController.disableArtifactsInSack(sackId);
-            } else if (formId.equals("completeQuest")){
-                int userId = Integer.parseInt(inputs.get("userId").toString());
-                int questId = Integer.parseInt(inputs.get("questId").toString());
-                mentorController.completeQuestByStudent(userId,questId);
+            switch (formId) {
+                case "editUser": {
+                    int userId = Integer.parseInt(inputs.get("userId").toString());
+                    String newUsername = String.valueOf(inputs.get("username"));
+                    int classId = Integer.parseInt(inputs.get("class").toString());
+                    int mentorId = Integer.parseInt(inputs.get("mentor").toString());
+                    System.out.println(inputs);
+                    mentorController.updateStudent(userId, newUsername, mentorId, classId);
+                    break;
+                }
+                case "addUser": {
+                    String username = String.valueOf(inputs.get("username"));
+                    String password = String.valueOf(inputs.get("password"));
+                    int classId = Integer.parseInt(inputs.get("class").toString());
+                    int mentorId = Integer.parseInt(inputs.get("mentor").toString());
+                    mentorController.createStudent(username, password, mentorId, classId);
+                    break;
+                }
+                case "editQuest": {
+                    int questId = Integer.parseInt(inputs.get("questId").toString());
+                    String questName = String.valueOf(inputs.get("questName"));
+                    String description = String.valueOf(inputs.get("description"));
+                    int exp = Integer.parseInt(inputs.get("exp").toString());
+                    int categoryId = Integer.parseInt(inputs.get("questCategory").toString());
+                    boolean isActive = Boolean.parseBoolean(inputs.get("isActive").toString());
+                    mentorController.updateQuest(questId, questName, description, exp, categoryId, isActive);
+                    break;
+                }
+                case "addQuest": {
+                    String questName = String.valueOf(inputs.get("questName"));
+                    String description = String.valueOf(inputs.get("description"));
+                    int exp = Integer.parseInt(inputs.get("exp").toString());
+                    int categoryId = Integer.parseInt(inputs.get("questCategory").toString());
+                    mentorController.createQuest(questName, description, exp, categoryId);
+                    break;
+                }
+                case "editItem": {
+                    int itemId = Integer.parseInt(inputs.get("itemId").toString());
+                    String itemName = String.valueOf(inputs.get("itemName"));
+                    String description = String.valueOf(inputs.get("description"));
+                    int price = Integer.parseInt(inputs.get("price").toString());
+                    boolean isGlobal = Boolean.getBoolean(inputs.get("isGlobal").toString());
+                    mentorController.updateArtifact(itemId, itemName, description, price, isGlobal);
+                    break;
+                }
+                case "addItem": {
+                    String itemName = String.valueOf(inputs.get("itemName"));
+                    String description = String.valueOf(inputs.get("description"));
+                    int price = Integer.parseInt(inputs.get("price").toString());
+                    boolean isGlobal = Boolean.getBoolean(inputs.get("isGlobal").toString());
+                    mentorController.createArtifact(itemName, description, price, isGlobal);
+                    break;
+                }
+                case "useItem":
+                    int sackId = Integer.parseInt(inputs.get("deactivate").toString());
+                    mentorController.disableArtifactsInSack(sackId);
+                    break;
+                case "completeQuest": {
+                    int userId = Integer.parseInt(inputs.get("userId").toString());
+                    int questId = Integer.parseInt(inputs.get("questId").toString());
+                    mentorController.completeQuestByStudent(userId, questId);
 
+                    break;
+                }
             }
             httpExchange.getResponseHeaders().set("Location", "/mentor");
             httpExchange.sendResponseHeaders(303, response.getBytes().length);
