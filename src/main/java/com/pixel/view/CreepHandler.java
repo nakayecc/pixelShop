@@ -9,10 +9,17 @@ import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpCookie;
+import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
+import java.util.Map;
+import java.util.Optional;
 
 public class CreepHandler implements HttpHandler {
     @Override
@@ -39,7 +46,57 @@ public class CreepHandler implements HttpHandler {
         CreepController creepController = new CreepController(mentorDAOI, classesDAOI, levelsDAOI);
         Common common = new Common();
 
-        handleRequest(httpExchange, connection, classController, mentorController, cookieHandler, sessionDAOI, creepController);
+        String response = "";
+        String method = httpExchange.getRequestMethod();
+        Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
+
+        if (method.equals("GET")) {
+            if (cookie.isPresent()) {
+                try {
+                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
+                        handleRequest(httpExchange, connection, classController ,
+                                mentorController, creepController);
+
+                    } else {
+                        httpExchange.getResponseHeaders().set("Location", "/login");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                httpExchange.getResponseHeaders().set("Location", "/login");
+                httpExchange.sendResponseHeaders(303, response.getBytes().length);
+            }
+
+
+        }
+        System.out.println(method);
+
+        if (method.equals("POST")) {
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+            Map inputs = common.parseFormData(formData);
+            String formId = String.valueOf(inputs.get("id"));
+            if (formId.equals("addNewMentor")) {
+                String mentorName = String.valueOf(inputs.get("mentorName"));
+                String password = String.valueOf(inputs.get("password"));
+                int classId = Integer.parseInt(inputs.get("classId").toString());
+                creepController.createMentor(mentorName, password, classId);
+            } else if (formId.equals("editMentor")){
+                int mentorId = Integer.parseInt(inputs.get("mentorId").toString());
+                String mentorName = String.valueOf(inputs.get("mentorName"));
+                int classId = Integer.parseInt(inputs.get("classId").toString());
+                System.out.println(formData);
+                creepController.updateMentor(mentorId, mentorName, classId);
+
+            }
+
+            httpExchange.getResponseHeaders().set("Location", "/creep");
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+        }
+        httpExchange.sendResponseHeaders(303, response.getBytes().length);
 
 
         try {
@@ -52,7 +109,8 @@ public class CreepHandler implements HttpHandler {
 
     public void handleRequest(HttpExchange httpExchange, Connection connection,
                               ClassController classController, MentorController mentorController,
-                              CookieHandler cookieHandler, SessionDAOI sessionDAOI, CreepController creepController) {
+                              CreepController creepController) {
+
 
         String response = "";
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Creep.twig");

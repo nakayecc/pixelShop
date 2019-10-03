@@ -92,32 +92,38 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="userListEditBoxTitle">Edit Mentor</h5>
+                        <h5 class="modal-title">Edit Mentor</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="" method="post">
+                    <form method="POST">
+                        <div class="modal-body">
+
                             <div class="row mx-auto text-center">
+                                <input type="hidden" name="mentorId" value="{{ mentor.getId() }}">
+
                                 <div class="col-lg-12">Mentor Name</div>
                                 <div class="col-lg-12">
                                     <input type="text" name="mentorName" value="{{ mentor.getName() }}">
                                 </div>
                                 <div class="col-lg-12">Class assign</div>
                                 <div class="col-lg-12">
-                                    <select name="questCategory" class="browser-default custom-select w-75">
+                                    <select name="classId" class="browser-default custom-select w-75">
                                         {% for class in classList %}
-                                            <option value="{{ class.getId() }}">{{class.getName()}}</option>
+                                            <option value="{{ class.getId() }}">{{ class.getName() }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Save Changes</button>
-                    </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="editMentor" class="btn btn-primary mx-auto">Save
+                                Changes
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -136,28 +142,37 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="" method="post">
+                <form method="POST">
+                    <div class="modal-body">
+
                         <div class="row mx-auto text-center">
                             <div class="col-lg-12">Mentor Name</div>
                             <div class="col-lg-12">
-                                <input type="text" name="mentorName" value="Mentor Name">
+                                <input type="text" name="mentorName" value="Username">
                             </div>
+                            <div class="col-lg-12">Password</div>
                             <div class="col-lg-12">
-                                <select name="questCategory" class="browser-default custom-select w-75">
+                                <input type="password" name="password" value="password">
+                            </div>
+                            <div class="col-lg-12">Class</div>
+                            <div class="col-lg-12">
+                                <select name="classId" class="browser-default custom-select w-75">
                                     {% for class in classList %}
-                                        <option value="{{ class.getId() }}">{{class.getName()}}</option>
+                                        <option value="{{ class.getId() }}">{{ class.getName() }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
 
 
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Add Mentor</button>
-                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="id" value="addNewMentor" class="btn btn-primary mx-auto">Add
+                            Mentor
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -207,65 +222,65 @@
     </div>
     <!--    ADD NEW QUEST MODAL BOX-->
     {% for class in classList %}
-    <div class="modal fade" id="addNewClass" tabindex="-1" role="dialog"
-         aria-labelledby="addNewClassTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Class</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post">
-                        <div class="row mx-auto text-center">
-                            <div class="col-lg-12">Class Name</div>
-                            <div class="col-lg-12">
-                                <input type="text" name="className" value="{{ class.getName() }}">
+        <div class="modal fade" id="addNewClass" tabindex="-1" role="dialog"
+             aria-labelledby="addNewClassTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Class</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">Class Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="className" value="{{ class.getName() }}">
+                                </div>
+                                <div class="col-lg-12">Mentor</div>
                             </div>
-                            <div class="col-lg-12">Mentor</div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Add Class</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto">Add Class</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endfor %}
     <!--END ADD NEW QUEST BOX-->
 
     <!--    ADD NEW USER MODAL BOX-->
     {% for class in classList %}
-    <div class="modal fade" id="{{class.getName()}}" tabindex="-1" role="dialog"
-         aria-labelledby="classListEditBoxTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Class</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post">
-                        <div class="row mx-auto text-center">
-                            <div class="col-lg-12">Class Name</div>
-                            <div class="col-lg-12">
-                                <input type="text" name="className" value="{{ class.getName() }}">
+        <div class="modal fade" id="{{ class.getName() }}" tabindex="-1" role="dialog"
+             aria-labelledby="classListEditBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Class</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">Class Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="className" value="{{ class.getName() }}">
+                                </div>
+                                <div class="col-lg-12">Mentor</div>
                             </div>
-                            <div class="col-lg-12">Mentor</div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Edit Class</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto">Edit Class</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endfor %}
     <!--END EDIT QUEST BOX-->
 </section>
@@ -288,11 +303,11 @@
                                 <td>Remove</td>
                             </tr>
                             {% for entry in lvlMap %}
-                            <tr class="rounded">
-                                <th scope="row">{{ entry.getKey() }}</th>
-                                <td>{{ entry.getValue() }}</td>
-                                <td>X</td>
-                            </tr>
+                                <tr class="rounded">
+                                    <th scope="row">{{ entry.getKey() }}</th>
+                                    <td>{{ entry.getValue() }}</td>
+                                    <td>X</td>
+                                </tr>
                             {% endfor %}
                             <tr>
                                 <th colspan="5" data-toggle="modal" data-target="#addNewLevel">Add New Level</th>
