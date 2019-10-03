@@ -40,8 +40,8 @@ public class StudentHandler implements HttpHandler {
 
 
         UserController userController = new UserController(userDAOI);
-        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI,questCategoryDAOI);
-        QuestController questController = new QuestController(questDAOI,questCategoryDAOI);
+        StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI, questCategoryDAOI);
+        QuestController questController = new QuestController(questDAOI, questCategoryDAOI);
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         OwnItemController ownItemController = new OwnItemController(sackInventoryDAOI, artifactDAOI);
         SessionController sessionController = new SessionController(sessionDAOI, cookieHandler);
@@ -58,8 +58,14 @@ public class StudentHandler implements HttpHandler {
             if (cookie.isPresent()) {
                 try {
                     if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
-                        handleRequest(httpExchange, connection, cookieHandler, userController,
-                                studentController, artifactController, ownItemController, sessionController, questController);
+                        if (userController.checkUserRank(sessionDAOI.getUserId(cookieHandler.extractCookieToString(cookie))).equals("student")) {
+
+                            handleRequest(httpExchange, connection, cookieHandler, userController,
+                                    studentController, artifactController, ownItemController, sessionController, questController);
+                        } else {
+                            httpExchange.getResponseHeaders().set("Location", "/login");
+                            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                        }
                     } else {
                         httpExchange.getResponseHeaders().set("Location", "/login");
                         httpExchange.sendResponseHeaders(303, response.getBytes().length);
@@ -119,16 +125,16 @@ public class StudentHandler implements HttpHandler {
         int index = 0;
 
         model.with("userName", student.getName());
-        model.with("coin",studentController.getStudentMoney(student));
-        model.with("level",studentController.getStudentExperience(student));
+        model.with("coin", studentController.getStudentMoney(student));
+        model.with("level", studentController.getStudentExperience(student));
         model.with("exp", studentController.getStudentExperience(student)); //TODO exp counting
         model.with("lvl", studentController.getUserLevel(student)); //TODO lvl
         model.with("indexQuest", index);
-        model.with("mentorName",studentController.getMentorName(student));
-        model.with("activeBoost",ownItemController.getStudentOwnArtifact(student).size());
-        model.with("doneQuest",studentController.getAllQuestCompleted(student).size());
-        model.with("numberOfQuest",questController.getQuestList().size());
-        model.with("className",studentController.getClassName(student));
+        model.with("mentorName", studentController.getMentorName(student));
+        model.with("activeBoost", ownItemController.getStudentOwnArtifact(student).size());
+        model.with("doneQuest", studentController.getAllQuestCompleted(student).size());
+        model.with("numberOfQuest", questController.getQuestList().size());
+        model.with("className", studentController.getClassName(student));
         model.with("QuestList", questController.getQuestList());
         model.with("artifactGroupList", artifactController.getGroupArtifact());
         model.with("artifactSoloList", artifactController.getSoloArtifact());
