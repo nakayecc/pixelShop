@@ -79,23 +79,32 @@ public class CreepHandler implements HttpHandler {
             String formData = br.readLine();
             Map inputs = common.parseFormData(formData);
             String formId = String.valueOf(inputs.get("id"));
-            if (formId.equals("addNewMentor")) {
-                String mentorName = String.valueOf(inputs.get("mentorName"));
-                String password = String.valueOf(inputs.get("password"));
-                int classId = Integer.parseInt(inputs.get("classId").toString());
-                creepController.createMentor(mentorName, password, classId);
-            } else if (formId.equals("editMentor")){
-                int mentorId = Integer.parseInt(inputs.get("mentorId").toString());
-                String mentorName = String.valueOf(inputs.get("mentorName"));
-                int classId = Integer.parseInt(inputs.get("classId").toString());
-                System.out.println(formData);
-                creepController.updateMentor(mentorId, mentorName, classId);
-            } else if (formId.equals("addNewClass")){
-                String className = String.valueOf(inputs.get("className"));
-                creepController.createClass(className);
-            } else if (formId.equals("editClass")){
-                String className = String.valueOf(inputs.get("className"));
+            switch (formId) {
+                case "addNewMentor": {
+                    String mentorName = String.valueOf(inputs.get("mentorName"));
+                    String password = String.valueOf(inputs.get("password"));
+                    int classId = Integer.parseInt(inputs.get("classId").toString());
+                    creepController.createMentor(mentorName, password, classId);
+                    break;
+                }
+                case "editMentor": {
+                    int mentorId = Integer.parseInt(inputs.get("mentorId").toString());
+                    String mentorName = String.valueOf(inputs.get("mentorName"));
+                    int classId = Integer.parseInt(inputs.get("classId").toString());
+                    System.out.println(formData);
+                    creepController.updateMentor(mentorId, mentorName, classId);
+                    break;
+                }
+                case "addNewClass": {
+                    String className = String.valueOf(inputs.get("className"));
+                    creepController.createClass(className);
+                    break;
+                }
+                case "editClass": {
+                    String className = String.valueOf(inputs.get("className"));
 
+                    break;
+                }
             }
 
             httpExchange.getResponseHeaders().set("Location", "/creep");
