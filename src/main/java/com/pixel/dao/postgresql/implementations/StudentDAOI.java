@@ -1,6 +1,7 @@
 package com.pixel.dao.postgresql.implementations;
 
 import com.pixel.dao.postgresql.interfaces.StudentDAO;
+import com.pixel.model.Md5encyption;
 import com.pixel.model.Quest;
 import com.pixel.model.Student;
 
@@ -84,6 +85,7 @@ public class StudentDAOI implements StudentDAO {
     @Override
     public boolean save(Student s) throws SQLException {
         PreparedStatement preparedStatement;
+        Md5encyption crypter = new Md5encyption();
         String query = "" +
                 "WITH ins1 AS (" +
                 "    INSERT INTO users(name, password, role_name)" +
@@ -94,7 +96,7 @@ public class StudentDAOI implements StudentDAO {
                 "SELECT user_id, ?, ? FROM ins1";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, s.getName());
-        preparedStatement.setString(2, s.getPassword());
+        preparedStatement.setString(2, crypter.encypt(s.getPassword()));
         preparedStatement.setString(3, s.getRoleName());
         preparedStatement.setInt(4, s.getMentor_id());
         preparedStatement.setInt(5, s.getCass_id());
