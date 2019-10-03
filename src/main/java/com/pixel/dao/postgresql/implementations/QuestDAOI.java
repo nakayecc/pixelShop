@@ -83,7 +83,7 @@ public class QuestDAOI implements QuestDAO {
     @Override
     public Quest getById(int id) throws SQLException {
         PreparedStatement preparedStatement;
-        String query = "select id, name, exp, category_id, description from quests " +
+        String query = "select id, name, exp, category_id, description, is_active from quests " +
                 "WHERE id = ?";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id);
