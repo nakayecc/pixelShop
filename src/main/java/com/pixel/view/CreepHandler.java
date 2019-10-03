@@ -90,6 +90,11 @@ public class CreepHandler implements HttpHandler {
                 int classId = Integer.parseInt(inputs.get("classId").toString());
                 System.out.println(formData);
                 creepController.updateMentor(mentorId, mentorName, classId);
+            } else if (formId.equals("addNewClass")){
+                String className = String.valueOf(inputs.get("className"));
+                creepController.createClass(className);
+            } else if (formId.equals("editClass")){
+                String className = String.valueOf(inputs.get("className"));
 
             }
 

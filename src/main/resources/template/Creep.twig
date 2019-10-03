@@ -220,7 +220,7 @@
 
         </div>
     </div>
-    <!--    ADD NEW QUEST MODAL BOX-->
+    <!--    ADD NEW CLASS MODAL BOX-->
     {% for class in classList %}
         <div class="modal fade" id="addNewClass" tabindex="-1" role="dialog"
              aria-labelledby="addNewClassTitle" aria-hidden="true">
@@ -232,20 +232,22 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <form method="POST">
                     <div class="modal-body">
-                        <form action="" method="post">
+
                             <div class="row mx-auto text-center">
                                 <div class="col-lg-12">Class Name</div>
                                 <div class="col-lg-12">
-                                    <input type="text" name="className" value="{{ class.getName() }}">
+                                    <input type="text" name="className" value="Class Name">
                                 </div>
-                                <div class="col-lg-12">Mentor</div>
+
                             </div>
-                        </form>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto">Add Class</button>
+                        <button type="submit" name="id" value="addNewClass" class="btn btn-primary mx-auto">Add Class</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
