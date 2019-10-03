@@ -25,22 +25,21 @@ public class CreepHandler implements HttpHandler {
         StudentDAOI studentDAOI = new StudentDAOI(connection);
         QuestDAOI questDAOI = new QuestDAOI(connection);
         QuestCompletedDAOI questCompletedDAOI = new QuestCompletedDAOI(connection);
-        LevelsDAOI levelsDAOI = new LevelsDAOI(connection);
         ClassesDAOI classesDAOI = new ClassesDAOI(connection);
         SackInventoryDAOI sackInventoryDAOI = new SackInventoryDAOI(connection);
         MentorDAOI mentorDAOI = new MentorDAOI(connection);
         SessionDAOI sessionDAOI = new SessionDAOI(connection);
+        LevelsDAOI levelsDAOI = new LevelsDAOI(connection);
 
 
         ClassController classController = new ClassController(classesDAOI);
         CookieHandler cookieHandler = new CookieHandler();
         MentorController mentorController = new MentorController(studentDAOI, classesDAOI, questDAOI, artifactDAOI,
                 mentorDAOI, questCompletedDAOI, sackInventoryDAOI);
-        LvlController lvlController = new LvlController(levelsDAOI);
+        CreepController creepController = new CreepController(mentorDAOI, classesDAOI, levelsDAOI);
         Common common = new Common();
 
-        handleRequest(httpExchange, connection, classController, mentorController, cookieHandler, sessionDAOI,
-                lvlController);
+        handleRequest(httpExchange, connection, classController, mentorController, cookieHandler, sessionDAOI, creepController);
 
 
         try {
@@ -53,7 +52,7 @@ public class CreepHandler implements HttpHandler {
 
     public void handleRequest(HttpExchange httpExchange, Connection connection,
                               ClassController classController, MentorController mentorController,
-                              CookieHandler cookieHandler, SessionDAOI sessionDAOI, LvlController lvlController) {
+                              CookieHandler cookieHandler, SessionDAOI sessionDAOI, CreepController creepController) {
 
         String response = "";
         JtwigTemplate template = JtwigTemplate.classpathTemplate("template/Creep.twig");
@@ -61,8 +60,8 @@ public class CreepHandler implements HttpHandler {
         model.with("mentorList", mentorController.getMentorList());
         model.with("classList", classController.getClassList());
         model.with("classController", classController);
-        model.with("lvlMap", lvlController.getAllLevel().entrySet());
-        response = template.render(model);
+        model.with("lvlMap",creepController.getAllLevel().entrySet());
+                response = template.render(model);
 
         try {
             sendResponse(httpExchange, response);
