@@ -104,7 +104,6 @@ public class StudentHandler implements HttpHandler {
         String response = "";
         Student student = null; //find by cookie
         int userId = sessionController.getUserIdBySession(httpExchange);
-        System.out.println(userId);
         try {
 
             student = studentController.getStudent(userId);
@@ -137,7 +136,6 @@ public class StudentHandler implements HttpHandler {
         model.with("questDoneMap", studentController.getAllQuestCompleted(student).entrySet());
         model.with("percentageQuestCompleted", studentController.getPercentageOfCompleted(student));
         model.with("artifactShopSList", artifactController.getAllArtifact());
-        System.out.println(ownItemController.getStudentOwnArtifact(student));
         response = template.render(model);
         try {
             connection.close();

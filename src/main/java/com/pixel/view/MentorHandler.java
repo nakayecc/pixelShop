@@ -69,7 +69,6 @@ public class MentorHandler implements HttpHandler {
 
 
         }
-        System.out.println(method);
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
@@ -83,7 +82,6 @@ public class MentorHandler implements HttpHandler {
                     String newUsername = String.valueOf(inputs.get("username"));
                     int classId = Integer.parseInt(inputs.get("class").toString());
                     int mentorId = Integer.parseInt(inputs.get("mentor").toString());
-                    System.out.println(inputs);
                     mentorController.updateStudent(userId, newUsername, mentorId, classId);
                     break;
                 }

@@ -24,6 +24,7 @@ import java.util.UUID;
 public class Login implements HttpHandler {
     private SessionDAOI sessionDAOI;
     private Common common;
+
     public Login() {
         common = new Common();
 
@@ -71,18 +72,28 @@ public class Login implements HttpHandler {
             String password = String.valueOf(inputs.get("password"));
             try {
                 if (userController.checkIfPasswordIsCorrect(username, password)) {
+                    int userId = 0;
                     //todo nie zwracac -1 dodatkowa metoda czy user istnieje
                     cookies = new HttpCookie("sessionId", generateSessionID());
                     httpExchange.getResponseHeaders().add("Set-Cookie", cookies.toString());
                     try {
-                        int userId = userController.getUserIdFromCredentials(username, password);
+                        userId = userController.getUserIdFromCredentials(username, password);
                         sessionDAOI.createSession(cookies.getValue(), userId);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
+                    if (userController.checkUserRank(userId).equals("creep")) {
+                        httpExchange.getResponseHeaders().set("Location", "/creep");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    } else if (userController.checkUserRank(userId).equals("mentor")) {
+                        httpExchange.getResponseHeaders().set("Location", "/mentor");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    } else {
+                        httpExchange.getResponseHeaders().set("Location", "/");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    }
 
-                    httpExchange.getResponseHeaders().set("Location", "/");
-                    httpExchange.sendResponseHeaders(303, response.getBytes().length);
+
                 } else {
                     response = common.getLoginTemplate();
                 }
@@ -112,8 +123,6 @@ public class Login implements HttpHandler {
         UUID generatedId = UUID.randomUUID();
         return generatedId.toString();
     }
-
-
 
 
 }

@@ -71,7 +71,7 @@ public class CreepHandler implements HttpHandler {
 
 
         }
-        System.out.println(method);
+
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
@@ -114,7 +114,6 @@ public class CreepHandler implements HttpHandler {
 
                 case "deleteLevel": {
                     int levelId = Integer.parseInt(inputs.get("levelId").toString());
-                    System.out.println(formData);
                     creepController.removeLevelByID(levelId);
                     break;
                 }
