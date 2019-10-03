@@ -37,9 +37,11 @@ public class CreepHandler implements HttpHandler {
         MentorDAOI mentorDAOI = new MentorDAOI(connection);
         SessionDAOI sessionDAOI = new SessionDAOI(connection);
         LevelsDAOI levelsDAOI = new LevelsDAOI(connection);
+        UserDAOI userDAOI = new UserDAOI(connection);
 
 
         ClassController classController = new ClassController(classesDAOI);
+        UserController userController = new UserController(userDAOI);
         CookieHandler cookieHandler = new CookieHandler();
         MentorController mentorController = new MentorController(studentDAOI, classesDAOI, questDAOI, artifactDAOI,
                 mentorDAOI, questCompletedDAOI, sackInventoryDAOI);
@@ -54,8 +56,14 @@ public class CreepHandler implements HttpHandler {
             if (cookie.isPresent()) {
                 try {
                     if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
-                       handleRequest(httpExchange, connection, classController ,
-                                mentorController, creepController);
+                        if (userController.checkUserRank(sessionDAOI.getUserId(cookieHandler.extractCookieToString(cookie))).equals("creep")) {
+
+                            handleRequest(httpExchange, connection, classController,
+                                    mentorController, creepController);
+                        } else {
+                            httpExchange.getResponseHeaders().set("Location", "/login");
+                            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                        }
 
                     } else {
                         httpExchange.getResponseHeaders().set("Location", "/login");

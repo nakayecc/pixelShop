@@ -46,9 +46,10 @@ public class Login implements HttpHandler {
         if (method.equals("GET")) {
             if (cookie.isPresent()) {
                 try {
+                    int userId = sessionDAOI.getUserId(cookieHandler.extractCookieToString(cookie));
                     if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
-                        httpExchange.getResponseHeaders().set("Location", "/");
-                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                        redirectUser(httpExchange, userController, response, userId);
+
                     } else {
                         response = common.getLoginTemplate();
                     }
@@ -82,16 +83,7 @@ public class Login implements HttpHandler {
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    if (userController.checkUserRank(userId).equals("creep")) {
-                        httpExchange.getResponseHeaders().set("Location", "/creep");
-                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
-                    } else if (userController.checkUserRank(userId).equals("mentor")) {
-                        httpExchange.getResponseHeaders().set("Location", "/mentor");
-                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
-                    } else {
-                        httpExchange.getResponseHeaders().set("Location", "/");
-                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
-                    }
+                    redirectUser(httpExchange, userController, response, userId);
 
 
                 } else {
@@ -115,6 +107,19 @@ public class Login implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+    }
+
+    private void redirectUser(HttpExchange httpExchange, UserController userController, String response, int userId) throws SQLException, IOException {
+        if (userController.checkUserRank(userId).equals("creep")) {
+            httpExchange.getResponseHeaders().set("Location", "/creep");
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+        } else if (userController.checkUserRank(userId).equals("mentor")){
+            httpExchange.getResponseHeaders().set("Location", "/mentor");
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+        } else {
+            httpExchange.getResponseHeaders().set("Location", "/");
+            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+        }
     }
 
 

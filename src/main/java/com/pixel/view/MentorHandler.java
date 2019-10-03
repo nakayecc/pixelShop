@@ -58,7 +58,7 @@ public class MentorHandler implements HttpHandler {
                             handleRequest(httpExchange, connection, studentController, artifactController, questController, classController,
                                     mentorController, ownItemController, cookieHandler, sessionDAOI);
                         } else {
-                            httpExchange.getResponseHeaders().set("Location", "/");
+                            httpExchange.getResponseHeaders().set("Location", "/login");
                             httpExchange.sendResponseHeaders(303, response.getBytes().length);
                         }
 
