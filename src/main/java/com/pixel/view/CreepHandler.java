@@ -51,25 +51,25 @@ public class CreepHandler implements HttpHandler {
         Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
 
         if (method.equals("GET")) {
-//            if (cookie.isPresent()) {
-//                try {
-//                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
+            if (cookie.isPresent()) {
+                try {
+                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
                        handleRequest(httpExchange, connection, classController ,
                                 mentorController, creepController);
-//
-//                    } else {
-//                        httpExchange.getResponseHeaders().set("Location", "/login");
-//                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
-//                    }
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            } else {
-//                httpExchange.getResponseHeaders().set("Location", "/login");
-//                httpExchange.sendResponseHeaders(303, response.getBytes().length);
-//            }
-//
-//
+
+                    } else {
+                        httpExchange.getResponseHeaders().set("Location", "/login");
+                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                httpExchange.getResponseHeaders().set("Location", "/login");
+                httpExchange.sendResponseHeaders(303, response.getBytes().length);
+            }
+
+
         }
         System.out.println(method);
 
