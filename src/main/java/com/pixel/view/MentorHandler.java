@@ -33,6 +33,7 @@ public class MentorHandler implements HttpHandler {
         MentorDAOI mentorDAOI = new MentorDAOI(connection);
         QuestCategoryDAOI questCategoryDAOI = new QuestCategoryDAOI(connection);
         SessionDAOI sessionDAOI = new SessionDAOI(connection);
+        UserDAOI userDAOI = new UserDAOI(connection);
 
 
         StudentController studentController = new StudentController(studentDAOI, levelsDAOI, questDAOI, classesDAOI, artifactDAOI, sackInventoryDAOI,questCategoryDAOI);
@@ -40,6 +41,7 @@ public class MentorHandler implements HttpHandler {
         ArtifactController artifactController = new ArtifactController(artifactDAOI);
         ClassController classController = new ClassController(classesDAOI);
         CookieHandler cookieHandler = new CookieHandler();
+        UserController userController = new UserController(userDAOI);
         OwnItemController ownItemController = new OwnItemController(sackInventoryDAOI, artifactDAOI);
         MentorController mentorController = new MentorController(studentDAOI, classesDAOI,questDAOI,artifactDAOI,mentorDAOI, questCompletedDAOI, sackInventoryDAOI);
         Common common = new Common();
@@ -52,8 +54,13 @@ public class MentorHandler implements HttpHandler {
             if (cookie.isPresent()) {
                 try {
                     if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
-                        handleRequest(httpExchange, connection,studentController, artifactController, questController, classController ,
-                                mentorController, ownItemController, cookieHandler, sessionDAOI);
+                        if (userController.checkUserRank(sessionDAOI.getUserId(cookieHandler.extractCookieToString(cookie))).equals("mentor")) {
+                            handleRequest(httpExchange, connection, studentController, artifactController, questController, classController,
+                                    mentorController, ownItemController, cookieHandler, sessionDAOI);
+                        } else {
+                            httpExchange.getResponseHeaders().set("Location", "/");
+                            httpExchange.sendResponseHeaders(303, response.getBytes().length);
+                        }
 
                     } else {
                         httpExchange.getResponseHeaders().set("Location", "/login");
