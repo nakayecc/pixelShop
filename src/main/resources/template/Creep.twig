@@ -308,7 +308,12 @@
                                 <tr class="rounded">
                                     <th scope="row">{{ entry.getKey() }}</th>
                                     <td>{{ entry.getValue() }}</td>
-                                    <td>X</td>
+
+                                    <td><form method="POST">
+                                            <input type="hidden" name="levelId" value="{{ lvlId.getLevelIdByName(entry.getKey()) }}">
+                                        <button type="submit" name="id" value="deleteLevel" class="btn btn-primary mx-auto">X</button>
+                                    </form>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             <tr>
@@ -325,7 +330,7 @@
 
         </div>
     </div>
-    <!--    ADD NEW QUEST MODAL BOX-->
+    <!--    ADD NEW LEVEL MODAL BOX-->
 
     <div class="modal fade" id="addNewLevel" tabindex="-1" role="dialog"
          aria-labelledby="addNewLevelTitle" aria-hidden="true">
@@ -337,8 +342,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <form method="POST">
                 <div class="modal-body">
-                    <form action="" method="post">
+
                         <div class="row mx-auto text-center">
                             <div class="col-lg-12">Level Name</div>
                             <div class="col-lg-12">
@@ -350,11 +356,12 @@
 
 
                         </div>
-                    </form>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mx-auto">Add Level</button>
+                    <button type="submit" name="id" value="addLevel" class="btn btn-primary mx-auto">Add Level</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

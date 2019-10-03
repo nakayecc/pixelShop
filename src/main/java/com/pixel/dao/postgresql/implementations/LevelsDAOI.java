@@ -27,6 +27,21 @@ public class LevelsDAOI {
         return levels;
 
     }
+
+    public int getLevelIdByName(String name) throws SQLException {
+        PreparedStatement preparedStatement;
+        String query = "SELECT id FROM levels WHERE level_name = ? ;";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, name);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            return rs.getInt("id");
+        }
+        return 0;
+
+
+    }
+
     public void connClose() throws SQLException {
         connection.close();
 

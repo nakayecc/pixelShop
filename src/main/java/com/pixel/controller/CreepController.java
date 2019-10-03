@@ -70,6 +70,14 @@ CreepController {
             e.printStackTrace();
         }
     }
+    public int getLevelIdByName(String name){
+        try {
+            return levelDAOI.getLevelIdByName(name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     public Map<String,Integer> getAllLevel(){
         Map<String,Integer> levelMap = new HashMap<>();

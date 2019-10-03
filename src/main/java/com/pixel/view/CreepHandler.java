@@ -51,25 +51,25 @@ public class CreepHandler implements HttpHandler {
         Optional<HttpCookie> cookie = cookieHandler.getCookie(httpExchange, "sessionId");
 
         if (method.equals("GET")) {
-            if (cookie.isPresent()) {
-                try {
-                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
-                        handleRequest(httpExchange, connection, classController ,
+//            if (cookie.isPresent()) {
+//                try {
+//                    if (sessionDAOI.isCurrentSession(cookieHandler.extractCookieToString(cookie))) {
+                       handleRequest(httpExchange, connection, classController ,
                                 mentorController, creepController);
-
-                    } else {
-                        httpExchange.getResponseHeaders().set("Location", "/login");
-                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                httpExchange.getResponseHeaders().set("Location", "/login");
-                httpExchange.sendResponseHeaders(303, response.getBytes().length);
-            }
-
-
+//
+//                    } else {
+//                        httpExchange.getResponseHeaders().set("Location", "/login");
+//                        httpExchange.sendResponseHeaders(303, response.getBytes().length);
+//                    }
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            } else {
+//                httpExchange.getResponseHeaders().set("Location", "/login");
+//                httpExchange.sendResponseHeaders(303, response.getBytes().length);
+//            }
+//
+//
         }
         System.out.println(method);
 
@@ -104,6 +104,20 @@ public class CreepHandler implements HttpHandler {
 
                     break;
                 }
+
+                case "addLevel": {
+                    String levelName = String.valueOf(inputs.get("levelName"));
+                    int experience = Integer.parseInt(inputs.get("exp").toString());
+                    creepController.addLevel(levelName, experience);
+                    break;
+                }
+
+                case "deleteLevel": {
+                    int levelId = Integer.parseInt(inputs.get("levelId").toString());
+                    System.out.println(formData);
+                    creepController.removeLevelByID(levelId);
+                    break;
+                }
             }
 
             httpExchange.getResponseHeaders().set("Location", "/creep");
@@ -132,6 +146,7 @@ public class CreepHandler implements HttpHandler {
         model.with("classList", classController.getClassList());
         model.with("classController", classController);
         model.with("lvlMap",creepController.getAllLevel().entrySet());
+        model.with("lvlId",creepController);
                 response = template.render(model);
 
         try {
