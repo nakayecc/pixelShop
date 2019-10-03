@@ -19,7 +19,8 @@ public class UserDAOI implements UsersDAO {
         String query = "UPDATE users SET name = ?, password = ?, role_name = ? WHERE id = "+id+"";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, name);
-        preparedStatement.setString(2, password);
+        Md5encyption crypter = new Md5encyption();
+        preparedStatement.setString(2, crypter.encypt(password));
         preparedStatement.setString(3, roleName);
         preparedStatement.executeUpdate();
     }
