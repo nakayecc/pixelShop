@@ -2,6 +2,7 @@ package com.pixel.dao.postgresql.implementations;
 
 import com.pixel.dao.postgresql.PostgreSQLJDBC;
 import com.pixel.dao.postgresql.interfaces.UsersDAO;
+import com.pixel.model.Md5encyption;
 import com.pixel.model.User;
 
 import java.sql.*;
@@ -18,7 +19,8 @@ public class UserDAOI implements UsersDAO {
         String query = "UPDATE users SET name = ?, password = ?, role_name = ? WHERE id = "+id+"";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, name);
-        preparedStatement.setString(2, password);
+        Md5encyption crypter = new Md5encyption();
+        preparedStatement.setString(2, crypter.encypt(password));
         preparedStatement.setString(3, roleName);
         preparedStatement.executeUpdate();
     }
@@ -34,10 +36,11 @@ public class UserDAOI implements UsersDAO {
 
     public int getIdFromCredentials(String name, String password) throws SQLException {
         PreparedStatement preparedStatement;
+        Md5encyption crypter = new Md5encyption();
         String query = "SELECT * FROM users WHERE name = ? AND password = ? LIMIT 1";
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, name);
-        preparedStatement.setString(2, password);
+        preparedStatement.setString(2, crypter.encypt(password));
         ResultSet rs = preparedStatement.executeQuery();
         if(rs.next()){
             return rs.getInt("id");
