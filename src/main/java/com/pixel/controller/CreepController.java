@@ -5,7 +5,9 @@ import com.pixel.model.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class
 CreepController {
@@ -67,6 +69,18 @@ CreepController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Map<String,Integer> getAllLevel(){
+        Map<String,Integer> levelMap = new HashMap<>();
+
+        try {
+            levelMap = levelDAOI.getLevelMap();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return levelMap;
     }
 
 
