@@ -20,7 +20,7 @@ public class Static implements HttpHandler {
 
         // get file path from url
         URI uri = httpExchange.getRequestURI();
-        System.out.println("looking for: " + uri.getPath());
+
         String path = "." + uri.getPath();
 
         // get file from resources folder, see: https://www.mkyong.com/java/java-read-a-file-from-resources-folder/

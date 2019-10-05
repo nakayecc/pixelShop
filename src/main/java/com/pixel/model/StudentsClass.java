@@ -1,19 +1,19 @@
 package com.pixel.model;
 
-public class Class {
+public class StudentsClass {
     private int id;
     private String name;
 
-    public Class(int id, String name) {
+    public StudentsClass(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Class(String name) {
+    public StudentsClass(String name) {
         this.name = name;
     }
 
-    public Class() {
+    public StudentsClass() {
     }
 
     public int getId() {

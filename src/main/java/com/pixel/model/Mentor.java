@@ -8,6 +8,11 @@ public class Mentor extends User {
         this.class_id = class_id;
     }
 
+    public Mentor(int id, String name, String roleName, int class_id) {
+        super(id, name, roleName);
+        this.class_id = class_id;
+    }
+
     public Mentor(String name, String password, String roleName, int class_id) {
         super(name, password, roleName);
         this.class_id = class_id;

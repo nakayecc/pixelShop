@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuestStore</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+    <link href="/static/fonts/ChessType.ttf" rel="stylesheet">
+</head>
+<body id="pageTop">
+<nav class="navbar navbar-expand-lg bg-dark fixed-top" id="mainNav">
+
+    <ul class="navbar-nav mr-auto">
+        <p>Logged us: Mentor</p>
+    </ul>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        MENU
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto mr-5">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#pageTop">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#questList">Quests</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#itemList">Items</a>
+            </li>
+
+
+        </ul>
+        <ul class="navbar-nav ml-auto"><p>
+                <a href="/logout">Logout</a>
+            </p>
+        </ul>
+    </div>
+
+</nav>
+
+
+<section id="userList">
+    <div class="container-fluid align-items-center p-5">
+        <div class="row">
+
+            <div class="col-lg-12 rounded">
+
+                <div class="row text-center">
+
+                    <h1 class="mx-auto p-5">User List</h1>
+                    <div class="col-lg-12 table-responsive">
+                        <table class="table table-primary table-hover table-striped rounded">
+
+                            <tbody>
+                            <tr class="rounded">
+                                <th scope="row">Lp.</th>
+                                <td>UserName</td>
+                                <td>Class</td>
+                                <td>Mentor</td>
+                                <td>Edit</td>
+                                <td>Use Item</td>
+                                <td>Complete Quest</td>
+
+                            </tr>
+                            {% for student in studentList %}
+                                {% set studentCounter = studentCounter | default(0) + 1 %}
+                                {% set getClassName = studentController.getClassName(student) %}
+                                {% set getMentorName = studentController.getMentorName(student) %}
+                                {% set modalEditUser = "#" ~ student.getName() %}
+                                {% set modalUseItem = "#" ~ student.getName() ~ student.getId() %}
+                                {% set modalCompleteQuest = "#" ~ student.getName() ~ "complete" %}
+                                <tr>
+                                    <th scope="row">{{ studentCounter }}</th>
+                                    <td>{{ student.getName() }}</td>
+                                    <td>{{ getClassName }}</td>
+                                    <td>{{ getMentorName }}</td>
+                                    <td data-toggle="modal" data-target="{{ modalEditUser }}">>>></td>
+                                    <td data-toggle="modal" data-target="{{ modalUseItem }}">>>></td>
+                                    <td data-toggle="modal" data-target="{{ modalCompleteQuest }}">>>></td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <th colspan="7" data-toggle="modal" data-target="#addNewUser">Add New User</th>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--    MODAL BOX EDIT USER-->
+    {% for student in studentList %}
+        <div class="modal fade" id="{{ student.getName() }}" tabindex="-1" role="dialog"
+             aria-labelledby="userListEditBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userListEditBoxTitle">Edit User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="" method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="userId" value="{{ student.getId() }}">
+                                </div>
+                                <div class="col-lg-12">Username</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="username" value="Username">
+                                </div>
+                                <div class="col-lg-12">Class</div>
+                                <div class="col-lg-12">
+                                    <label>
+                                        <select name="class" class="form-control">
+                                            {% for class in classList %}
+                                                <option id="{{ class.getId() }}"
+                                                        value="{{ class.getId() }}">{{ class.getName() }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">Mentor</div>
+                                <div class="col-lg-12">
+                                    <select name="mentor" class="form-control">
+                                        {% for mentor in mentorList %}
+                                            <option id="{{ mentor.getId() }}"
+                                                    value="{{ mentor.getId() }}">{{ mentor.getName() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="editUser" class="btn btn-primary mx-auto">Save
+                                Changes
+                            </button>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--    END USER EDIT-->
+    <!--    MODAL BOX USE ITEM -->
+    {% for student in studentList %}
+
+        <div class="modal fade" id="{{ student.getName() ~ student.getId() }}" tabindex="-1" role="dialog"
+             aria-labelledby="userListUseItemBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userListUseItemBoxTitle">UseItem</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="" method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="userId" value="{{ student.getId() }}">
+                                    <div class="col-lg-12">Use Item</div>
+                                    <div class="col-lg-12">
+                                        <label>
+                                            {% if studentArtifactList.getStudentSacks(student).size() > 0 %}
+                                                <select name="deactivate" class="form-control">
+
+                                                    {% for sacks in studentArtifactList.getStudentSacks(student) %}
+                                                        <option>Choose item</option>
+
+                                                        <option id="{{ sacks.getId() }}"
+                                                                value="{{ sacks.getId() }}">{{ artifact.getById(sacks.getArtifactId()).getName() }}</option>
+
+                                                    {% endfor %}
+
+                                                </select>
+                                            {% else %}
+                                                <p class="btn-warning mt-2">No items</p>
+                                            {% endif %}
+
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer mx-auto">
+                            <button type="submit" name="id" value="useItem" class="btn btn-primary mx-auto">Save
+                                Changes
+                            </button>
+
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--    END USER USE ITEM-->
+
+    <!--    MODAL BOX COMPLETE QUEST -->
+    {% for student in studentList %}
+
+        <div class="modal fade" id="{{ student.getName() ~ "complete" }}" tabindex="-1" role="dialog"
+             aria-labelledby="completeQuestBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="completeQuestBoxTitle">Complete Quest</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="" method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="userId" value="{{ student.getId() }}">
+                                    <div class="col-lg-12">Complete Quest</div>
+                                    <div class="col-lg-12">
+                                        <label>
+                                            <select name="questId" class="form-control">
+                                                <option>Choose quest</option>
+                                                {% for quest in activeQuest %}
+
+
+                                                    <option id="{{ quest.getId() }}"
+                                                            value="{{ quest.getId() }}">{{ quest.getName() }}</option>
+
+                                                {% endfor %}
+
+                                            </select>
+
+
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer mx-auto">
+                            <button type="submit" name="id" value="completeQuest" class="btn btn-primary mx-auto">Save
+                                Changes
+                            </button>
+
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--    END COMPLETE QUEST-->
+
+    <!--    ADD NEW USER MODAL BOX-->
+
+    <div class="modal fade" id="addNewUser" tabindex="-1" role="dialog"
+         aria-labelledby="userListEditBoxTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" method="post">
+                    <div class="modal-body">
+
+                        <div class="row mx-auto text-center">
+                            <div class="col-lg-12">Username</div>
+                            <div class="col-lg-12">
+                                <input type="text" name="username" value="Username">
+                            </div>
+                            <div class="col-lg-12">Password</div>
+                            <div class="col-lg-12">
+                                <input type="password" name="password" value="Password">
+                            </div>
+                            <div class="col-lg-12">Class</div>
+                            <div class="col-lg-12">
+                                <select name="class" class="form-control">
+                                    {% for class in classList %}
+                                        <option id="{{ class.getId() }}"
+                                                value="{{ class.getId() }}">{{ class.getName() }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-12">Mentor</div>
+                            <div class="col-lg-12">
+                                <select name="mentor" class="form-control">
+                                    {% for mentor in mentorList %}
+                                        <option id="{{ mentor.getId() }}"
+                                                value="{{ mentor.getId() }}">{{ mentor.getName() }}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="id" value="addUser" class="btn btn-primary mx-auto">Add User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--END ADD NEW USER BOX-->
+</section>
+<section id="questList">
+    <div class="container-fluid align-items-center p-5" id="contener">
+        <div class="row">
+
+            <div class="col-lg-12 rounded" id="questsDone">
+
+                <div class="row text-center">
+                    <h1 class="mx-auto p-5">Quest List</h1>
+                    <div class="col-lg-12 table-responsive">
+                        <table class="table table-primary table-hover table-striped rounded">
+
+                            <tbody>
+                            <tr class="rounded">
+                                <th scope="row">Id</th>
+                                <td>QuestName</td>
+                                <td>Experience</td>
+                                <td>isActive</td>
+                                <td>Edit</td>
+                            </tr>
+                            {% for quest in questList %}
+                                {% set modalEditQuest = "#" ~ quest.getName().replaceAll(" ","") ~ quest.getId() %}
+                                {% set questCounter = questCounter | default(0) + 1 %}
+                                <tr class="rounded">
+                                    <th scope="row">{{ questCounter }}</th>
+                                    <td>{{ quest.getName() }}</td>
+                                    <td>{{ quest.getExp }}</td>
+                                    <td>{{ quest.isActive() }}</td>
+                                    <td data-toggle="modal" data-target="{{ modalEditQuest }}">>>></td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <th colspan="5" data-toggle="modal" data-target="#addNewQuest">Add New Quest</th>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--    ADD NEW QUEST MODAL BOX-->
+    {% for quest in questList %}
+        <div class="modal fade" id="addNewQuest" tabindex="-1" role="dialog"
+             aria-labelledby="addNewQuestTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Quest</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">Quest Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="questName" value="QuestName">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">Quest Description</div>
+                                    <textarea name="description"></textarea>
+                                </div>
+                                <div class="col-lg-12">Quest Category</div>
+                                <div class="col-lg-12">
+                                    <select name="questCategory" class="browser-default custom-select w-75">
+                                        {% for category in categoryList %}
+                                            <option value="{{ category.getId() }}">{{ category.getName() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">Experience</div>
+                                <div class="col-lg-12"><input type="text"
+                                                              name="exp" value="100"></div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="addQuest" class="btn btn-primary mx-auto">Add Quest
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--END ADD NEW QUEST BOX-->
+
+    <!--    ADD NEW Quest MODAL BOX-->
+    {% for quest in questList %}
+        {% set modalEditQuestExe = quest.getName().replaceAll(" ","") ~ quest.getId() %}
+        <div class="modal fade" id="{{ modalEditQuestExe }}" tabindex="-1" role="dialog"
+             aria-labelledby="questListEditBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Quest</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="questId" value="{{ quest.getId() }}">
+                                </div>
+                                <div class="col-lg-12">Quest Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="questName" value="{{ quest.getName() }}">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">Quest Description</div>
+                                    <textarea name="description"></textarea>
+                                </div>
+                                <div class="col-lg-12">Quest Category</div>
+                                <div class="col-lg-12">
+                                    <select name="questCategory" class="browser-default custom-select w-75">
+                                        <option selected>Quest Category</option>
+                                        {% for category in categoryList %}
+                                            <option value="{{ category.getId() }}">{{ category.getName() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-lg-12">Experience</div>
+                                <div class="col-lg-12"><input type="text"
+                                                              name="exp" value="{{ quest.getExp() }}"></div>
+
+                                <div class="col-lg-12">IsActive?</div>
+                                <div class="col-lg-12">
+                                    <select name="isActive" class="browser-default custom-select w-75">
+                                        <option selected>Choose</option>
+
+                                        <option value="True">true</option>
+                                        <option value="False">false</option>
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="editQuest" class="btn btn-primary mx-auto">Edit
+                                Quest
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--END EDIT QUEST BOX-->
+</section>
+
+<section id="itemList">
+    <div class="container-fluid align-items-center p-5">
+        <div class="row">
+
+            <div class="col-lg-12 rounded" id="itemsList">
+
+                <div class="row text-center">
+                    <h1 class="mx-auto p-5">Item List</h1>
+                    <div class="col-lg-12 table-responsive">
+                        <table class="table table-primary table-hover table-striped rounded">
+
+                            <tbody>
+                            <tr class="rounded">
+                                <th scope="row">Id</th>
+                                <td>Item Name</td>
+                                <td>Cost</td>
+                                <td>Group Item</td>
+                                <td>Edit</td>
+                            </tr>
+
+                            {% for artifact in artifactList %}
+                                {% set modalEditArtifact = "#" ~ artifact.getName().replaceAll(" ","") ~ artifact.getId() %}
+                                {% set artifactCounter = artifactCounter | default(0) + 1 %}
+                                <tr class="rounded">
+                                    <th scope="row">{{ artifactCounter }}</th>
+                                    <td>{{ artifact.getName() }}</td>
+                                    <td>{{ artifact.getPrice() }}</td>
+                                    <td>{{ artifact.isGlobal }}</td>
+                                    <td data-toggle="modal" data-target="{{ modalEditArtifact }}">>>></td>
+                                </tr>
+                            {% endfor %}
+
+                            <tr>
+                            <tr>
+                                <th colspan="5" data-toggle="modal" data-target="#addNewItem">Add New Item</th>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--    ADD NEW QUEST MODAL BOX-->
+
+    <div class="modal fade" id="addNewItem" tabindex="-1" role="dialog"
+         aria-labelledby="addNewQuestTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="itemId" value="{{ artifact.getId() }}">
+                                </div>
+                                <div class="col-lg-12">Item Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="itemName" value="ItemName">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">Item Description</div>
+                                    <label>
+                                        <textarea name="description"></textarea>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">Cost</div>
+                                <div class="col-lg-12"><input type="text"
+                                                              name="price" value="100"></div>
+                                <div class="col-lg-12">Item Category</div>
+                                <div class="col-lg-12">
+                                    <select name="isGlobal" class="browser-default custom-select w-75">
+                                        <option selected>Item Type</option>
+                                        <option value="True">true</option>
+                                        <option value="False">false</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="addItem" class="btn btn-primary mx-auto">Add Item
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END ADD NEW QUEST BOX-->
+
+    <!--    ADD NEW USER MODAL BOX-->
+    {% for artifact in artifactList %}
+        {% set modalEditArtifactExe = artifact.getName().replaceAll(" ","") ~ artifact.getId() %}
+        <div class="modal fade" id="{{ modalEditArtifactExe }}" tabindex="-1" role="dialog"
+             aria-labelledby="itemListEditBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="itemId" value="{{ artifact.getId() }}">
+                                </div>
+                                <div class="col-lg-12">Item Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="itemName" value="ItemName">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">Item Description</div>
+                                    <label>
+                                        <textarea name="description"></textarea>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">Cost</div>
+                                <div class="col-lg-12"><input type="text"
+                                                              name="price" value="100"></div>
+                                <div class="col-lg-12">Item Category</div>
+                                <div class="col-lg-12">
+                                    <select name="isGlobal" class="browser-default custom-select w-75">
+                                        <option selected>Item Type</option>
+                                        <option value="True">true</option>
+                                        <option value="False">false</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="editItem" class="btn btn-primary mx-auto">Edit Item
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--END EDIT QUEST BOX-->
+</section>
+
+
+<footer class="bg-dark text-center">
+    <p>Copyright &copy; TeamName</p>
+</footer>
+
+
+</body>
+<script src="/static/js/jquery/jquery.min.js"></script>
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+
+<script src="/static/js/jquery-easing/jquery.easing.min.js"></script>
+<script src="/static/js/questStore.min.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    });
+    $('input:text').focus(
+        function () {
+            $(this).val('');
+        });
+    $('input:password').focus(
+        function () {
+            $(this).val('');
+        });
+
+</script>
+
+
+</html>

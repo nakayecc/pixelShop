@@ -1,10 +1,8 @@
 package com.pixel;
 
-import com.pixel.controller.QuestController;
-import com.pixel.controller.StudentController;
-import com.pixel.controller.UserController;
-import com.pixel.view.Index;
-import com.pixel.view.Static;
+
+import com.pixel.model.Creep;
+import com.pixel.view.*;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -15,15 +13,17 @@ import java.net.InetSocketAddress;
  */
 public class App {
     public static void main(String[] args) {
-        UserController userController = new UserController();
-        StudentController studentController = new StudentController();
-        QuestController questController = new QuestController();
+
 
         HttpServer server = null;
         try {
-            server = HttpServer.create(new InetSocketAddress(8080), 0);
-            server.createContext("/", new Index(studentController, questController));
+            server = HttpServer.create(new InetSocketAddress(8000), 0);
+            server.createContext("/", new StudentHandler());
+            server.createContext("/mentor", new MentorHandler());
             server.createContext("/static", new Static());
+            server.createContext("/login", new Login());
+            server.createContext("/logout", new Logout());
+            server.createContext("/creep", new CreepHandler());
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {

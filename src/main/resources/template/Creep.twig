@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuestStore</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+    <link href="/static/fonts/ChessType.ttf" rel="stylesheet">
+</head>
+<body id="pageTop">
+<nav class="navbar navbar-expand-lg bg-dark fixed-top" id="mainNav">
+
+    <ul class="navbar-nav mr-auto">
+        <p>Logged us: Mentor</p>
+    </ul>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        MENU
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto mr-5">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#pageTop">Mentors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#classList">Class</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#settings">Settings</a>
+            </li>
+
+
+        </ul>
+        <ul class="navbar-nav ml-auto"><p>
+                <a href="/logout">Logout</a>
+            </p>
+        </ul>
+    </div>
+
+</nav>
+
+
+<section id="mentorList">
+    <div class="container-fluid align-items-center p-5">
+        <div class="row">
+
+            <div class="col-lg-12 rounded">
+
+                <div class="row text-center">
+
+                    <h1 class="mx-auto p-5">Mentor List</h1>
+                    <div class="col-lg-12 table-responsive">
+                        <table class="table table-primary table-hover table-striped rounded">
+
+                            <tbody>
+                            <tr class="rounded">
+                                <th scope="row">Id</th>
+                                <td>Mentor Name</td>
+                                <td>Class assign</td>
+                                <td>Edit</td>
+                            </tr>
+                            {% for mentor in mentorList %}
+                                {% set mentorCounter = mentorCounter | default(0) + 1 %}
+                                {% set modalEditMentor = "#" ~ mentor.getName() %}
+                                <tr class="rounded">
+                                    <th scope="row">{{ mentorCounter }}</th>
+                                    <td>{{ mentor.getName() }}</td>
+                                    <td>{{ classController.getClassNameBy(mentor.getClass_id()) }}</td>
+                                    <td data-toggle="modal" data-target="{{ modalEditMentor }}">>>></td>
+                                </tr>
+                            {% endfor %}
+
+                            <tr>
+                                <th colspan="5" data-toggle="modal" data-target="#addNewMentor">Add New Mentor</th>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--    MODAL BOX EDIT USER-->
+    {% for mentor in mentorList %}
+        <div class="modal fade" id="{{ mentor.getName() }}" tabindex="-1" role="dialog"
+             aria-labelledby="mentorListEditBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Mentor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <input type="hidden" name="mentorId" value="{{ mentor.getId() }}">
+
+                                <div class="col-lg-12">Mentor Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="mentorName" value="{{ mentor.getName() }}">
+                                </div>
+                                <div class="col-lg-12">Class assign</div>
+                                <div class="col-lg-12">
+                                    <select name="classId" class="browser-default custom-select w-75">
+                                        {% for class in classList %}
+                                            <option value="{{ class.getId() }}">{{ class.getName() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="id" value="editMentor" class="btn btn-primary mx-auto">Save
+                                Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--    END USER EDIT-->
+
+    <!--    ADD NEW USER MODAL BOX-->
+
+    <div class="modal fade" id="addNewMentor" tabindex="-1" role="dialog"
+         aria-labelledby="addMentorTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Mentor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST">
+                    <div class="modal-body">
+
+                        <div class="row mx-auto text-center">
+                            <div class="col-lg-12">Mentor Name</div>
+                            <div class="col-lg-12">
+                                <input type="text" name="mentorName" value="Username">
+                            </div>
+                            <div class="col-lg-12">Password</div>
+                            <div class="col-lg-12">
+                                <input type="password" name="password" value="password">
+                            </div>
+                            <div class="col-lg-12">Class</div>
+                            <div class="col-lg-12">
+                                <select name="classId" class="browser-default custom-select w-75">
+                                    {% for class in classList %}
+                                        <option value="{{ class.getId() }}">{{ class.getName() }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="id" value="addNewMentor" class="btn btn-primary mx-auto">Add
+                            Mentor
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--END ADD NEW USER BOX-->
+</section>
+<section id="classList">
+    <div class="container-fluid align-items-center p-5">
+        <div class="row">
+
+            <div class="col-lg-12 rounded">
+
+                <div class="row text-center">
+                    <h1 class="mx-auto p-5">Class List</h1>
+                    <div class="col-lg-12 table-responsive">
+                        <table class="table table-primary table-hover table-striped rounded">
+
+                            <tbody>
+                            <tr class="rounded">
+                                <th scope="row">Id</th>
+                                <td>Class name</td>
+                                <td>Edit</td>
+                            </tr>
+                            {% for class in classList %}
+                                {% set classCounter = classCounter | default(0) + 1 %}
+                                {% set modalClassMentor = "#" ~ class.getName() %}
+
+                                <tr class="rounded">
+                                    <th scope="row">{{ classCounter }}</th>
+                                    <td>{{ class.getName() }}</td>
+                                    <td data-toggle="modal" data-target="{{ modalClassMentor }}">>>></td>
+                                </tr>
+                            {% endfor %}
+
+                            <tr>
+                                <th colspan="5" data-toggle="modal" data-target="#addNewClass">Add New Class</th>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--    ADD NEW CLASS MODAL BOX-->
+    {% for class in classList %}
+        <div class="modal fade" id="addNewClass" tabindex="-1" role="dialog"
+             aria-labelledby="addNewClassTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Class</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST">
+                    <div class="modal-body">
+
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">Class Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="className" value="Class Name">
+                                </div>
+
+                            </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="id" value="addNewClass" class="btn btn-primary mx-auto">Add Class</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--END ADD NEW QUEST BOX-->
+
+    <!--    ADD NEW USER MODAL BOX-->
+    {% for class in classList %}
+        <div class="modal fade" id="{{ class.getName() }}" tabindex="-1" role="dialog"
+             aria-labelledby="classListEditBoxTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Class</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="row mx-auto text-center">
+                                <div class="col-lg-12">Class Name</div>
+                                <div class="col-lg-12">
+                                    <input type="text" name="className" value="{{ class.getName() }}">
+                                </div>
+                                <div class="col-lg-12">Mentor</div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto">Edit Class</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--END EDIT QUEST BOX-->
+</section>
+
+<section id="settings">
+    <div class="container-fluid align-items-center p-5">
+        <div class="row">
+
+            <div class="col-lg-12 rounded">
+
+                <div class="row text-center">
+                    <h1 class="mx-auto p-5">Settings</h1>
+                    <div class="col-lg-12 table-responsive">
+                        <table class="table table-primary table-hover table-striped rounded">
+
+                            <tbody>
+                            <tr class="rounded">
+                                <th scope="row">Level</th>
+                                <td>Exp</td>
+                                <td>Remove</td>
+                            </tr>
+                            {% for entry in lvlMap %}
+                                <tr class="rounded">
+                                    <th scope="row">{{ entry.getKey() }}</th>
+                                    <td>{{ entry.getValue() }}</td>
+
+                                    <td><form method="POST">
+                                            <input type="hidden" name="levelId" value="{{ lvlId.getLevelIdByName(entry.getKey()) }}">
+                                        <button type="submit" name="id" value="deleteLevel" class="btn btn-primary mx-auto">X</button>
+                                    </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <th colspan="5" data-toggle="modal" data-target="#addNewLevel">Add New Level</th>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--    ADD NEW LEVEL MODAL BOX-->
+
+    <div class="modal fade" id="addNewLevel" tabindex="-1" role="dialog"
+         aria-labelledby="addNewLevelTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Level</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST">
+                <div class="modal-body">
+
+                        <div class="row mx-auto text-center">
+                            <div class="col-lg-12">Level Name</div>
+                            <div class="col-lg-12">
+                                <input type="text" name="levelName" value="LevelName">
+                            </div>
+                            <div class="col-lg-12">Exp</div>
+                            <div class="col-lg-12"><input type="text"
+                                                          name="exp" value="100"></div>
+
+
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="id" value="addLevel" class="btn btn-primary mx-auto">Add Level</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--END ADD NEW QUEST BOX-->
+
+
+</section>
+
+
+<footer class="bg-dark text-center">
+    <p>Copyright &copy; TeamName</p>
+</footer>
+
+
+</body>
+<script src="/static/js/jquery/jquery.min.js"></script>
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+
+<script src="/static/js/jquery-easing/jquery.easing.min.js"></script>
+<script src="/static/js/questStore.min.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    });
+    $('input:text').focus(
+        function () {
+            $(this).val('');
+        });
+    $('input:password').focus(
+        function () {
+            $(this).val('');
+        });
+
+</script>
+
+
+</html>
